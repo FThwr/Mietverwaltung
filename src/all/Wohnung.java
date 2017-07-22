@@ -1,4 +1,4 @@
-package all
+package all;
 
 public class Wohnung {
 
