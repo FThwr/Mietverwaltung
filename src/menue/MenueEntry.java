@@ -1,5 +1,6 @@
 package menue;
 
+import action.Action;
 
 public class MenueEntry {
 	

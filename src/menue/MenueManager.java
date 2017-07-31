@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import all.*;
+
 public class MenueManager {
 
 	private ArrayList<MenueEntry> menuList = new ArrayList<MenueEntry>();

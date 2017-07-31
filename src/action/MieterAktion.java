@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import all.*;
+import menue.MenueManager;
+
 public class MieterAktion extends MenueManager implements Action {
 	
 	@Override
