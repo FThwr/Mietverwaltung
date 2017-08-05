@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import all.*;
+import objekte.*;
 
 public class MenueManager {
 

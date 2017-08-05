@@ -1,4 +1,4 @@
-package all;
+package verwaltungen;
 
 public class Wohnungsverwaltung {
 	//Test

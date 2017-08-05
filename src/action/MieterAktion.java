@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import all.*;
 import menue.MenueManager;
+import objekte.*;
 
 public class MieterAktion extends MenueManager implements Action {
 	

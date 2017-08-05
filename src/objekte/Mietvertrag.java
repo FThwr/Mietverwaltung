@@ -1,4 +1,4 @@
-package all;
+package objekte;
 
 public class Mietvertrag {
 	
