@@ -1,5 +1,7 @@
 package objekte;
 
+import hilfsklassen.Adresse;
+
 public class Wohnung {
 	
 	private int wohnungsID;
@@ -10,7 +12,7 @@ public class Wohnung {
 	private boolean balkon;
 	private boolean fuﬂbodenheizung;
 	private String aussicht;
-	private String adresse;
+	private Adresse adresse;
 	private String status;
 	private String letztesRenovierungsdatum;
 	private int renovierungsanzahl;
@@ -19,7 +21,7 @@ public class Wohnung {
 	private Mitarbeiter zugeordneterMitarbeiter;
 	
 	
-	public Wohnung(int wohnungsID, int zimmeranzahl, double fl‰che, double kosten, int etage, boolean balkon,boolean fuﬂbodenheizung, String aussicht, String adresse, String status, 
+	public Wohnung(int wohnungsID, int zimmeranzahl, double fl‰che, double kosten, int etage, boolean balkon,boolean fuﬂbodenheizung, String aussicht, Adresse adresse, String status, 
 			String letztesRenovierungsdatum, int renovierungsanzahl, String letzeRenovierung_Details, Mitarbeiter zugeordneterMitarbeiter) {
 		this.wohnungsID = wohnungsID;
 		this.zimmeranzahl = zimmeranzahl;
@@ -118,12 +120,12 @@ public class Wohnung {
 	}
 
 
-	public String getAdresse() {
+	public Adresse getAdresse() {
 		return adresse;
 	}
 
 
-	public void setAdresse(String adresse) {
+	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
 
