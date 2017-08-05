@@ -1,6 +1,6 @@
 package verwaltungen;
 
-public class Wohnungsverwaltung implements VerwaltungIF {
+public class Mieterverwaltung implements VerwaltungIF {
 
 	@Override
 	public void neu() {
@@ -31,6 +31,5 @@ public class Wohnungsverwaltung implements VerwaltungIF {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+
 }
