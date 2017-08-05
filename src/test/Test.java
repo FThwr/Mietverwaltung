@@ -1,9 +1,9 @@
 package test;
 
 import action.MieterAktion;
-import all.*;
 import menue.MenueEntry;
 import menue.MenueManager;
+import objekte.*;
 
 /*
  * 
@@ -22,42 +22,51 @@ public class Test {
 		m.add(new Mitarbeiter ("Rumps", "Alicia"));
 		m.add(new Mitarbeiter ("Wusch", "Max"));
 		
+//		ich denke Wohnungen, Mieter, Mitarbeiter usw. sollten sollten wir in einer separaten Testklasse erstellen und dann auch in einer Datei abspeichern (für die Persistenz) @AG
 		// Wohnungen
 		m.add(new Wohnung (301, 4, 80.60, 1100.00, 3, true, true, "Osten", " Kleeweg Nr 22, 13357 Berlin, Wedding", "frei", "22.1.2017", 3, "Rohre neu verlegt", new Mitarbeiter ("Max")));
 		m.add(new Wohnung (302, 4, 80.60, 1200.00, 3, true, true, "Westen", " Kleeweg Nr 22, 13357 Berlin, Wedding", "vermietet", "23.3.2017", 1, "Tapeten gewechselt", new Mitarbeiter ("Felicia")));
-//		m.add(new Wohnung (6, 106, 1600, 3, true, "Süden"));
-//		m.add(new Wohnung (1, 31, 650, 2, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 650, 2, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 650, 2, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 650, 2, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 650, 2, true, "Westen"));
-//		m.add(new Wohnung (2, 51, 700, 2, true, "Osten"));
-//		m.add(new Wohnung (2, 51, 700, 2, true, "Osten"));
-//		m.add(new Wohnung (2, 51, 700, 2, true, "Osten"));
-//		m.add(new Wohnung (1, 31, 550, 1, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 550, 1, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 550, 1, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 550, 1, true, "Westen"));
-//		m.add(new Wohnung (1, 31, 550, 1, true, "Westen"));
-//		m.add(new Wohnung (2, 51, 600, 1, true, "Osten"));
-//		m.add(new Wohnung (2, 51, 600, 1, true, "Osten"));
-//		m.add(new Wohnung (2, 51, 600, 1, true, "Osten"));
+
 		
-		
+		//1. Menueebene
 		m.add(new MenueEntry("", new String [] {"Mieter", "Wohnung", "Handwerkerauftrag", "Mietvertrag", "Interessenten", "Suche"}));
-		m.add(new MenueEntry("Mieter", new String [] {"Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen"}));
-		m.add(new MenueEntry("Mieter anzeigen", new MieterAktion()));
-		m.add(new MenueEntry("Wohnung", new String [] {"Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Handwerkeraufträge", "Buche", "Trauerweide"}));
-		m.add(new MenueEntry("Nadelbäume", new String [] {"Tanne", "Kiefer"}));
 		
-		m.add(new MenueEntry("Wohnung anzeigen", new MieterAktion()));
-//		m.add(new MenueEntry("Kastanie", new HalloAktion()));
-//		m.add(new MenueEntry("Ahorn", new IchBinAktion()));
-//		m.add(new MenueEntry("Birke", new HalloAktion()));
-//		m.add(new MenueEntry("Buche", new IchBinAktion()));
-//		m.add(new MenueEntry("Trauerweide", new HalloAktion()));
-//		m.add(new MenueEntry("Tanne", new IchBinAktion()));
-//		m.add(new MenueEntry("Kiefer", new HalloAktion()));
+		
+//		Sollte es auch einen Menueeintrag "loeschen" geben??? @AG
+		//2. Menueebene
+		m.add(new MenueEntry("Mieter", new String [] {"Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen"}));
+		m.add(new MenueEntry("Wohnung", new String [] {"Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Handwerkeraufträge"}));
+		m.add(new MenueEntry("Handwerkerauftrag", new String [] {"Handwerkerauftrag anzeigen", "neuen Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten"}));
+		m.add(new MenueEntry("Mietvertrag", new String [] {"Mietvertrag anzeigen", "neuen Mietvertrag erstellen", "Mietvertrag bearbeiten"}));
+		m.add(new MenueEntry("Interessenten", new String [] {"Interessent anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Suchauftrag"}));
+		m.add(new MenueEntry("Suche", new String [] {}));
+		
+		//3. Menueebene
+		m.add(new MenueEntry("Mieter anzeigen", new MieterAktion()));
+		m.add(new MenueEntry("neuen Mieter erstellen", new MieterAktion()));
+		m.add(new MenueEntry("Mieter bearbeiten", new MieterAktion()));
+		m.add(new MenueEntry("Mieter suchen", new MieterAktion()));
+		
+		//Aktionen müssten noch erstellt werden @AG
+//		m.add(new MenueEntry("Wohnung anzeigen", action));
+//		m.add(new MenueEntry("neue Wohnung erstellen", action));
+//		m.add(new MenueEntry("Wohnung bearbeiten", action));
+//		m.add(new MenueEntry("Handwerkeraufträge", action));
+//		
+//		m.add(new MenueEntry("Handwerkerauftrag anzeigen", action));
+//		m.add(new MenueEntry("neuen Handwerkerauftrag erstellen", action));
+//		m.add(new MenueEntry("Handwerkerauftrag bearbeiten", action));
+//		
+//		m.add(new MenueEntry("Mietvertrag anzeigen", action));
+//		m.add(new MenueEntry("neuen Mietvertrag erstellen", action));
+//		m.add(new MenueEntry("Mietvertrag bearbeiten", action));
+//		
+//		m.add(new MenueEntry("Interessent anzeigen", action));
+//		m.add(new MenueEntry("neuen Interessenten erstellen", action));
+//		m.add(new MenueEntry("Interessent bearbeiten", action));
+//		m.add(new MenueEntry("Suchauftrag", action));
+		
+		
 		m.start();
 		
 	}
