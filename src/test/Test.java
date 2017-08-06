@@ -43,10 +43,10 @@ public class Test {
 		m.add(new MenueEntry("Suche", new String [] {}));
 		
 		//3. Menueebene
-		m.add(new MenueEntry("Mieter anzeigen", new MieterAktion()));
-		m.add(new MenueEntry("neuen Mieter erstellen", new MieterAktion()));
-		m.add(new MenueEntry("Mieter bearbeiten", new MieterAktion()));
-		m.add(new MenueEntry("Mieter suchen", new MieterAktion()));
+//		m.add(new MenueEntry("Mieter anzeigen", new MieterAktion()));
+//		m.add(new MenueEntry("neuen Mieter erstellen", new MieterAktion()));
+//		m.add(new MenueEntry("Mieter bearbeiten", new MieterAktion()));
+//		m.add(new MenueEntry("Mieter suchen", new MieterAktion()));
 		
 		//Aktionen müssten noch erstellt werden @AG
 //		m.add(new MenueEntry("Wohnung anzeigen", action));
