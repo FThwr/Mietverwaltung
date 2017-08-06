@@ -34,13 +34,14 @@ public class Test {
 		
 		
 //		Sollte es auch einen Menueeintrag "loeschen" geben??? @AG
+//		Sollten die SuchenAktion in den Unterpunkte "Suche"? Wir können auch auf die Aktionen doppelt verweisen @AG
 		//2. Menueebene
 		m.add(new MenueEntry("Mieter", new String [] {"Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen"}));
-		m.add(new MenueEntry("Wohnung", new String [] {"Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Handwerkeraufträge"}));
-		m.add(new MenueEntry("Handwerkerauftrag", new String [] {"Handwerkerauftrag anzeigen", "neuen Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten"}));
-		m.add(new MenueEntry("Mietvertrag", new String [] {"Mietvertrag anzeigen", "neuen Mietvertrag erstellen", "Mietvertrag bearbeiten"}));
-		m.add(new MenueEntry("Interessenten", new String [] {"Interessent anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Suchauftrag"}));
-		m.add(new MenueEntry("Suche", new String [] {}));
+		m.add(new MenueEntry("Wohnung", new String [] {"Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Wohnung suchen", "Handwerkeraufträge"}));
+		m.add(new MenueEntry("Handwerkerauftrag", new String [] {"Handwerkerauftrag anzeigen", "neuen Handwerkerauftrag erstellen", "Handwerkerauftrag suchen", "Handwerkerauftrag bearbeiten"}));
+		m.add(new MenueEntry("Mietvertrag", new String [] {"Mietvertrag anzeigen", "neuen Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen"}));
+		m.add(new MenueEntry("Interessenten", new String [] {"Interessent anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen", "Suchauftrag"}));
+//		m.add(new MenueEntry("Suche", new String [] {}));	
 		
 		//3. Menueebene
 //		m.add(new MenueEntry("Mieter anzeigen", new MieterAktion()));
@@ -48,23 +49,26 @@ public class Test {
 //		m.add(new MenueEntry("Mieter bearbeiten", new MieterAktion()));
 //		m.add(new MenueEntry("Mieter suchen", new MieterAktion()));
 		
-		//Aktionen müssten noch erstellt werden @AG
-//		m.add(new MenueEntry("Wohnung anzeigen", action));
-//		m.add(new MenueEntry("neue Wohnung erstellen", action));
-//		m.add(new MenueEntry("Wohnung bearbeiten", action));
+		m.add(new MenueEntry("Wohnung anzeigen", new WohnungAnzeigenAction()));
+		m.add(new MenueEntry("neue Wohnung erstellen", new neueWohnungAction()));
+		m.add(new MenueEntry("Wohnung bearbeiten", new WohnungBearbeitenAction()));
+		m.add(new MenueEntry("Wohnung suchen", new WohnungSuchenAktion()));
 //		m.add(new MenueEntry("Handwerkeraufträge", action));
 //		
 //		m.add(new MenueEntry("Handwerkerauftrag anzeigen", action));
 //		m.add(new MenueEntry("neuen Handwerkerauftrag erstellen", action));
 //		m.add(new MenueEntry("Handwerkerauftrag bearbeiten", action));
-//		
+//		m.add(new MenueEntry("Handwerkerauftrag suchen", action));
+		
 //		m.add(new MenueEntry("Mietvertrag anzeigen", action));
 //		m.add(new MenueEntry("neuen Mietvertrag erstellen", action));
 //		m.add(new MenueEntry("Mietvertrag bearbeiten", action));
-//		
+//		m.add(new MenueEntry("Mietvertrag suchen", action));
+		
 //		m.add(new MenueEntry("Interessent anzeigen", action));
 //		m.add(new MenueEntry("neuen Interessenten erstellen", action));
 //		m.add(new MenueEntry("Interessent bearbeiten", action));
+//		m.add(new MenueEntry("Interessent suchen", action));
 //		m.add(new MenueEntry("Suchauftrag", action));
 		
 		
