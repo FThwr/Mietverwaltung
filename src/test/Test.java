@@ -1,6 +1,6 @@
 package test;
 
-import action.MieterAktion;
+import action.*;
 import hilfsklassen.Adresse;
 import menue.MenueEntry;
 import menue.MenueManager;
@@ -16,17 +16,17 @@ public class Test {
 		
 		MenueManager m = new MenueManager();
 		// Anmeldekonten der Mitarbeiter
-		m.add(new Mitarbeiter ("Qualle", "Herr Faustmann"));
-		m.add(new Mitarbeiter ("Boing", "Felicia"));
-		m.add(new Mitarbeiter ("Boom", "Mandy"));
-		m.add(new Mitarbeiter ("Zisch", "Sophia"));
-		m.add(new Mitarbeiter ("Rumps", "Alicia"));
-		m.add(new Mitarbeiter ("Wusch", "Max"));
+		m.add(new Mitarbeiter(1, "Faustmann", "Gert", "Qualle"));
+		m.add(new Mitarbeiter (2, "Tsakonas", "Felicia", "Boing"));
+		m.add(new Mitarbeiter (3, "Bebenroth", "Mandy", "Boom"));
+		m.add(new Mitarbeiter (4, "Ruhkieck", "Sophia", "Zisch"));
+		m.add(new Mitarbeiter (5, "Guhl", "Alicia", "Rumps"));
+		m.add(new Mitarbeiter (6, "Menz", "Max", "Wusch"));
 		
 //		ich denke Wohnungen, Mieter, Mitarbeiter usw. sollten sollten wir in einer separaten Testklasse erstellen und dann auch in einer Datei abspeichern (für die Persistenz) @AG
 		// Wohnungen
-		m.add(new Wohnung (301, 4, 80.60, 1100.00, 3, true, true, "Osten", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", "22.1.2017", 3, "Rohre neu verlegt", new Mitarbeiter ("Max")));
-		m.add(new Wohnung (302, 4, 80.60, 1200.00, 3, true, true, "Westen", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "vermietet", "23.3.2017", 1, "Tapeten gewechselt", new Mitarbeiter ("Felicia")));
+		m.add(new Wohnung (301, 4, 80.60, 1100.00, 3, true, true, "Osten", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", "22.1.2017", 3, "Rohre neu verlegt", new Mitarbeiter (6, "Menz","Max")));
+		m.add(new Wohnung (302, 4, 80.60, 1200.00, 3, true, true, "Westen", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "vermietet", "23.3.2017", 1, "Tapeten gewechselt", new Mitarbeiter (2, "Tsakonas","Felicia")));
 
 		
 		//1. Menueebene
