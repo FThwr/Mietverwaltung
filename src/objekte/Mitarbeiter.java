@@ -2,19 +2,22 @@ package objekte;
 
 public class Mitarbeiter {
 	
+	private int mitarbeiterID;
 	private String name;
 	private String vorname;
 	private String benutzername;
 	private String passwort;
 	
 	
-	public Mitarbeiter (String name, String vorname, String passwort) {
+	public Mitarbeiter (int mitarbeiterID, String name, String vorname, String passwort) {
+		this.mitarbeiterID = mitarbeiterID;
 		this.name = name;
 		this.passwort = passwort;
 		this.benutzername = vorname.trim().substring(0, 1) + "." + name;
 	}
 	
-	public Mitarbeiter (String name, String vorname) {
+	public Mitarbeiter (int mitarbeiterID, String name, String vorname) {
+		this.mitarbeiterID = mitarbeiterID;
 		this.name = name;
 		this.vorname = vorname;
 	}
