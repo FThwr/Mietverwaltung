@@ -3,7 +3,6 @@ package action;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -58,8 +57,8 @@ panel = new JPanel();
 		button = new JButton("Enter");
 		
 
-//???		// Buttons werden dem Listener zugeordnet
-		button.addActionListener((ActionListener) this);
+		// Buttons werden dem Listener zugeordnet
+		button.addActionListener(this);
 
 		
 
@@ -227,8 +226,8 @@ panel = new JPanel();
 							 + "\n" + tab + "Fl‰che: " + flat.getFl‰che()
 							 + "\n" + tab + "Kosten: " + flat.getKosten()
 							 + "\n" + tab + "Etage: " + flat.getEtage()
-							 + "\n" + tab + "Balkon: " + flat.isBalkon()
-							 + "\n" + tab + "Fuﬂbodenheizung: " + flat.isFuﬂbodenheizung()
+							 + "\n" + tab + "Balkon: " + flat.getBalkon()
+							 + "\n" + tab + "Fuﬂbodenheizung: " + flat.getFuﬂbodenheizung()
 							 + "\n" + tab + "Aussicht: " + flat.getAussicht()
 							 // + System.out.println("Adresse: " + flat.getAdresse());
 							 + "\n" + tab + "Status: " + flat.getStatus()

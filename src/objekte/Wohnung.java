@@ -90,7 +90,7 @@ public class Wohnung {
 	}
 
 
-	public boolean isBalkon() {
+	public boolean getBalkon() {
 		return balkon;
 	}
 
@@ -100,7 +100,7 @@ public class Wohnung {
 	}
 
 
-	public boolean isFuﬂbodenheizung() {
+	public boolean getFuﬂbodenheizung() {
 		return fuﬂbodenheizung;
 	}
 

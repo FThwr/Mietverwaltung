@@ -5,13 +5,15 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import objekte.*;
+import hilfsklassen.J;
+import objekte.Mitarbeiter;
+import objekte.Wohnung;
 
-public class MenueManager {
+public class MenueManager extends J {
 
 	private ArrayList<MenueEntry> menuList = new ArrayList<MenueEntry>();
-	private ArrayList<Mitarbeiter> workerList = new ArrayList<Mitarbeiter>();
-	public ArrayList<Wohnung> flatList = new ArrayList<Wohnung>();
+	protected static ArrayList<Mitarbeiter> workerList = new ArrayList<Mitarbeiter>();
+	protected static ArrayList<Wohnung> flatList = new ArrayList<Wohnung>();
 
 	public void add(MenueEntry menueEintrag) {
 		menuList.add(menueEintrag);
@@ -50,7 +52,6 @@ public class MenueManager {
 		} catch (NullPointerException ex) {
 			System.out.println("keine Aktion hinterlegt, weil kein Menüeintrag erstellt wurde");
 			actionAusfuehren(meAktuell);
-			// meAktuell = zeigeAufObermenue(meAktuell);
 			meAktuell = aufruf(meAktuell);
 		}
 	}
@@ -86,6 +87,7 @@ public class MenueManager {
 
 			System.out.print("Wählen Sie einen Menüpunkt aus: ");
 			int eingabe = eingabeEinlesen(scanner);
+			System.out.println("");
 			if (eingabe <= meAktuell.getLocation().length && eingabe > 0) {
 				meAktuell = zeigeAufUntermenue(meAktuell, eingabe);
 			} else if (eingabe == 0) {
@@ -121,7 +123,9 @@ public class MenueManager {
 		for (int i = 0; i < me.getLocation().length; i++) {
 			String untermenueName = (me.getLocation())[i];
 			System.out.println((i + 1) + ". " + untermenueName);
+			
 		}
+		System.out.println("");
 	}
 
 	public MenueEntry zeigeAufObermenue(MenueEntry meAktuell) {
