@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import menue.MenueManager;
+import objekte.Mieter;
 import objekte.Wohnung;
 
 public class WohnungAnzeigenAction extends MenueManager implements Action, ActionListener {
@@ -90,9 +91,29 @@ public void action() {
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		int status = 0;
 		for (Wohnung flat : flatList) {
+			for (Mieter owner : ownerList) {
+				if (owner.getWohnungsnummer() == flat.getWohnungsID()) {
+					status = 1;
+				}
+				else {status = 0;
+				
+				}
+			}
+			if (status == 1) {
+				flat.setStatus("vermietet");
+			}
+			else {
+				flat.setStatus("frei");
+			}
 			
-			 text = text + tab + "Wohnungsnummer: " + flat.getWohnungsID()
+			
+			
+			 text = text 
+			 + "\n" + tab + "Wohnungsnummer: " + flat.getWohnungsID()
 			 + "\n" + tab + "Zimmeranzahl: " + flat.getZimmeranzahl()
 			 + "\n" + tab + "Fläche: " + flat.getFläche()
 			 + "\n" + tab + "Kosten: " + flat.getKosten()

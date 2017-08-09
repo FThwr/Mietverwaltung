@@ -4,7 +4,6 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import menue.MenueManager;
-import objekte.Mitarbeiter;
 import objekte.Wohnung;
 
 public class neueWohnungAction extends MenueManager implements Action {
@@ -53,11 +52,17 @@ public class neueWohnungAction extends MenueManager implements Action {
 
 		String zugeordneterMitarbeiter = "-";
 		String eingabe_zugeordneterMitarbeiter = "-";
+		
+		String Mieternachname = "-";
+		String eingabe_Mieternachname = "-";
+
+		String Mietername = "-";
+		String eingabe_Mietername = "-";
 
 		while (erstellVorgang == true) {
 
 			String[] buttons = { "ID", "ZA", "Fl", "KT", "EG", "BK", "FBH", "AS", "ST", "LRDT", "RA", "LRI", "ZM",
-					"erstellen", "abbruch" };
+					"MINN", "MIN", "erstellen", "abbruch" };
 
 			int ok = JOptionPane.showOptionDialog(null,
 					"W‰hlen Sie ein zu bearbeitenden Wert! " + "\n\nID:                " + ID + "\n\nZA:               "
@@ -66,7 +71,9 @@ public class neueWohnungAction extends MenueManager implements Action {
 							+ "\n\nFBH:              " + fuﬂbodenheizung + "\n\nAS:                 " + aussicht
 							+ "\n\nST:                 " + status + "\n\nLRDT:            " + letztesRenovierungsdatum
 							+ "\n\nRA:                " + renovierungsanzahl + "\n\nLRI:                "
-							+ letzeRenovierung_Details + "\n\nZM:                " + zugeordneterMitarbeiter,
+							+ letzeRenovierung_Details + "\n\nZM:                " + zugeordneterMitarbeiter
+							+ "\n\nMINN:                " +  Mieternachname
+							+ "\n\nMIN:                " + Mietername,
 					"Wohnungserstellung", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons);
 
 			if (ok == 0) {
@@ -120,12 +127,18 @@ public class neueWohnungAction extends MenueManager implements Action {
 				zugeordneterMitarbeiter = String_eingabe(eingabe_zugeordneterMitarbeiter);
 			}
 			if (ok == 13) {
-				erstellVorgang = false;
-				flatList.add(new Wohnung(ID, zimmeranzahl, fl‰che, kosten, etage, balkon, fuﬂbodenheizung, aussicht,
-						status, letztesRenovierungsdatum, "", renovierungsanzahl, letzeRenovierung_Details,
-						new Mitarbeiter(zugeordneterMitarbeiter)));
+				Mieternachname = String_eingabe(eingabe_Mieternachname);
 			}
 			if (ok == 14) {
+				Mietername = String_eingabe(eingabe_Mietername);
+			}
+			if (ok == 15) {
+				erstellVorgang = false;
+//				flatList.add(new Wohnung(new Mieter (Mietername, Mieternachname), ID, zimmeranzahl, fl‰che, kosten, etage, balkon, fuﬂbodenheizung, aussicht,
+//						status, letztesRenovierungsdatum, "", renovierungsanzahl, letzeRenovierung_Details,
+//						new Mitarbeiter(zugeordneterMitarbeiter)));
+			}
+			if (ok == 16) {
 				erstellVorgang = false;
 			}
 		}

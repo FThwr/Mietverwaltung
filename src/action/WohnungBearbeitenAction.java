@@ -1,9 +1,11 @@
 package action;
 
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import menue.MenueManager;
+import objekte.Mieter;
 import objekte.Wohnung;
 
 public class WohnungBearbeitenAction extends MenueManager implements Action {
@@ -26,11 +28,21 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 			if (zu_bearbeitende_wohnung.equals("" + flat.getWohnungsID())) {
 				boolean bearbeitungsVorgang = true;
 
+				String aktueller_Mieternachname = flat.getOwner().getName();
+				String neue_Mieternachname = aktueller_Mieternachname;
+				String a_MINN = aktueller_Mieternachname;
+				a_MINN = länge_anpassen(a_MINN);
+
+				String aktueller_Mietername = flat.getOwner().getName();
+				String neue_Mietername = aktueller_Mietername;
+				String a_MIN = aktueller_Mietername;
+				a_MIN = länge_anpassen(a_MIN);
+
 				int aktuelleID = flat.getWohnungsID();
 				int neueID = aktuelleID;
 				String aID = "" + aktuelleID;
 				aID = länge_anpassen(aID);
-				
+
 				int aktuelle_zimmeranzahl = flat.getZimmeranzahl();
 				int neue_zimmeranzahl = aktuelle_zimmeranzahl;
 				String a_ZA = "" + aktuelle_zimmeranzahl;
@@ -91,28 +103,34 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 				String neue_zugeordneterMitarbeiter = aktuelle_zugeordneterMitarbeiter;
 				String a_ZM = aktuelle_zugeordneterMitarbeiter;
 				a_ZM = länge_anpassen(a_ZM);
-				
+
 				while (bearbeitungsVorgang == true) {
 
 					String[] buttons = { "ID", "ZA", "Fl", "KT", "EG", "BK", "FBH", "AS", "ST", "LRDT", "RA", "LRI",
-							"ZM", "ändern", "abbruch" };
+							"ZM", "MINN", "MIN", "ändern", "abbruch" };
 
-					int ok = JOptionPane.showOptionDialog(null,
-							"Wählen Sie ein zu bearbeitenden Wert! " 
-									+ "\n\naktuelle ID:                " + aID + "aktuelle ID:                " + neueID
-									+ "\n\naktuelle ZA:               " + a_ZA + "aktuelle ZA:               " + neue_zimmeranzahl
-									+ "\n\naktuelle FL:                " + a_FL + "aktuelle FL:                " + neue_fläche
-									+ "\n\naktuelle KT:                " + a_KT + "aktuelle KT:                " + neue_kosten
-									+ "\n\naktuelle EG:                " + a_EG + "aktuelle EG:                " + neue_etage
-									+ "\n\naktuelle BK:                " + a_BK + "aktuelle BK:                " + neue_balkon
-									+ "\n\naktuelle FBH:              " + a_FBH + "aktuelle FBH:              " + neue_fußbodenheizung
-									+ "\n\naktuelle AS:                 " + a_AS + "aktuelle AS:                 " + neue_aussicht
-									+ "\n\naktuelle ST:                 " + a_ST + "aktuelle ST:                 " + neue_status
-									+ "\n\naktuelle LRDT:            " + a_LRDT + "aktuelle LRDT:            " + neue_letzesRenovierungsdatum
-									+ "\n\naktuelle RA:                " + a_RA + "aktuelle RA:                " + neue_renovierungsanzahl
-									+ "\n\naktuelle LRI:                " + a_LRI + "aktuelle LRI:                " + neue_letzteRenovierung_Details
-									+ "\n\naktuelle ZM:                " + a_ZM + "aktuelle ZM:                " + neue_zugeordneterMitarbeiter, 
-							"Wohnungserstellung", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons);
+					int ok = JOptionPane.showOptionDialog(null, "Wählen Sie ein zu bearbeitenden Wert! "
+
+							+ "\n\naktuelle ID:                " + aID + "aktuelle ID:                " + neueID
+							+ "\n\naktuelle ZA:               " + a_ZA + "aktuelle ZA:               "
+							+ neue_zimmeranzahl + "\n\naktuelle FL:                " + a_FL
+							+ "aktuelle FL:                " + neue_fläche + "\n\naktuelle KT:                " + a_KT
+							+ "aktuelle KT:                " + neue_kosten + "\n\naktuelle EG:                " + a_EG
+							+ "aktuelle EG:                " + neue_etage + "\n\naktuelle BK:                " + a_BK
+							+ "aktuelle BK:                " + neue_balkon + "\n\naktuelle FBH:              " + a_FBH
+							+ "aktuelle FBH:              " + neue_fußbodenheizung + "\n\naktuelle AS:                 "
+							+ a_AS + "aktuelle AS:                 " + neue_aussicht
+							+ "\n\naktuelle ST:                 " + a_ST + "aktuelle ST:                 " + neue_status
+							+ "\n\naktuelle LRDT:            " + a_LRDT + "aktuelle LRDT:            "
+							+ neue_letzesRenovierungsdatum + "\n\naktuelle RA:                " + a_RA
+							+ "aktuelle RA:                " + neue_renovierungsanzahl
+							+ "\n\naktuelle LRI:                " + a_LRI + "aktuelle LRI:                "
+							+ neue_letzteRenovierung_Details + "\n\naktuelle ZM:                " + a_ZM
+							+ "aktuelle ZM:                " + neue_zugeordneterMitarbeiter
+							+ "\n\naktueller MINN:                " + a_MINN + "neuer MINN:                 "
+							+ neue_Mieternachname + "\n\naktueller MIN:                " + a_MIN
+							+ "neuer MIN:                 " + neue_Mietername, "Wohnungserstellung",
+							JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons);
 
 					if (ok == 0) {
 						neueID = int_eingabe(buttons, ok);
@@ -126,7 +144,7 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 										"Wohnungserstellung", JOptionPane.WARNING_MESSAGE, 0, null, knopf, knopf);
 								neueID = -100;
 								break;
-							} 							
+							}
 						}
 					}
 					if (ok == 1) {
@@ -166,22 +184,54 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 						neue_zugeordneterMitarbeiter = mitarbeiter_eingabe(buttons, ok);
 					}
 					if (ok == 13) {
-						bearbeitungsVorgang = false;
-						flat.setWohnungsID(neueID);
-						flat.setZimmeranzahl(neue_zimmeranzahl);
-						flat.setFläche(neue_fläche);
-						flat.setKosten(neue_kosten);
-						flat.setEtage(neue_etage);
-						flat.setBalkon(neue_balkon);
-						flat.setFußbodenheizung(neue_fußbodenheizung);
-						flat.setAussicht(neue_aussicht);
-						flat.setStatus(neue_status);
-						flat.setLetztesRenovierungsdatum(neue_letzesRenovierungsdatum);
-						flat.setRenovierungsanzahl(neue_renovierungsanzahl);
-						flat.setLetzeRenovierung_Details(neue_letzteRenovierung_Details);
-						flat.getZugeordneterMitarbeiter().setName(neue_zugeordneterMitarbeiter);
+						neue_Mieternachname = String_eingabe(buttons, ok);
 					}
 					if (ok == 14) {
+						neue_Mietername = String_eingabe(buttons, ok);
+					}
+					if (ok == 15) {
+						bearbeitungsVorgang = false;
+						
+						//wenn beim bearbeiten eine Wohnung ausgewählt wird, die jemanden gehört, du aber jemand anderen auswählst, der diese Wohnung übernehmen möchte, 
+						// dann setzte eine '0' in dem Mieterprofil an der Stelle seiner WOhnung, da er jetzt keine mehr besitzt
+						for (Mieter owner : ownerList) {
+							if (owner.getWohnungsnummer() == neueID) {
+								owner.setWohnungsnummer(0);
+							}
+							
+							if (flat.getWohnungsID() == aktuelleID) {
+								flat.getOwner().setVorname("");
+								flat.getOwner().setName("");
+							}
+
+							// wenn der Vor- und Nachname in der Mieterliste mit den veränderten Namen übereinstimmen, also sie somit existieren, dann 
+							// verändere im Bezug zur WOhnung den Besitzer 
+							// verändere in der Mieterliste den Namen und die Wohnung
+							if (neue_Mietername.equals(owner.getName())
+									&& neue_Mieternachname.equals(owner.getName())) {
+								flat.getOwner().setVorname(neue_Mieternachname);
+								flat.getOwner().setName(neue_Mietername);
+								owner.setVorname(neue_Mieternachname);
+								owner.setName(neue_Mietername);
+								owner.setWohnungsnummer(neueID);
+							} 							
+
+							flat.setWohnungsID(neueID);
+							flat.setZimmeranzahl(neue_zimmeranzahl);
+							flat.setFläche(neue_fläche);
+							flat.setKosten(neue_kosten);
+							flat.setEtage(neue_etage);
+							flat.setBalkon(neue_balkon);
+							flat.setFußbodenheizung(neue_fußbodenheizung);
+							flat.setAussicht(neue_aussicht);
+							flat.setStatus(neue_status);
+							flat.setLetztesRenovierungsdatum(neue_letzesRenovierungsdatum);
+							flat.setRenovierungsanzahl(neue_renovierungsanzahl);
+							flat.setLetzeRenovierung_Details(neue_letzteRenovierung_Details);
+							flat.getZugeordneterMitarbeiter().setName(neue_zugeordneterMitarbeiter);
+						}
+					}
+					if (ok == 16) {
 						bearbeitungsVorgang = false;
 					} else {
 						System.out.println("");
@@ -194,19 +244,20 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 	}
 
 	private String länge_anpassen(String wort) {
-		
+
 		int abzug = wort.length();
 		if (wort.length() < 90) {
-			while (wort.length() < (90-abzug)) {
-				wort = wort + " "; 
-				
+			while (wort.length() < (90 - abzug)) {
+				wort = wort + " ";
+
 			}
-		} return wort;
-		
+		}
+		return wort;
+
 	}
 
 	public String mitarbeiter_eingabe(String[] buttons, int ok) {
-		
+
 		JOptionPane jop = new JOptionPane();
 		jop.setWantsInput(true);
 		jop.setMessage("Eingabe vom Feld: " + buttons[ok]);
@@ -235,7 +286,7 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 		return bearbeitungsknopf;
 	}
 
-	public String String_eingabe(String [] buttons, int ok) {
+	public String String_eingabe(String[] buttons, int ok) {
 		JOptionPane jop = new JOptionPane();
 		jop.setWantsInput(true);
 		jop.setMessage("Eingabe vom Feld: " + buttons[ok]);
@@ -269,7 +320,7 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 		return bearbeitungsknopf;
 	}
 
-	public double double_eingabe(String [] buttons, int ok) {
+	public double double_eingabe(String[] buttons, int ok) {
 
 		JOptionPane jop = new JOptionPane();
 		jop.setWantsInput(true);
@@ -284,9 +335,4 @@ public class WohnungBearbeitenAction extends MenueManager implements Action {
 		double bearbeitungsknopf = Double.parseDouble(eingabe);
 		return bearbeitungsknopf;
 	}
-	
-	public int getlength(int zahl){
-		   String s = String.valueOf(zahl);
-		   return s.length();
-		}
 }

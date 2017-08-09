@@ -4,6 +4,7 @@ import hilfsklassen.Adresse;
 
 public class Wohnung {
 	
+	private Mieter owner;
 	private int wohnungsID;
 	private int zimmeranzahl;
 	private double fläche;
@@ -37,6 +38,16 @@ public class Wohnung {
 		this.renovierungsanzahl = renovierungsanzahl;
 		this.letzeRenovierung_Details = letzeRenovierung_Details;
 		this.zugeordneterMitarbeiter = zugeordneterMitarbeiter;
+	}
+
+
+	public Mieter getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(Mieter owner) {
+		this.owner = owner;
 	}
 
 

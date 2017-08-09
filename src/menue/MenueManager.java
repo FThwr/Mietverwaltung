@@ -6,6 +6,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import hilfsklassen.J;
+import objekte.Mieter;
 import objekte.Mitarbeiter;
 import objekte.Wohnung;
 
@@ -14,11 +15,16 @@ public class MenueManager extends J {
 	private ArrayList<MenueEntry> menuList = new ArrayList<MenueEntry>();
 	protected static ArrayList<Mitarbeiter> workerList = new ArrayList<Mitarbeiter>();
 	protected static ArrayList<Wohnung> flatList = new ArrayList<Wohnung>();
-
+	protected static ArrayList<Mieter> ownerList = new ArrayList<Mieter>();
+	
 	public void add(MenueEntry menueEintrag) {
 		menuList.add(menueEintrag);
 	}
 
+	public void add(Mieter mieter) {
+		ownerList.add(mieter);
+	}
+	
 	public void add(Mitarbeiter mitarbeiter) {
 		workerList.add(mitarbeiter);
 	}
@@ -85,7 +91,7 @@ public class MenueManager extends J {
 			System.out.println(meAktuell.getName());
 			zaehleMenuePunkteAuf(meAktuell);
 
-			System.out.print("Wählen Sie einen Menüpunkt aus: ");
+			System.out.print("_______________________________ Wählen Sie einen Menüpunkt aus: _______________________________");
 			int eingabe = eingabeEinlesen(scanner);
 			System.out.println("");
 			if (eingabe <= meAktuell.getLocation().length && eingabe > 0) {
@@ -96,13 +102,14 @@ public class MenueManager extends J {
 				System.out.println("Programm wurde beendet.");
 				System.exit(0);
 			} else {
-				System.out.println("Fehler, der ausgewählte Menüpunkt existiert nicht.");
+				System.out.println("------------------------------- Fehler, der ausgewählte Menüpunkt existiert nicht. -------------------------------");
 			}
 		} while (meAktuell.getLocation() != null);
 		meAktuell = actionAusfuehren(meAktuell);
 		meAktuell = aufruf(meAktuell);
 		return meAktuell;
 	}
+
 
 	public MenueEntry actionAusfuehren(MenueEntry meAktuell) {
 		if (meAktuell.getLocation() == null) {

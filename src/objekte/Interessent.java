@@ -7,9 +7,9 @@ public class Interessent extends Kunde {
 
 	private String rolle;
 	
-	public Interessent(int kundenID, String name, String vorname, Datum geburtsdatum, Adresse adresse, String email,
+	public Interessent(int kundenID, String name, String vorname, Datum geburtsdatum, int wohnungsnummer, Adresse adresse, String email,
 			String telefonnummer) {
-		super(kundenID, name, vorname, geburtsdatum, adresse, email, telefonnummer);
+		super(kundenID, name, vorname, geburtsdatum, wohnungsnummer, adresse, email, telefonnummer);
 		this.setRolle("Interessent");
 	}
 

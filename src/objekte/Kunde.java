@@ -8,15 +8,17 @@ public abstract class Kunde {
 	protected String name;
 	protected String vorname;
 	protected Datum geburtsdatum;
+	protected int wohnungsnummer;
 	protected Adresse adresse;
 	protected String email;
 	protected String telefonnummer;
 	
-	public Kunde(int kundenID, String name, String vorname, Datum geburtsdatum, Adresse adresse, String email, String telefonnummer) {
+	public Kunde(int kundenID, String name, String vorname, Datum geburtsdatum, int wohnungsnummer, Adresse adresse, String email, String telefonnummer) {
 		this.kundenID = kundenID;
 		this.name = name;
 		this.vorname = vorname;
 		this.geburtsdatum = geburtsdatum;
+		this.wohnungsnummer = wohnungsnummer;
 		this.adresse = adresse;
 		this.email = email;
 		this.telefonnummer = telefonnummer;
@@ -26,7 +28,7 @@ public abstract class Kunde {
 	@Override
 	public String toString() {
 		return "Kunde: \nKunden-ID:" + kundenID + "\nName: " + name + "\nVorname: " + vorname + "\nGeburtsdatum: "
-				+ geburtsdatum.toString() + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer;
+				+ geburtsdatum.toString() + "\nWohnungsnummer: " + wohnungsnummer + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer;
 	}
 
 	public void display() {
@@ -66,6 +68,16 @@ public abstract class Kunde {
 	public void setGeburtsdatum(Datum geburtsdatum) {
 		this.geburtsdatum = geburtsdatum;
 	}
+
+	public int getWohnungsnummer() {
+		return wohnungsnummer;
+	}
+
+
+	public void setWohnungsnummer(int wohnungsnummer) {
+		this.wohnungsnummer = wohnungsnummer;
+	}
+
 
 	public Adresse getAdresse() {
 		return adresse;
