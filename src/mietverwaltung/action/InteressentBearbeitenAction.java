@@ -1,10 +1,16 @@
-package mietverwaltung;
+package mietverwaltung.action;
 
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class InteressentBearbeitenAction extends MenueManager implements Action {
+import mietverwaltung.Adresse;
+import mietverwaltung.Datum;
+import mietverwaltung.Interessent;
+import mietverwaltung.Mieter;
+import mietverwaltung.menu.MenuManager;
+
+public class InteressentBearbeitenAction extends MenuManager implements Action {
 
 	@Override
 	public void action() {

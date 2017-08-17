@@ -1,26 +1,32 @@
-package mietverwaltung;
+package mietverwaltung.action;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InteressentSuchenAction extends MenueManager implements Action {
+import mietverwaltung.Mieter;
+import mietverwaltung.menu.MenuManager;
+
+public class MieterSuchenAction extends MenuManager implements Action {
 
 	@Override
 	public void action() {
 
 		System.out.println(
-				"________________________________________ Interessent suchen ________________________________________");
+				"________________________________________ Mieter suchen ________________________________________");
 
 		boolean suchVorgang = true;
 
-		int interessentenID = -100;
-		int such_interessentenID = interessentenID;
+		int mieterID = -100;
+		int such_mieterID = mieterID;
 
 		String name = "-";
 		String such_name = name;
 
 		String vorname = "-";
 		String such_vorname = vorname;
+
+		int wohnung = -100;
+		int such_wohnung = wohnung;
 
 		String EMail = "-";
 		String such_EMail = EMail;
@@ -38,7 +44,7 @@ public class InteressentSuchenAction extends MenueManager implements Action {
 		String telefon = "-";
 		String such_telefon = telefon;
 
-		String[] kategorie = { "Interessenten ID", "Name", "Vorname", "E-Mail", "Adresse", "Telefonnummer" };
+		String[] kategorie = { "Mieter ID", "Name", "Vorname", "Wohnung", "E-Mail", "Adresse", "Telefonnummer" };
 
 		String check = "";
 
@@ -47,24 +53,29 @@ public class InteressentSuchenAction extends MenueManager implements Action {
 			Scanner s = new Scanner(System.in);
 			System.out.println(
 					"............................... Wählen Sie die zu suchende Eigenschaft aus! ..............................."
-							+ "\n Drücke '1' für Interessenten ID  " 
-							+ "\n Drücke '2' für Name  "
-							+ "\n Drücke '3' für Vorname  " 
-							+ "\n Drücke '4' für E-Mail  "
-							+ "\n Drücke '5' für Adresse  " 
-							+ "\n Drücke '6' für Telefonnummer  "
-							+ "\n Drücke '7' für bestätigen  " 
+							+ "\n Drücke '1' für Kunden ID  " 
+							+ "\n Drücke '2' für Nachname  "
+							+ "\n Drücke '3' für Name  " 
+							+ "\n Drücke '4' für Wohnung  " 
+							+ "\n Drücke '5' für E-Mail  "
+							+ "\n Drücke '6' für Adresse  " 
+							+ "\n Drücke '7' für Telefonnummer  "
+							+ "\n Drücke '8' für bestätigen  " 
 							+ "\n Drücke '0' für abbruch der Suche!\n");
 
 			System.out.println("........... Aktuelle Suche nach: ...........");
-			if (such_interessentenID != -100) {
-				System.out.println("Interessenten ID:                 " + such_interessentenID);
-			} 
-			else {
-				System.out.println("Interessenten ID:                 " + "-");
+			if (such_mieterID != -100) {
+				System.out.println("Kunden ID:                 " + such_mieterID);
+			} else {
+				System.out.println("Kunden ID:                 " + "-");
 			}
 			System.out.println("Name:                  " + such_name);
-			System.out.println("Vorname:                  " + such_vorname);
+			System.out.println("Vorname:                      " + such_vorname);
+			if (such_wohnung != -100) {
+				System.out.println("Wohnung:                   " + such_wohnung);
+			} else {
+				System.out.println("Wohnung:                   " + "-");
+			}
 			System.out.println("E-Mail:                    " + such_EMail);
 			System.out.println("Adresse Straße:            " + such_adresse_straße);
 			if (hausnummer != -100) {
@@ -90,9 +101,9 @@ public class InteressentSuchenAction extends MenueManager implements Action {
 				}
 				if (eingabe == 1) {
 					try {
-						such_interessentenID = einlesen_Zahl(kategorie, eingabe);
-						if (such_interessentenID == 0) {
-							such_interessentenID = interessentenID;
+						such_mieterID = einlesen_Zahl(kategorie, eingabe);
+						if (such_mieterID == 0) {
+							such_mieterID = mieterID;
 						} else {
 							check = check + "a";
 						}
@@ -118,14 +129,28 @@ public class InteressentSuchenAction extends MenueManager implements Action {
 					}
 				}
 				if (eingabe == 4) {
+
+					try {
+						such_wohnung = einlesen_Zahl(kategorie, eingabe);
+						if (such_wohnung == 0) {
+							such_wohnung = wohnung;
+						} else {
+							check = check + "d";
+						}
+					} catch (InputMismatchException e) {
+						System.out.println(
+								"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+					}
+				}
+				if (eingabe == 5) {
 					such_EMail = einlesen_Wort(kategorie, eingabe);
 					if (such_EMail.equals("" + 0)) {
 						such_EMail = EMail;
 					} else {
-						check = check + "d";
+						check = check + "e";
 					}
 				}
-				if (eingabe == 5) {
+				if (eingabe == 6) {
 					System.out.println("Spezialisierung der zu suchenden Adresse: ");
 					System.out.println("Drücke '1' für Straße: ");
 					System.out.println("Drücke '2' für Hausnummer: ");
@@ -180,73 +205,79 @@ public class InteressentSuchenAction extends MenueManager implements Action {
 						}
 					}
 				}
-				if (eingabe == 6) {
+				if (eingabe == 7) {
 					such_telefon = einlesen_Wort(kategorie, eingabe);
 					if (such_telefon.equals("" + 0)) {
 						such_telefon = telefon;
 					} else {
-						check = check + "e";
+						check = check + "f";
 					}
 				}
 
-				if (eingabe == 7) {
+				if (eingabe == 8) {
 					suchVorgang = false;
 
-					int vgl_interessentenID = -100;
+					int vgl_mieterID = -100;
 					String vgl_name = "-";
 					String vgl_vorname = "-";
+
+					int vgl_wohnung = -100;
+					String vgl_EMail = "-";
 
 					String vgl_adresse_straße = "-";
 					int vgl_adresse_hausnummer = -100;
 					int vgl_adresse_platz = -100;
 					String vgl_adresse_stadt = "-";
-					
-					String vgl_EMail = "-"; 
+
 					String vgl_telefon = "-";
 
-					for (Interessent interest : interestList) {
+					for (Mieter owner : ownerList) {
 
 						if (check.contains("a")) {
-							vgl_interessentenID = interest.getKundenID();
+							vgl_mieterID = owner.getKundenID();
 						}
 						if (check.contains("b")) {
-							vgl_name = interest.getName();
+							vgl_name = owner.getName();
 						}
 						if (check.contains("c")) {
-							vgl_vorname = interest.getVorname();
+							vgl_vorname = owner.getVorname();
 						}
 						if (check.contains("d")) {
-							vgl_EMail = interest.getEmail();
-						}
-						if (check.contains("w")) {
-							vgl_adresse_straße = interest.getAdresse().getStrasse();
-						}
-						if (check.contains("x")) {
-							vgl_adresse_hausnummer = interest.getAdresse().getHausnummer();
-						}
-						if (check.contains("y")) {
-							vgl_adresse_platz = interest.getAdresse().getPlz();
-						}
-						if (check.contains("z")) {	
-						vgl_adresse_stadt = interest.getAdresse().getStadt();
+							vgl_wohnung = owner.getWohnungsnummer();
 						}
 						if (check.contains("e")) {
-							vgl_telefon = interest.getTelefonnummer();
+							vgl_EMail = owner.getEmail();
+						}
+						if (check.contains("w")) {
+							vgl_adresse_straße = owner.getAdresse().getStrasse();
+						}
+						if (check.contains("x")) {
+							vgl_adresse_hausnummer = owner.getAdresse().getHausnummer();
+						}
+						if (check.contains("y")) {
+							vgl_adresse_platz = owner.getAdresse().getPlz();
+						}
+						if (check.contains("z")) {	
+						vgl_adresse_stadt = owner.getAdresse().getStadt();
+						}
+						if (check.contains("f")) {
+							vgl_telefon = owner.getTelefonnummer();
 						}
 
-						if (vgl_interessentenID == such_interessentenID && vgl_name.contains(such_name) && vgl_vorname.contains(such_vorname)
-								&& vgl_EMail.contains(such_EMail)
+						if (vgl_mieterID == such_mieterID && vgl_name.contains(such_name) && vgl_vorname.contains(such_vorname)
+								&& vgl_wohnung == such_wohnung && vgl_EMail.contains(such_EMail)
 								&& vgl_adresse_straße.contains(such_adresse_straße)
 								&& vgl_adresse_stadt.contains(such_adresse_stadt)
 								&& vgl_adresse_hausnummer == such_adresse_hausnummer
 								&& vgl_adresse_platz == such_adresse_platz && vgl_telefon.contains(such_telefon)) {
-							System.out.println("Interessenten ID:          " + interest.getKundenID());
-							System.out.println("Name:                      " + interest.getName());
-							System.out.println("Vorname:                   " + interest.getVorname());
-							System.out.println("Geburtsdatum:              " + interest.getGeburtsdatum());
-							System.out.println("E-Mail:                    " + interest.getEmail());
-							System.out.println("Adresse:                   " + interest.getAdresse());
-							System.out.println("Telefonnummer:             " + interest.getTelefonnummer());
+							System.out.println("Mieter ID:          " + owner.getKundenID());
+							System.out.println("Name:               " + owner.getName());
+							System.out.println("Vorname:            " + owner.getVorname());
+							System.out.println("Geburtsdatum:       " + owner.getGeburtsdatum());
+							System.out.println("Wohnung:            " + owner.getWohnungsnummer());
+							System.out.println("E-Mail:             " + owner.getEmail());
+							System.out.println("Adresse:            " + owner.getAdresse());
+							System.out.println("Telefonnummer:      " + owner.getTelefonnummer());
 							System.out.println("");
 						}
 					}

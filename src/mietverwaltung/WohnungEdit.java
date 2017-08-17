@@ -6,7 +6,10 @@ import java.util.Scanner;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-public class WohnungEdit extends MenueManager implements Action {
+import mietverwaltung.action.Action;
+import mietverwaltung.menu.MenuManager;
+
+public class WohnungEdit extends MenuManager implements Action {
 
 	@Override
 	public void action() {

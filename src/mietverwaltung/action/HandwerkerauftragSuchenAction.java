@@ -1,9 +1,12 @@
-package mietverwaltung;
+package mietverwaltung.action;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class HandwerkerauftragSuchenAction extends MenueManager implements Action {
+import mietverwaltung.Handwerkerauftrag;
+import mietverwaltung.menu.MenuManager;
+
+public class HandwerkerauftragSuchenAction extends MenuManager implements Action {
 
 	@Override
 	public void action() {

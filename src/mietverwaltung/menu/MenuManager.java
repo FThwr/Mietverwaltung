@@ -1,13 +1,21 @@
-package mietverwaltung;
+package mietverwaltung.menu;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-public class MenueManager extends J {
+import mietverwaltung.Handwerkerauftrag;
+import mietverwaltung.Interessent;
+import mietverwaltung.J;
+import mietverwaltung.Mieter;
+import mietverwaltung.Mietvertrag;
+import mietverwaltung.Mitarbeiter;
+import mietverwaltung.Wohnung;
 
-	protected static ArrayList<MenueEntry> menuList = new ArrayList<MenueEntry>();
+public class MenuManager extends J {
+
+	protected static ArrayList<MenuEntry> menuList = new ArrayList<MenuEntry>();
 	protected static ArrayList<Mitarbeiter> workerList = new ArrayList<Mitarbeiter>();
 	protected static ArrayList<Wohnung> flatList = new ArrayList<Wohnung>();
 	protected static ArrayList<Mieter> ownerList = new ArrayList<Mieter>();
@@ -15,7 +23,7 @@ public class MenueManager extends J {
 	protected static ArrayList<Handwerkerauftrag> repairList = new ArrayList<Handwerkerauftrag>();
 	protected static ArrayList<Mietvertrag> contractList = new ArrayList<Mietvertrag>();
 
-	public void add(MenueEntry menueEintrag) {
+	public void add(MenuEntry menueEintrag) {
 		menuList.add(menueEintrag);
 	}
 	
@@ -61,7 +69,7 @@ public class MenueManager extends J {
 
 		System.out.println(
 				"\nBei Eingabe von \"0\" kehren Sie zum vorherigen Menü zurück. \nBei \"-1\" wird das Programm beendet.");
-		MenueEntry meAktuell = ersterEintrag();
+		MenuEntry meAktuell = ersterEintrag();
 		try {
 			meAktuell = aufruf(meAktuell);
 
@@ -95,7 +103,7 @@ public class MenueManager extends J {
 		return false;
 	}
 
-	public MenueEntry aufruf(MenueEntry meAktuell) {
+	public MenuEntry aufruf(MenuEntry meAktuell) {
 		Scanner scanner = new Scanner(System.in);
 		do {
 			if (meAktuell.getName().equals("")) {
@@ -126,7 +134,7 @@ public class MenueManager extends J {
 		return meAktuell;
 	}
 
-	public MenueEntry actionAusfuehren(MenueEntry meAktuell) {
+	public MenuEntry actionAusfuehren(MenuEntry meAktuell) {
 		if (meAktuell.getLocation() == null) {
 			if (meAktuell.getAction() != null) {
 				meAktuell.getAction().action();
@@ -141,7 +149,7 @@ public class MenueManager extends J {
 		return number;
 	}
 
-	public void zaehleMenuePunkteAuf(MenueEntry me) {
+	public void zaehleMenuePunkteAuf(MenuEntry me) {
 		for (int i = 0; i < me.getLocation().length; i++) {
 			String untermenueName = (me.getLocation())[i];
 			System.out.println((i + 1) + ". " + untermenueName);
@@ -150,10 +158,10 @@ public class MenueManager extends J {
 		System.out.println("");
 	}
 
-	public MenueEntry zeigeAufObermenue(MenueEntry meAktuell) {
+	public MenuEntry zeigeAufObermenue(MenuEntry meAktuell) {
 		try {
 			String nameObermenue = meAktuell.getName();
-			for (MenueEntry meSuche : menuList) {
+			for (MenuEntry meSuche : menuList) {
 				String[] array = meSuche.getLocation();
 				for (int i = 0; i < array.length; i++) {
 					if (nameObermenue.equals(array[i])) {
@@ -167,9 +175,9 @@ public class MenueManager extends J {
 		}
 	}
 
-	public MenueEntry zeigeAufUntermenue(MenueEntry me, int nummer) {
+	public MenuEntry zeigeAufUntermenue(MenuEntry me, int nummer) {
 		String nameUntermenue = ((me.getLocation())[nummer - 1]);
-		for (MenueEntry meSuche : menuList) {
+		for (MenuEntry meSuche : menuList) {
 			if ((meSuche.getName()).equals(nameUntermenue)) {
 				return meSuche;
 			}
@@ -177,8 +185,8 @@ public class MenueManager extends J {
 		return null;
 	}
 
-	public MenueEntry ersterEintrag() {
-		for (MenueEntry me : menuList) {
+	public MenuEntry ersterEintrag() {
+		for (MenuEntry me : menuList) {
 			if (me.getName() == "") {
 				return me;
 			}

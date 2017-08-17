@@ -1,6 +1,8 @@
-package mietverwaltung;
+package mietverwaltung.menu;
 
-public class MenueEntry {
+import mietverwaltung.action.Action;
+
+public class MenuEntry {
 	
 	private String name;
 	private String [] location = null; // Array der Untermenuepunkte
@@ -30,12 +32,12 @@ public class MenueEntry {
 		this.action = action;
 	}
 
-	public MenueEntry (String name, String [] location) {
+	public MenuEntry (String name, String [] location) {
 		this.name = name;
 		this.location = location; // Untermenuepunkte
 	}
 	
-	public MenueEntry (String name, Action action) {
+	public MenuEntry (String name, Action action) {
 		this.name = name;
 		this.action = action;
 	}

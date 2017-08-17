@@ -1,6 +1,9 @@
-package mietverwaltung;
+package mietverwaltung.action;
 
-public class MieterAnzeigenAction extends MenueManager implements Action {
+import mietverwaltung.Mieter;
+import mietverwaltung.menu.MenuManager;
+
+public class MieterAnzeigenAction extends MenuManager implements Action {
 
 	@Override
 	public void action() {

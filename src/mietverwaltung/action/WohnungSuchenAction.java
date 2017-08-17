@@ -1,4 +1,4 @@
-package mietverwaltung;
+package mietverwaltung.action;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -16,7 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-public class WohnungSuchenAktion extends MenueManager implements Action {
+import mietverwaltung.Wohnung;
+import mietverwaltung.menu.MenuManager;
+
+public class WohnungSuchenAction extends MenuManager implements Action {
 
 	@Override
 	public void action() {

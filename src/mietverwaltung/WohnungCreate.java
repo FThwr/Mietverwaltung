@@ -3,7 +3,10 @@ package mietverwaltung;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class WohnungCreate extends MenueManager implements Action {
+import mietverwaltung.action.Action;
+import mietverwaltung.menu.MenuManager;
+
+public class WohnungCreate extends MenuManager implements Action {
 
 	@Override
 	public void action() {

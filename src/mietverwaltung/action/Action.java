@@ -1,4 +1,4 @@
-package mietverwaltung;
+package mietverwaltung.action;
 
 public interface Action {
 
