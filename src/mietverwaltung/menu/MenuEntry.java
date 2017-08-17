@@ -3,43 +3,43 @@ package mietverwaltung.menu;
 import mietverwaltung.action.Action;
 
 public class MenuEntry {
-	
-	private String name;
-	private String [] location = null; // Array der Untermenuepunkte
-	private Action action = null;
-	
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String name;
+    private String[] location = null; // Array der Untermenuepunkte
+    private Action action = null;
 
-	public String[] getLocation() {
-		return location;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setLocation(String[] location) {
-		this.location = location;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public Action getAction() {
-		return action;
-	}
+    public String[] getLocation() {
+        return this.location;
+    }
 
-	public void setAction(Action action) {
-		this.action = action;
-	}
+    public void setLocation(final String[] location) {
+        this.location = location;
+    }
 
-	public MenuEntry (String name, String [] location) {
-		this.name = name;
-		this.location = location; // Untermenuepunkte
-	}
-	
-	public MenuEntry (String name, Action action) {
-		this.name = name;
-		this.action = action;
-	}
+    public Action getAction() {
+        return this.action;
+    }
+
+    public void setAction(final Action action) {
+        this.action = action;
+    }
+
+    public MenuEntry(final String name, final String[] location) {
+        this.name = name;
+        this.location = location; // Untermenuepunkte
+    }
+
+    public MenuEntry(final String name, final Action action) {
+        this.name = name;
+        this.action = action;
+    }
 
 }

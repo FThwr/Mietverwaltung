@@ -1,86 +1,83 @@
 package mietverwaltung;
 
 public class Handwerkerauftrag {
-	
-	private String auftragsID;
-	private int wohnungsID;
-	private int mitarbeiterID;
-	private String mängelbeschreibung;
-	private String status;
-	private Datum eingangsdatum;
-	private Datum fertigstellungsDatum;
-	
-	
-	public Handwerkerauftrag(String auftragsID, int wohnungsID, int mitarbeiterID, String mängelbeschreibung,
-			String status, Datum eingangsdatum, Datum fertigstellungsDatum) {
-		this.auftragsID = auftragsID;
-		this.wohnungsID = wohnungsID;
-		this.mitarbeiterID = mitarbeiterID;
-		this.mängelbeschreibung = mängelbeschreibung;
-		this.status = status;
-		this.eingangsdatum = eingangsdatum;
-		this.fertigstellungsDatum = fertigstellungsDatum;
-	}
-	
-	public Handwerkerauftrag(String auftragsID) {
-		this.auftragsID = auftragsID;
-	}
 
-	public String getAuftragsID() {
-		return auftragsID;
-	}
+    private String auftragsID;
+    private int wohnungsID;
+    private int mitarbeiterID;
+    private String mängelbeschreibung;
+    private String status;
+    private Datum eingangsdatum;
+    private Datum fertigstellungsDatum;
 
-	public void setAuftragsID(String auftragsID) {
-		this.auftragsID = auftragsID;
-	}
+    public Handwerkerauftrag(final String auftragsID, final int wohnungsID, final int mitarbeiterID, final String mängelbeschreibung, final String status, final Datum eingangsdatum, final Datum fertigstellungsDatum) {
+        this.auftragsID = auftragsID;
+        this.wohnungsID = wohnungsID;
+        this.mitarbeiterID = mitarbeiterID;
+        this.mängelbeschreibung = mängelbeschreibung;
+        this.status = status;
+        this.eingangsdatum = eingangsdatum;
+        this.fertigstellungsDatum = fertigstellungsDatum;
+    }
 
-	public String getMängelbeschreibung() {
-		return mängelbeschreibung;
-	}
+    public Handwerkerauftrag(final String auftragsID) {
+        this.auftragsID = auftragsID;
+    }
 
-	public void setMängelbeschreibung(String mängelbeschreibung) {
-		this.mängelbeschreibung = mängelbeschreibung;
-	}
+    public String getAuftragsID() {
+        return this.auftragsID;
+    }
 
-	public int getWohnungsID() {
-		return wohnungsID;
-	}
+    public void setAuftragsID(final String auftragsID) {
+        this.auftragsID = auftragsID;
+    }
 
-	public void setWohnungsID(int wohnungsID) {
-		this.wohnungsID = wohnungsID;
-	}
+    public String getMängelbeschreibung() {
+        return this.mängelbeschreibung;
+    }
 
-	public int getMitarbeiterID() {
-		return mitarbeiterID;
-	}
+    public void setMängelbeschreibung(final String mängelbeschreibung) {
+        this.mängelbeschreibung = mängelbeschreibung;
+    }
 
-	public void setMitarbeiterID(int mitarbeiterID) {
-		this.mitarbeiterID = mitarbeiterID;
-	}
+    public int getWohnungsID() {
+        return this.wohnungsID;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setWohnungsID(final int wohnungsID) {
+        this.wohnungsID = wohnungsID;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public int getMitarbeiterID() {
+        return this.mitarbeiterID;
+    }
 
-	public Datum getEingangsdatum() {
-		return eingangsdatum;
-	}
+    public void setMitarbeiterID(final int mitarbeiterID) {
+        this.mitarbeiterID = mitarbeiterID;
+    }
 
-	public void setEingangsdatum(Datum eingangsdatum) {
-		this.eingangsdatum = eingangsdatum;
-	}
+    public String getStatus() {
+        return this.status;
+    }
 
-	public Datum getFertigstellungsDatum() {
-		return fertigstellungsDatum;
-	}
+    public void setStatus(final String status) {
+        this.status = status;
+    }
 
-	public void setFertigstellungsDatum(Datum fertigstellungsDatum) {
-		this.fertigstellungsDatum = fertigstellungsDatum;
-	} 
+    public Datum getEingangsdatum() {
+        return this.eingangsdatum;
+    }
 
-	
+    public void setEingangsdatum(final Datum eingangsdatum) {
+        this.eingangsdatum = eingangsdatum;
+    }
+
+    public Datum getFertigstellungsDatum() {
+        return this.fertigstellungsDatum;
+    }
+
+    public void setFertigstellungsDatum(final Datum fertigstellungsDatum) {
+        this.fertigstellungsDatum = fertigstellungsDatum;
+    }
+
 }

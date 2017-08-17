@@ -1,120 +1,119 @@
 package mietverwaltung;
 
 public abstract class Kunde {
-	
-	protected int kundenID;
-	protected String name;
-	protected String vorname;
-	protected Datum geburtsdatum;
-	protected int wohnungsnummer; 
-	protected Adresse adresse;
-	protected String email;
-	protected String telefonnummer;
-	protected String rolle; 
-	
-	public Kunde (int kundenID, String name, String vorname, Datum geburtsdatum, int wohnungsnummer, String email, Adresse adresse, String telefonnummer, String rolle) {
-		this.kundenID = kundenID;
-		this.name = name;
-		this.vorname = vorname;
-		this.geburtsdatum = geburtsdatum;
-		this.wohnungsnummer = wohnungsnummer;
-		this.adresse = adresse;
-		this.email = email;
-		this.telefonnummer = telefonnummer;
-		this.rolle = rolle;
-	}
-	
-	public Kunde (int kundenID, String name, String vorname, Datum geburtsdatum, String email, Adresse adresse, String telefonnummer, String rolle) {
-		this.kundenID = kundenID;
-		this.name = name;
-		this.vorname = vorname;
-		this.geburtsdatum = geburtsdatum;
-		this.adresse = adresse;
-		this.email = email;
-		this.telefonnummer = telefonnummer;
-		this.rolle = rolle;
-	}
-	
-	@Override
-	public String toString() {
-		return "Kunde: \nKunden-ID:" + kundenID + "\nName: " + name + "\nVorname: " + vorname + "\nGeburtsdatum: "
-				+ geburtsdatum.toString() + "\nWohnungsnummer: " + wohnungsnummer + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer + "\nRolle: " + rolle;
-	}
 
-	public void display() {
-		System.out.println(this.toString());
-	}
+    protected int kundenID;
+    protected String name;
+    protected String vorname;
+    protected Datum geburtsdatum;
+    protected int wohnungsnummer;
+    protected Adresse adresse;
+    protected String email;
+    protected String telefonnummer;
+    protected String rolle;
 
-	public int getWohnungsnummer() {
-		return wohnungsnummer;
-	}
+    public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final int wohnungsnummer, final String email, final Adresse adresse, final String telefonnummer, final String rolle) {
+        this.kundenID = kundenID;
+        this.name = name;
+        this.vorname = vorname;
+        this.geburtsdatum = geburtsdatum;
+        this.wohnungsnummer = wohnungsnummer;
+        this.adresse = adresse;
+        this.email = email;
+        this.telefonnummer = telefonnummer;
+        this.rolle = rolle;
+    }
 
-	public void setWohnungsnummer(int wohnungsnummer) {
-		this.wohnungsnummer = wohnungsnummer;
-	}
+    public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final String email, final Adresse adresse, final String telefonnummer, final String rolle) {
+        this.kundenID = kundenID;
+        this.name = name;
+        this.vorname = vorname;
+        this.geburtsdatum = geburtsdatum;
+        this.adresse = adresse;
+        this.email = email;
+        this.telefonnummer = telefonnummer;
+        this.rolle = rolle;
+    }
 
-	public int getKundenID() {
-		return kundenID;
-	}
+    @Override
+    public String toString() {
+        return "Kunde: \nKunden-ID:" + this.kundenID + "\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nWohnungsnummer: " + this.wohnungsnummer + "\nAdresse: " + this.adresse.toString() + "\nE-Mail: " + this.email + "\nTelefonnummer: " + this.telefonnummer + "\nRolle: " + this.rolle;
+    }
 
-	public void setKundenID(int kundenID) {
-		this.kundenID = kundenID;
-	}
+    public void display() {
+        System.out.println(this.toString());
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getWohnungsnummer() {
+        return this.wohnungsnummer;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setWohnungsnummer(final int wohnungsnummer) {
+        this.wohnungsnummer = wohnungsnummer;
+    }
 
-	public String getVorname() {
-		return vorname;
-	}
+    public int getKundenID() {
+        return this.kundenID;
+    }
 
-	public void setVorname(String vorname) {
-		this.vorname = vorname;
-	}
+    public void setKundenID(final int kundenID) {
+        this.kundenID = kundenID;
+    }
 
-	public Datum getGeburtsdatum() {
-		return geburtsdatum;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setGeburtsdatum(Datum geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public Adresse getAdresse() {
-		return adresse;
-	}
+    public String getVorname() {
+        return this.vorname;
+    }
 
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
-	}
+    public void setVorname(final String vorname) {
+        this.vorname = vorname;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public Datum getGeburtsdatum() {
+        return this.geburtsdatum;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setGeburtsdatum(final Datum geburtsdatum) {
+        this.geburtsdatum = geburtsdatum;
+    }
 
-	public String getTelefonnummer() {
-		return telefonnummer;
-	}
+    public Adresse getAdresse() {
+        return this.adresse;
+    }
 
-	public void setTelefonnummer(String telefonnummer) {
-		this.telefonnummer = telefonnummer;
-	}
+    public void setAdresse(final Adresse adresse) {
+        this.adresse = adresse;
+    }
 
-	public String getRolle() {
-		return rolle;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public void setRolle(String rolle) {
-		this.rolle = rolle;
-	}
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public String getTelefonnummer() {
+        return this.telefonnummer;
+    }
+
+    public void setTelefonnummer(final String telefonnummer) {
+        this.telefonnummer = telefonnummer;
+    }
+
+    public String getRolle() {
+        return this.rolle;
+    }
+
+    public void setRolle(final String rolle) {
+        this.rolle = rolle;
+    }
 
 }
