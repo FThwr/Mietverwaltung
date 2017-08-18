@@ -51,7 +51,7 @@ public class Test {
         m.add(new Wohnung(303, 4, 80.60, 1100.00, 3, true, true, "Osten", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22, 1, 2017), 3, "Rohre neu verlegt", new Handwerkerauftrag(""), new Mitarbeiter(6, "Menz", "Max")));
         m.add(new Wohnung(304, 3, 80.60, 1100.00, 4, true, true, "Osten", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22, 1, 2017), 3, "Rohre neu verlegt", new Handwerkerauftrag(""), new Mitarbeiter(2, "Tsakonas", "Felicia")));
 
-        //		
+        //
         m.add(new Handwerkerauftrag("H-404", 303, 1, "Kaputte Wand", "in Arbeit", new Datum(3, 12, 2016), new Datum(0, 0, 0)));
         m.add(new Handwerkerauftrag("H-40003", 302, 1, "Kaputte Tür", "fertig", new Datum(1, 12, 2014), new Datum(0, 0, 0)));
         m.add(new Handwerkerauftrag("H-40002", 303, 2, "Kaputte Badewanne", "fertig", new Datum(1, 11, 2013), new Datum(0, 0, 0)));
@@ -107,8 +107,6 @@ public class Test {
         m.add(new MenuEntry("Mietvertrag anzeigen", new MietvertragAnzeigenAction()));
         m.add(new MenuEntry("Mietvertrag erstellen", new MietvertragErstellenAction()));
         m.add(new MenuEntry("Mietvertrag bearbeiten", new MietvertragBearbeitenAction()));
-
-        aktuellerDatensatz.laden("mietverwaltung.dat");
 
         //		m.add(new MenueEntry("Kiefer", new HalloAktion()));
         m.start();

@@ -7,13 +7,12 @@ import javax.swing.JOptionPane;
 
 import mietverwaltung.Handwerkerauftrag;
 import mietverwaltung.Interessent;
-import mietverwaltung.J;
 import mietverwaltung.Mieter;
 import mietverwaltung.Mietvertrag;
 import mietverwaltung.Mitarbeiter;
 import mietverwaltung.Wohnung;
 
-public class MenuManager extends J {
+public class MenuManager extends Panel {
 
     protected static ArrayList<MenuEntry> menuList = new ArrayList<>();
     protected static ArrayList<Mitarbeiter> workerList = new ArrayList<>();
