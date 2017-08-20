@@ -6,23 +6,10 @@ public abstract class Kunde {
     protected String name;
     protected String vorname;
     protected Datum geburtsdatum;
-    protected int wohnungsnummer;
     protected Adresse adresse;
     protected String email;
     protected String telefonnummer;
     protected String rolle;
-
-    public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final int wohnungsnummer, final String email, final Adresse adresse, final String telefonnummer, final String rolle) {
-        this.kundenID = kundenID;
-        this.name = name;
-        this.vorname = vorname;
-        this.geburtsdatum = geburtsdatum;
-        this.wohnungsnummer = wohnungsnummer;
-        this.adresse = adresse;
-        this.email = email;
-        this.telefonnummer = telefonnummer;
-        this.rolle = rolle;
-    }
 
     public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final String email, final Adresse adresse, final String telefonnummer, final String rolle) {
         this.kundenID = kundenID;
@@ -37,19 +24,8 @@ public abstract class Kunde {
 
     @Override
     public String toString() {
-        return "Kunde: \nKunden-ID:" + this.kundenID + "\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nWohnungsnummer: " + this.wohnungsnummer + "\nAdresse: " + this.adresse.toString() + "\nE-Mail: " + this.email + "\nTelefonnummer: " + this.telefonnummer + "\nRolle: " + this.rolle;
-    }
-
-    public void display() {
-        System.out.println(this.toString());
-    }
-
-    public int getWohnungsnummer() {
-        return this.wohnungsnummer;
-    }
-
-    public void setWohnungsnummer(final int wohnungsnummer) {
-        this.wohnungsnummer = wohnungsnummer;
+        return String.format("Kunde: %nKunden-ID: %d%n Name: %s%n Vorname: %n%s Geburtdatum: %s&n Adresse: %s%n E-Mail: %s%n Telefonnummer: %s%n Rolle: %s%n", this.kundenID, this.name, this.vorname, this.geburtsdatum, this.adresse, this.email, this.telefonnummer, this.rolle);
+        //"\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nWohnungsnummer: " + "\nAdresse: " + this.adresse.toString() + "\nE-Mail: " + this.email + "\nTelefonnummer: " + this.telefonnummer + "\nRolle: " + this.rolle;
     }
 
     public int getKundenID() {

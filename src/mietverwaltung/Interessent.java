@@ -6,13 +6,9 @@ public class Interessent extends Kunde {
         super(kundenID, name, vorname, geburtsdatum, email, adresse, telefonnummer, rolle);
     }
 
-    @Override
-    public String toString() {
-        return "Interessent: \nInteressenten-ID:" + this.kundenID + "\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nE-Mail: " + this.email + "\nAdresse: " + this.adresse.toString() + "\nTelefonnummer: " + this.telefonnummer + "\nRolle: " + this.rolle;
-    }
-
-    @Override
-    public void display() {
-        System.out.println(this.toString());
-    }
+    //    @Override
+    //    public String toString() {
+    //        //return "Interessent: \nInteressenten-ID:"  + this.kundenID + "\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nE-Mail: " + this.email + "\nAdresse: " + this.adresse.toString() + "\nTelefonnummer: " + this.telefonnummer + "\nRolle: " + this.rolle;
+    //        return String.format("Interessent:%nInteressenten-ID: %d%nName: %s%nVorname: %s%nGeburtsdatum: %s%n E-Mail: %s%n Adresse: %s%n Telefonnummer: %s%n Rolle: %s", this.kundenID, this.name, this.vorname, this.geburtsdatum, this.email, this.adresse, this.telefonnummer, this.rolle);
+    //    }
 }
