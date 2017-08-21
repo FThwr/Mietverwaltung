@@ -1,6 +1,10 @@
 package mietverwaltung;
 
-public class Handwerkerauftrag {
+import java.io.Serializable;
+
+public class Handwerkerauftrag implements Serializable {
+
+    private static final long serialVersionUID = -4643341413157418462L;
 
     private String auftragsID;
     private int wohnungsID;

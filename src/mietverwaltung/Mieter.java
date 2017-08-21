@@ -2,6 +2,8 @@ package mietverwaltung;
 
 public class Mieter extends Kunde {
 
+    private static final long serialVersionUID = 3620317998156570808L;
+
     protected int wohnungsnummer;
 
     public Mieter(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final int wohnungsnummer, final String email, final Adresse adresse, final String telefonnummer, final String rolle) {

@@ -1,6 +1,10 @@
 package mietverwaltung;
 
-public class Mietvertrag {
+import java.io.Serializable;
+
+public class Mietvertrag implements Serializable {
+
+    private static final long serialVersionUID = -2416274103842355273L;
 
     private String mietvertragID;
     private int wohnungsID;

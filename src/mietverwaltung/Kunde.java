@@ -1,6 +1,10 @@
 package mietverwaltung;
 
-public abstract class Kunde {
+import java.io.Serializable;
+
+public abstract class Kunde implements Serializable {
+
+    private static final long serialVersionUID = -1213794226230753295L;
 
     protected int kundenID;
     protected String name;

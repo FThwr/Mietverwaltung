@@ -1,6 +1,10 @@
 package mietverwaltung;
 
-public class Adresse {
+import java.io.Serializable;
+
+public class Adresse implements Serializable {
+
+    private static final long serialVersionUID = -1808836307904995394L;
 
     private String strasse;
     private int hausnummer;

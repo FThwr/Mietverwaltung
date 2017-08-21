@@ -1,5 +1,6 @@
 package mietverwaltung.menu;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,43 +12,102 @@ import mietverwaltung.Mieter;
 import mietverwaltung.Mietvertrag;
 import mietverwaltung.Mitarbeiter;
 import mietverwaltung.Wohnung;
+import mietverwaltung.action.HandwerkerauftragAnzeigenAction;
+import mietverwaltung.action.HandwerkerauftragBearbeitenAction;
+import mietverwaltung.action.HandwerkerauftragErstellenAction;
+import mietverwaltung.action.HandwerkerauftragSuchenAction;
+import mietverwaltung.action.InteressentAnzeigenAction;
+import mietverwaltung.action.InteressentBearbeitenAction;
+import mietverwaltung.action.InteressentErstellenAction;
+import mietverwaltung.action.InteressentSuchenAction;
+import mietverwaltung.action.MieterAnzeigenAction;
+import mietverwaltung.action.MieterBearbeitenAction;
+import mietverwaltung.action.MieterErstellenAction;
+import mietverwaltung.action.MieterSuchenAction;
+import mietverwaltung.action.MietvertragAnzeigenAction;
+import mietverwaltung.action.MietvertragBearbeitenAction;
+import mietverwaltung.action.MietvertragErstellenAction;
+import mietverwaltung.action.MietvertragSuchenAction;
+import mietverwaltung.action.MitarbeiterAnzeigenAction;
+import mietverwaltung.action.MitarbeiterBearbeitenAction;
+import mietverwaltung.action.MitarbeiterErstellenAction;
+import mietverwaltung.action.WohnungAnzeigenAction;
+import mietverwaltung.action.WohnungBearbeitenAction;
+import mietverwaltung.action.WohnungErstellenAction;
+import mietverwaltung.action.WohnungSuchenAction;
 
-public class MenuManager extends Panel {
+public class MenuManager extends Panel implements Serializable {
+
+    private static final long serialVersionUID = 5699492648153643863L;
 
     protected static ArrayList<MenuEntry> menuList = new ArrayList<>();
-    protected static ArrayList<Mitarbeiter> workerList = new ArrayList<>();
-    protected static ArrayList<Wohnung> flatList = new ArrayList<>();
-    protected static ArrayList<Mieter> ownerList = new ArrayList<>();
-    protected static ArrayList<Interessent> interestList = new ArrayList<>();
-    protected static ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
-    protected static ArrayList<Mietvertrag> contractList = new ArrayList<>();
 
-    public void add(final MenuEntry menueEintrag) {
-        MenuManager.menuList.add(menueEintrag);
+    static {
+        MenuManager.menuList.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Suche" }));
+        MenuManager.menuList.add(new MenuEntry("Kunde", new String[] { "Mieter", "Interessent" }));
+        MenuManager.menuList.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Handwerkeraufträge", "Wohnung suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "Mietvertrag anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
+
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "Handwerkerauftrag anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
+
+        MenuManager.menuList.add(new MenuEntry("Mieter", new String[] { "Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Interessent", new String[] { "Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
+
+        MenuManager.menuList.add(new MenuEntry("Wohnung suchen", new WohnungSuchenAction()));
+        MenuManager.menuList.add(new MenuEntry("Wohnung anzeigen", new WohnungAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("neue Wohnung erstellen", new WohnungErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Wohnung bearbeiten", new WohnungBearbeitenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mieter anzeigen", new MieterAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mieter bearbeiten", new MieterBearbeitenAction()));
+        MenuManager.menuList.add(new MenuEntry("neuen Mieter erstellen", new MieterErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mieter suchen", new MieterSuchenAction()));
+        MenuManager.menuList.add(new MenuEntry("Interessenten anzeigen", new InteressentAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("Interessent bearbeiten", new InteressentBearbeitenAction()));
+        MenuManager.menuList.add(new MenuEntry("neuen Interessenten erstellen", new InteressentErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Interessenten suchen", new InteressentSuchenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mitarbeiter anzeigen", new MitarbeiterAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("neuen Mitarbeiter erstellen", new MitarbeiterErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mitarbeiter bearbeiten", new MitarbeiterBearbeitenAction()));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag suchen", new HandwerkerauftragSuchenAction()));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag anzeigen", new HandwerkerauftragAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag erstellen", new HandwerkerauftragErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag bearbeiten", new HandwerkerauftragBearbeitenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag suchen", new MietvertragSuchenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag anzeigen", new MietvertragAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag erstellen", new MietvertragErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag bearbeiten", new MietvertragBearbeitenAction()));
     }
 
+    protected ArrayList<Mitarbeiter> workerList = new ArrayList<>();
+    protected ArrayList<Wohnung> flatList = new ArrayList<>();
+    protected ArrayList<Mieter> ownerList = new ArrayList<>();
+    protected ArrayList<Interessent> interestList = new ArrayList<>();
+    protected ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
+    protected ArrayList<Mietvertrag> contractList = new ArrayList<>();
+
     public void add(final Mietvertrag mietvertrag) {
-        MenuManager.contractList.add(mietvertrag);
+        this.contractList.add(mietvertrag);
     }
 
     public void add(final Handwerkerauftrag handwerkerauftrag) {
-        MenuManager.repairList.add(handwerkerauftrag);
+        this.repairList.add(handwerkerauftrag);
     }
 
     public void add(final Mieter mieter) {
-        MenuManager.ownerList.add(mieter);
+        this.ownerList.add(mieter);
     }
 
     public void add(final Interessent interessent) {
-        MenuManager.interestList.add(interessent);
+        this.interestList.add(interessent);
     }
 
     public void add(final Mitarbeiter mitarbeiter) {
-        MenuManager.workerList.add(mitarbeiter);
+        this.workerList.add(mitarbeiter);
     }
 
     public void add(final Wohnung wohnung) {
-        MenuManager.flatList.add(wohnung);
+        this.flatList.add(wohnung);
     }
 
     public void start() {
@@ -79,7 +139,7 @@ public class MenuManager extends Panel {
     }
 
     private void personHerausfinden(final String anmeldung) {
-        for (Mitarbeiter ma : MenuManager.workerList) {
+        for (Mitarbeiter ma : this.workerList) {
             if (anmeldung.equals(ma.getPasswort())) {
                 System.out.println("\nWillkommen bei der Mietverwaltung " + ma.getName() + "\n");
             }
@@ -93,7 +153,7 @@ public class MenuManager extends Panel {
     }
 
     public boolean passwortExistens(final String anmeldung) {
-        for (Mitarbeiter ma : MenuManager.workerList) {
+        for (Mitarbeiter ma : this.workerList) {
             if (anmeldung.equals(ma.getPasswort())) {
                 return true;
             }

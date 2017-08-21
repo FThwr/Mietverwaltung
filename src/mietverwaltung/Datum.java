@@ -1,9 +1,12 @@
 package mietverwaltung;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Datum implements Comparable<Datum> {
+public class Datum implements Comparable<Datum>, Serializable {
+
+    private static final long serialVersionUID = 7907478171840216174L;
 
     private int tag;
     private int monat;

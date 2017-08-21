@@ -1,6 +1,10 @@
 package mietverwaltung;
 
-public class Mitarbeiter {
+import java.io.Serializable;
+
+public class Mitarbeiter implements Serializable {
+
+    private static final long serialVersionUID = 2383717293291179777L;
 
     private int mitarbeiterID;
     private String name;

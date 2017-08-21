@@ -1,6 +1,10 @@
 package mietverwaltung;
 
-public class Wohnung {
+import java.io.Serializable;
+
+public class Wohnung implements Serializable {
+
+    private static final long serialVersionUID = -7870784941313641426L;
 
     private int wohnungsID;
     private int zimmeranzahl;

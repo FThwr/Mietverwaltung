@@ -1,29 +1,5 @@
 package mietverwaltung;
 
-import mietverwaltung.action.HandwerkerauftragAnzeigenAction;
-import mietverwaltung.action.HandwerkerauftragBearbeitenAction;
-import mietverwaltung.action.HandwerkerauftragErstellenAction;
-import mietverwaltung.action.HandwerkerauftragSuchenAction;
-import mietverwaltung.action.InteressentAnzeigenAction;
-import mietverwaltung.action.InteressentBearbeitenAction;
-import mietverwaltung.action.InteressentErstellenAction;
-import mietverwaltung.action.InteressentSuchenAction;
-import mietverwaltung.action.MieterAnzeigenAction;
-import mietverwaltung.action.MieterBearbeitenAction;
-import mietverwaltung.action.MieterErstellenAction;
-import mietverwaltung.action.MieterSuchenAction;
-import mietverwaltung.action.MietvertragAnzeigenAction;
-import mietverwaltung.action.MietvertragBearbeitenAction;
-import mietverwaltung.action.MietvertragErstellenAction;
-import mietverwaltung.action.MietvertragSuchenAction;
-import mietverwaltung.action.MitarbeiterAnzeigenAction;
-import mietverwaltung.action.MitarbeiterBearbeitenAction;
-import mietverwaltung.action.MitarbeiterErstellenAction;
-import mietverwaltung.action.WohnungAnzeigenAction;
-import mietverwaltung.action.WohnungErstellenAction;
-import mietverwaltung.action.WohnungBearbeitenAction;
-import mietverwaltung.action.WohnungSuchenAction;
-import mietverwaltung.menu.MenuEntry;
 import mietverwaltung.menu.MenuManager;
 
 public class Test {
@@ -74,41 +50,6 @@ public class Test {
         //		m.add(new Wohnung (2, 51, 600, 1, true, "Osten"));
         //		m.add(new Wohnung (2, 51, 600, 1, true, "Osten"));
         //		m.add(new Wohnung (2, 51, 600, 1, true, "Osten"));
-
-        m.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Suche" }));
-        m.add(new MenuEntry("Kunde", new String[] { "Mieter", "Interessent" }));
-        m.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Handwerkeraufträge", "Wohnung suchen" }));
-        m.add(new MenuEntry("Mitarbeiter", new String[] { "Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
-        m.add(new MenuEntry("Mietvertrag", new String[] { "Mietvertrag anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
-
-        m.add(new MenuEntry("Handwerkerauftrag", new String[] { "Handwerkerauftrag anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
-
-        m.add(new MenuEntry("Mieter", new String[] { "Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen" }));
-        m.add(new MenuEntry("Interessent", new String[] { "Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
-
-        m.add(new MenuEntry("Wohnung suchen", new WohnungSuchenAction()));
-        m.add(new MenuEntry("Wohnung anzeigen", new WohnungAnzeigenAction()));
-        m.add(new MenuEntry("neue Wohnung erstellen", new WohnungErstellenAction()));
-        m.add(new MenuEntry("Wohnung bearbeiten", new WohnungBearbeitenAction()));
-        m.add(new MenuEntry("Mieter anzeigen", new MieterAnzeigenAction()));
-        m.add(new MenuEntry("Mieter bearbeiten", new MieterBearbeitenAction()));
-        m.add(new MenuEntry("neuen Mieter erstellen", new MieterErstellenAction()));
-        m.add(new MenuEntry("Mieter suchen", new MieterSuchenAction()));
-        m.add(new MenuEntry("Interessenten anzeigen", new InteressentAnzeigenAction()));
-        m.add(new MenuEntry("Interessent bearbeiten", new InteressentBearbeitenAction()));
-        m.add(new MenuEntry("neuen Interessenten erstellen", new InteressentErstellenAction()));
-        m.add(new MenuEntry("Interessenten suchen", new InteressentSuchenAction()));
-        m.add(new MenuEntry("Mitarbeiter anzeigen", new MitarbeiterAnzeigenAction()));
-        m.add(new MenuEntry("neuen Mitarbeiter erstellen", new MitarbeiterErstellenAction()));
-        m.add(new MenuEntry("Mitarbeiter bearbeiten", new MitarbeiterBearbeitenAction()));
-        m.add(new MenuEntry("Handwerkerauftrag suchen", new HandwerkerauftragSuchenAction()));
-        m.add(new MenuEntry("Handwerkerauftrag anzeigen", new HandwerkerauftragAnzeigenAction()));
-        m.add(new MenuEntry("Handwerkerauftrag erstellen", new HandwerkerauftragErstellenAction()));
-        m.add(new MenuEntry("Handwerkerauftrag bearbeiten", new HandwerkerauftragBearbeitenAction()));
-        m.add(new MenuEntry("Mietvertrag suchen", new MietvertragSuchenAction()));
-        m.add(new MenuEntry("Mietvertrag anzeigen", new MietvertragAnzeigenAction()));
-        m.add(new MenuEntry("Mietvertrag erstellen", new MietvertragErstellenAction()));
-        m.add(new MenuEntry("Mietvertrag bearbeiten", new MietvertragBearbeitenAction()));
 
         //		m.add(new MenueEntry("Kiefer", new HalloAktion()));
         m.start();
