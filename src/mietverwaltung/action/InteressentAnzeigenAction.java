@@ -10,7 +10,7 @@ public class InteressentAnzeigenAction extends MenuManager implements Action {
 
         System.out.println("________________________________________ Interessent anzeigen ________________________________________");
 
-        for (Interessent interest : MenuManager.interestList) {
+        for (Interessent interest : MenuManager.currentManager.getInterestList()) {
 
             System.out.println("Interessenten ID: " + interest.getKundenID());
             System.out.println("Name:             " + interest.getName());

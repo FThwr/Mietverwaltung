@@ -51,7 +51,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action {
             if (ok == 1) {
                 mietvertragID = String_eingabe(kategorie, ok);
                 int vorhanden = 0;
-                for (Mietvertrag contract : MenuManager.contractList) {
+                for (Mietvertrag contract : MenuManager.currentManager.getContractList()) {
                     if (contract.getMietvertragID().equals(mietvertragID)) {
                         vorhanden = 1;
                     }
@@ -64,7 +64,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action {
             if (ok == 2) {
                 wohnungsID = int_eingabe(kategorie, ok);
                 int vorhanden = 0;
-                for (Wohnung flat : MenuManager.flatList) {
+                for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
                     if (flat.getWohnungsID() == wohnungsID) {
                         vorhanden = 1;
                     }
@@ -77,7 +77,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action {
             if (ok == 3) {
                 kundenID = int_eingabe(kategorie, ok);
                 int vorhanden = 0;
-                for (Interessent interest : MenuManager.interestList) {
+                for (Interessent interest : MenuManager.currentManager.getInterestList()) {
                     if (interest.getKundenID() == kundenID) {
                         vorhanden = 1;
 
@@ -91,7 +91,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action {
             if (ok == 4) {
                 mitarbeiterID = int_eingabe(kategorie, ok);
                 int vorhanden = 0;
-                for (Mitarbeiter worker : MenuManager.workerList) {
+                for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
                     if (worker.getMitarbeiterID() == mitarbeiterID) {
                         vorhanden = 1;
                     }
@@ -133,13 +133,13 @@ public class MietvertragErstellenAction extends MenuManager implements Action {
             if (ok == 7) {
                 erstellVorgang = false;
 
-                MenuManager.contractList.add(new Mietvertrag(mietvertragID, wohnungsID, kundenID, mitarbeiterID, mietbeginn, mietende));
+                MenuManager.currentManager.add(new Mietvertrag(mietvertragID, wohnungsID, kundenID, mitarbeiterID, mietbeginn, mietende));
 
-                for (Interessent interest : MenuManager.interestList) {
+                for (Interessent interest : MenuManager.currentManager.getInterestList()) {
                     if (interest.getKundenID() == kundenID) {
-                        MenuManager.ownerList.add(new Mieter(kundenID, interest.getName(), interest.getVorname(), interest.getGeburtsdatum(), wohnungsID, interest.getEmail(), interest.getAdresse(), interest.getTelefonnummer(), "Mieter"));
+                        MenuManager.currentManager.add(new Mieter(kundenID, interest.getName(), interest.getVorname(), interest.getGeburtsdatum(), wohnungsID, interest.getEmail(), interest.getAdresse(), interest.getTelefonnummer(), "Mieter"));
 
-                        Iterator<Interessent> iter = MenuManager.interestList.iterator();
+                        Iterator<Interessent> iter = MenuManager.currentManager.getInterestList().iterator();
 
                         while (iter.hasNext()) {
                             Interessent str = iter.next();

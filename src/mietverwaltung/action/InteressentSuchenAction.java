@@ -194,7 +194,7 @@ public class InteressentSuchenAction extends MenuManager implements Action {
                     String vgl_EMail = "-";
                     String vgl_telefon = "-";
 
-                    for (Interessent interest : MenuManager.interestList) {
+                    for (Interessent interest : MenuManager.currentManager.getInterestList()) {
 
                         if (check.contains("a")) {
                             vgl_interessentenID = interest.getKundenID();

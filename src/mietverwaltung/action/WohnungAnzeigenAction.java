@@ -12,9 +12,9 @@ public class WohnungAnzeigenAction extends MenuManager implements Action {
         // wenn ein Mieter eine vorhandene wohnung bewohnt
         // setzte Status auf vermietet, wenn nicht auf frei
 
-        for (Wohnung flat : MenuManager.flatList) {
+        for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
             int status = 0;
-            for (Mieter owner : MenuManager.ownerList) {
+            for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
                 if (owner.getWohnungsnummer() == flat.getWohnungsID() && flat.getWohnungsID() != -100 && owner.getWohnungsnummer() != -100) {
                     status = 1;
                 }
@@ -26,7 +26,7 @@ public class WohnungAnzeigenAction extends MenuManager implements Action {
             }
         }
 
-        for (Wohnung flat : MenuManager.flatList) {
+        for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
 
             if (flat.getWohnungsID() != -100) {
                 System.out.println("Wohnungsnummer:                  " + flat.getWohnungsID());

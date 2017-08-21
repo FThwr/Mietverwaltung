@@ -286,7 +286,7 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                     int vgl_fertigMonat = -100;
                     int vgl_fertigJahr = -100;
 
-                    for (Handwerkerauftrag repair : MenuManager.repairList) {
+                    for (Handwerkerauftrag repair : MenuManager.currentManager.getRepairList()) {
 
                         if (check.contains("a")) {
                             vgl_auftragsID = repair.getAuftragsID();

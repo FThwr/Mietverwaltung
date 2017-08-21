@@ -18,7 +18,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action {
         Scanner s = new Scanner(System.in);
         System.out.println("\nWählen Sie den Mietvertrag (ID) aus, den Sie bearbeiten möchten!\n");
 
-        for (Mietvertrag contract : MenuManager.contractList) {
+        for (Mietvertrag contract : MenuManager.currentManager.getContractList()) {
             System.out.println(contract.getMietvertragID());
         }
 
@@ -55,7 +55,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action {
             String MB_Leerzeichen = "";
             String ME_Leerzeichen = "";
 
-            for (Mietvertrag contract : MenuManager.contractList) {
+            for (Mietvertrag contract : MenuManager.currentManager.getContractList()) {
                 if (zu_bearbeitenden_mietvertrag.equals(contract.getMietvertragID())) {
 
                     mietvertragEingabe_erfolgreich = true;
@@ -184,7 +184,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action {
                         if (änderung == 7) {
                             bearbeitungsVorgang = false;
 
-                            for (Mietvertrag contract : MenuManager.contractList) {
+                            for (Mietvertrag contract : MenuManager.currentManager.getContractList()) {
                                 if (zu_bearbeitenden_mietvertrag == contract.getMietvertragID()) {
                                     contract.setMietvertragID(neueMietvertragsID);
                                     contract.setWohnungsID(neueWohnungsID);

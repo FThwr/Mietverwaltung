@@ -307,7 +307,7 @@ public class WohnungSuchenAction extends MenuManager implements Action {
                 String vgl_handwerkerAuftragID = "-";
                 String vgl_name = "-";
 
-                for (Wohnung flat : MenuManager.flatList) {
+                for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
 
                     if (check.contains("a")) {
                         vgl_wohnungsnummer = flat.getWohnungsID();

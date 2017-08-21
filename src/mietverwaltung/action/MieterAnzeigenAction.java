@@ -8,7 +8,7 @@ public class MieterAnzeigenAction extends MenuManager implements Action {
     @Override
     public void action() {
 
-        for (Mieter owner : MenuManager.ownerList) {
+        for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
 
             System.out.println("Mieter ID:      " + owner.getKundenID());
             System.out.println("Name:           " + owner.getName());

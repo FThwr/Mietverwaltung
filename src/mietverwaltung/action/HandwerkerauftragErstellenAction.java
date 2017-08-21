@@ -57,9 +57,9 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                     } else {
                         //wenn vorhanden = 1 ist, dann existiert ein Interessent mit dieser ID bereits
                         int vorhanden = 0;
-                        //für jedes Element in der Interessentenliste wird geguckt, 
+                        //für jedes Element in der Interessentenliste wird geguckt,
                         //ob die eingegebende ID mit einer bereits existierenden übereinstimmt
-                        for (Handwerkerauftrag repair : MenuManager.repairList) {
+                        for (Handwerkerauftrag repair : MenuManager.currentManager.getRepairList()) {
                             if (neueAID.equals(repair.getAuftragsID())) {
                                 vorhanden = 1;
                             }
@@ -78,9 +78,9 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                     } else {
                         //wenn vorhanden = 1 ist, dann existiert ein Interessent mit dieser ID bereits
                         int vorhanden = 0;
-                        //für jedes Element in der Interessentenliste wird geguckt, 
+                        //für jedes Element in der Interessentenliste wird geguckt,
                         //ob die eingegebende ID mit einer bereits existierenden übereinstimmt
-                        for (Wohnung flat : MenuManager.flatList) {
+                        for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
                             if (neueWID == flat.getWohnungsID()) {
                                 vorhanden = 1;
                             }
@@ -99,9 +99,9 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                     } else {
                         //wenn vorhanden = 1 ist, dann existiert ein Interessent mit dieser ID bereits
                         int vorhanden = 0;
-                        //für jedes Element in der Interessentenliste wird geguckt, 
+                        //für jedes Element in der Interessentenliste wird geguckt,
                         //ob die eingegebende ID mit einer bereits existierenden übereinstimmt
-                        for (Mitarbeiter worker : MenuManager.workerList) {
+                        for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
                             if (neueMID == worker.getMitarbeiterID()) {
                                 vorhanden = 1;
                             }
@@ -160,7 +160,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                     //					int jahr = einlesen_Zahl(auswahl, zähler);
                     //
                     //					if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
-                    //					} 
+                    //					}
                     //					else {
                     fertigstellungsDatum = new Datum(0, 0, 0);
                     //					}
@@ -168,7 +168,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                 if (änderung == 8) {
                     System.out.println("Handwerkerauftrag wurde erfolgreich angelegt!");
                     erstellVorgang = false;
-                    MenuManager.repairList.add(new Handwerkerauftrag(auftragsID, wohnungsID, mitarbeiterID, mängelbeschreibung, status, eingangsdatum, fertigstellungsDatum));
+                    MenuManager.currentManager.add(new Handwerkerauftrag(auftragsID, wohnungsID, mitarbeiterID, mängelbeschreibung, status, eingangsdatum, fertigstellungsDatum));
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");

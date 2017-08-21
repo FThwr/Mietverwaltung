@@ -21,7 +21,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action {
         System.out.println("\nWählen Sie den Interessenten (ID) aus, den Sie bearbeiten möchten!\n");
 
         // Ausgabe aller Interessenten (ID, Name, Vorname) zur einfacheren Auswahl
-        for (Interessent interest : MenuManager.interestList) {
+        for (Interessent interest : MenuManager.currentManager.getInterestList()) {
             System.out.println(interest.getName() + "; " + interest.getVorname() + "  ID: " + interest.getKundenID());
         }
 
@@ -73,7 +73,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action {
             String ADR_Leerzeichen = "";
 
             // wenn die Eingabe der Interessenten-ID einer existierenden ID entspricht wird fortgefahren
-            for (Interessent interest : MenuManager.interestList) {
+            for (Interessent interest : MenuManager.currentManager.getInterestList()) {
                 if (zu_bearbeitenden_interessent == interest.getKundenID()) {
 
                     interessentenEingabe_erfolgreich = true;
@@ -245,7 +245,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action {
 
                             if (neueRolle.equals("Interessent")) {
 
-                                for (Interessent interest : MenuManager.interestList) {
+                                for (Interessent interest : MenuManager.currentManager.getInterestList()) {
                                     if (zu_bearbeitenden_interessent == interest.getKundenID()) {
                                         interest.setKundenID(neueInteressentenID);
                                         interest.setName(neuerName);
@@ -258,15 +258,15 @@ public class InteressentBearbeitenAction extends MenuManager implements Action {
                                 }
                             }
                             if (neueRolle.equals("Mieter")) {
-                                for (Interessent interest : MenuManager.interestList) {
+                                for (Interessent interest : MenuManager.currentManager.getInterestList()) {
                                     if (zu_bearbeitenden_interessent == interest.getKundenID()) {
-                                        MenuManager.ownerList.add(new Mieter(neueInteressentenID, neuerName, neuerVorname, neuesGeburtsdatum, -100, neueEMail, neueAdresse, neueTelefon, neueRolle));
+                                        MenuManager.currentManager.add(new Mieter(neueInteressentenID, neuerName, neuerVorname, neuesGeburtsdatum, -100, neueEMail, neueAdresse, neueTelefon, neueRolle));
                                     }
                                 }
                             }
                             if (neueRolle.equals("Delete")) {
 
-                                Iterator<Interessent> iter = MenuManager.interestList.iterator();
+                                Iterator<Interessent> iter = MenuManager.currentManager.getInterestList().iterator();
 
                                 while (iter.hasNext()) {
                                     Interessent str = iter.next();

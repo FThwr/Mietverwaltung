@@ -20,7 +20,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
         System.out.println("\nWählen Sie den Handwerkerauftrag (ID) aus, die Sie bearbeiten möchten!\n");
 
         // Ausgabe aller Interessenten (ID, Name, Vorname) zur einfacheren Auswahl
-        for (Handwerkerauftrag repair : MenuManager.repairList) {
+        for (Handwerkerauftrag repair : MenuManager.currentManager.getRepairList()) {
             System.out.println(repair.getAuftragsID() + "; " + repair.getMängelbeschreibung());
         }
 
@@ -68,7 +68,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
             String FD_Leerzeichen = "";
 
             // wenn die Eingabe der Interessenten-ID einer existierenden ID entspricht wird fortgefahren
-            for (Handwerkerauftrag repair : MenuManager.repairList) {
+            for (Handwerkerauftrag repair : MenuManager.currentManager.getRepairList()) {
                 if (zu_bearbeitenden_handwerkerauftrag.equals(repair.getAuftragsID())) {
 
                     handwerkerauftragEingabe_erfolgreich = true;
@@ -226,14 +226,14 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
 
                             //							if (neuerStatus.equals("in Arbeit")) {
 
-                            for (Wohnung flat : MenuManager.flatList) {
+                            for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
                                 if (neueWohnungsID == flat.getWohnungsID()) {
                                     flat.setHandwerkerauftrag(new Handwerkerauftrag(neueAuftragsID));
 
                                 }
                             }
 
-                            for (Handwerkerauftrag repair : MenuManager.repairList) {
+                            for (Handwerkerauftrag repair : MenuManager.currentManager.getRepairList()) {
                                 if (zu_bearbeitenden_handwerkerauftrag.equals(repair.getAuftragsID())) {
                                     repair.setAuftragsID(neueAuftragsID);
                                     repair.setWohnungsID(neueWohnungsID);

@@ -20,7 +20,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action {
         Scanner s = new Scanner(System.in);
         System.out.println("\nWählen Sie den Mieter (ID) aus, den Sie bearbeiten möchten!\n");
 
-        for (Mieter owner : MenuManager.ownerList) {
+        for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
             System.out.println(owner.getName() + "; " + owner.getVorname() + "  ID: " + owner.getKundenID());
         }
 
@@ -69,7 +69,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action {
             String GD_Leerzeichen = "";
             String ADR_Leerzeichen = "";
 
-            for (Mieter owner : MenuManager.ownerList) {
+            for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
                 if (zu_bearbeitenden_mieter == owner.getKundenID()) {
 
                     mieterEingabe_erfolgreich = true;
@@ -202,8 +202,8 @@ public class MieterBearbeitenAction extends MenuManager implements Action {
                                     neu = aktuelleWohnung;
                                 } else {
                                     int nichtVorhanden = 0;
-                                    for (Mieter mt : MenuManager.ownerList) {
-                                        for (Wohnung flat : MenuManager.flatList) {
+                                    for (Mieter mt : MenuManager.currentManager.getOwnerList()) {
+                                        for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
 
                                             // nur wenn die Wohnung von keinem
                                             // anderen
@@ -294,7 +294,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action {
 
                             if (neueRolle.equals("Mieter")) {
 
-                                for (Mieter owner : MenuManager.ownerList) {
+                                for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
                                     if (zu_bearbeitenden_mieter == owner.getKundenID()) {
                                         owner.setKundenID(neueMieterID);
                                         owner.setName(neuerName);
@@ -311,7 +311,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action {
 
                             if (neueRolle.equals("Delete")) {
 
-                                Iterator<Mieter> iter = MenuManager.ownerList.iterator();
+                                Iterator<Mieter> iter = MenuManager.currentManager.getOwnerList().iterator();
 
                                 while (iter.hasNext()) {
                                     Mieter str = iter.next();

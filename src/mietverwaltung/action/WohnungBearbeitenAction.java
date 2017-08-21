@@ -89,7 +89,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
             String LRDT_Leerzeichen = "";
             String ZM_Leerzeichen = "";
 
-            for (Wohnung flat : MenuManager.flatList) {
+            for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
                 if (zu_bearbeitende_wohnung == flat.getWohnungsID()) {
 
                     wohnungseingabe_erfolgreich = true;
@@ -216,7 +216,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
                         if (ok == 1) {
                             int neu = int_eingabe(buttons, ok);
                             int nichtVorhanden = 0;
-                            for (Wohnung wohnung : MenuManager.flatList) {
+                            for (Wohnung wohnung : MenuManager.currentManager.getFlatList()) {
                                 if (wohnung.getWohnungsID() != neu) {
                                     nichtVorhanden = 1;
                                 }
@@ -348,7 +348,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
                             String name = "";
                             String vorname = "";
 
-                            for (Mitarbeiter worker : MenuManager.workerList) {
+                            for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
                                 if (worker.getMitarbeiterID() == ID) {
                                     name = worker.getName();
                                     vorname = worker.getVorname();
@@ -365,12 +365,12 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
                         if (ok == 14) {
                             bearbeitungsVorgang = false;
 
-                            for (Wohnung flat : MenuManager.flatList) {
+                            for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
                                 // wenn beim bearbeiten eine Wohnung ausgewählt
                                 // wird, die jemanden gehört,
                                 // dann wohnt der Mieter in der WOhnung mit der
                                 // eben angepassten Wohnungsnummer
-                                for (Mieter owner : MenuManager.ownerList) {
+                                for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
                                     if (owner.getWohnungsnummer() == aktuelleID && neueID != aktuelleID) {
                                         owner.setWohnungsnummer(neueID);
                                     }

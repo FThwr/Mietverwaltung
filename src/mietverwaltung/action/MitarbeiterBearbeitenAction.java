@@ -19,7 +19,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action {
         Scanner s = new Scanner(System.in);
         System.out.println("\nWählen Sie den Mitarbeiter (ID) aus, den Sie bearbeiten möchten!\n");
 
-        for (Mitarbeiter worker : MenuManager.workerList) {
+        for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
             System.out.println(worker.getName() + "; " + worker.getVorname() + "  ID: " + worker.getMitarbeiterID());
         }
 
@@ -51,7 +51,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action {
             String aktuellesPasswort = "";
             String neuesPasswort = "";
 
-            for (Mitarbeiter worker : MenuManager.workerList) {
+            for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
                 if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
 
                     mitarbeiterEingabe_erfolgreich = true;
@@ -146,7 +146,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action {
                         if (änderung == 5) {
                             bearbeitungsVorgang = false;
 
-                            for (Mitarbeiter worker : MenuManager.workerList) {
+                            for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
                                 if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
                                     neuerBenutzername = neuerVorname.trim().substring(0, 1) + "." + neuerName;
                                     worker.setMitarbeiterID(neueMitarbeiterID);
@@ -156,7 +156,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action {
                                     worker.setPasswort(neuesPasswort);
                                 }
                             }
-                            for (Wohnung flat : MenuManager.flatList) {
+                            for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
                                 if (aktuellerName.equals(flat.getZugeordneterMitarbeiter().getName())) {
                                     flat.getZugeordneterMitarbeiter().setName(neuerName);
                                     ;

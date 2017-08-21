@@ -10,7 +10,7 @@ public class HandwerkerauftragAnzeigenAction extends MenuManager implements Acti
 
         System.out.println("________________________________________ Handwerkerauftrag anzeigen ________________________________________");
 
-        for (Handwerkerauftrag repair : MenuManager.repairList) {
+        for (Handwerkerauftrag repair : MenuManager.currentManager.getRepairList()) {
 
             System.out.println("Auftrags ID: " + repair.getAuftragsID());
             System.out.println("Wohnungs ID: " + repair.getWohnungsID());

@@ -46,7 +46,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action {
                             neueID = mitarbeiterID;
                         } else {
                             int nichtVorhanden = 0;
-                            for (Mitarbeiter worker : MenuManager.workerList) {
+                            for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
                                 if (neueID == worker.getMitarbeiterID()) {
                                     nichtVorhanden = 1;
                                 }
@@ -91,7 +91,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action {
                     System.out.println("Mitarbeiter wurde erfolgreich angelegt!");
                     erstellVorgang = false;
                     benutzername = vorname.trim().substring(0, 1) + "." + name;
-                    MenuManager.workerList.add(new Mitarbeiter(mitarbeiterID, name, vorname, benutzername, passwort));
+                    MenuManager.currentManager.getWorkerList().add(new Mitarbeiter(mitarbeiterID, name, vorname, benutzername, passwort));
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");

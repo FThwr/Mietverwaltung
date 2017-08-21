@@ -58,7 +58,7 @@ public class InteressentErstellenAction extends MenuManager implements Action {
                             int vorhanden = 0;
                             //für jedes Element in der Interessentenliste wird geguckt,
                             //ob die eingegebende ID mit einer bereits existierenden übereinstimmt
-                            for (Interessent interest : MenuManager.interestList) {
+                            for (Interessent interest : MenuManager.currentManager.getInterestList()) {
                                 if (neueID == interest.getKundenID()) {
                                     vorhanden = 1;
                                 }
@@ -145,7 +145,7 @@ public class InteressentErstellenAction extends MenuManager implements Action {
                 if (änderung == 8) {
                     System.out.println("Interessent wurde erfolgreich angelegt!");
                     erstellVorgang = false;
-                    MenuManager.interestList.add(new Interessent(interessentenID, name, vorname, geburtsdatum, EMail, adresse, telefonnummer, status));
+                    MenuManager.currentManager.add(new Interessent(interessentenID, name, vorname, geburtsdatum, EMail, adresse, telefonnummer, status));
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");

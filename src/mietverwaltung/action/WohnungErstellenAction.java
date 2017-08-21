@@ -62,7 +62,7 @@ public class WohnungErstellenAction extends MenuManager implements Action {
             if (ok == 1) {
                 wohnungsnummer = int_eingabe(kategorie, ok);
                 int vorhanden = 0;
-                for (Wohnung flat : MenuManager.flatList) {
+                for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
                     if (flat.getWohnungsID() == wohnungsnummer) {
                         vorhanden = 1;
                     }
@@ -133,7 +133,7 @@ public class WohnungErstellenAction extends MenuManager implements Action {
                 String vorname = "";
                 int vorhanden = 0;
 
-                for (Mitarbeiter worker : MenuManager.workerList) {
+                for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
                     if (worker.getMitarbeiterID() == ID) {
                         name = worker.getName();
                         vorname = worker.getVorname();
@@ -153,7 +153,7 @@ public class WohnungErstellenAction extends MenuManager implements Action {
             if (ok == 11) {
                 erstellVorgang = false;
 
-                MenuManager.flatList.add(new Wohnung(wohnungsnummer, zimmeranzahl, fläche, kosten, etage, balkon, fußbodenheizung, aussicht, adresse, status, letztesRenovierungsdatum, renovierungsanzahl, letzeRenovierung_Details, handwerkerauftrag, zugeordneterMitarbeiter));
+                MenuManager.currentManager.add(new Wohnung(wohnungsnummer, zimmeranzahl, fläche, kosten, etage, balkon, fußbodenheizung, aussicht, adresse, status, letztesRenovierungsdatum, renovierungsanzahl, letzeRenovierung_Details, handwerkerauftrag, zugeordneterMitarbeiter));
             }
             if (ok > 11) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nKeine Option vorhanden!\n");

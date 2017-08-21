@@ -58,7 +58,7 @@ public class MieterErstellenAction extends MenuManager implements Action {
                             neueID = mieterID;
                         } else {
                             int nichtVorhanden = 0;
-                            for (Mieter owner : MenuManager.ownerList) {
+                            for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
                                 if (neueID == owner.getKundenID()) {
                                     nichtVorhanden = 1;
                                 }
@@ -111,8 +111,8 @@ public class MieterErstellenAction extends MenuManager implements Action {
                             neueWohnung = wohnung;
                         } else {
                             int nichtVorhanden = 0;
-                            for (Wohnung flat : MenuManager.flatList) {
-                                for (Mieter owner : MenuManager.ownerList) {
+                            for (Wohnung flat : MenuManager.currentManager.getFlatList()) {
+                                for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
                                     // nur wenn die Wohnung von keinem anderen Mieter
                                     // belegt ist und die Wohnung existiert
                                     if (owner.getWohnungsnummer() != neueWohnung && neueWohnung == flat.getWohnungsID() && flat.getStatus().equals("frei")) {
@@ -174,7 +174,7 @@ public class MieterErstellenAction extends MenuManager implements Action {
                 if (änderung == 9) {
                     System.out.println("Mieter wurde erfolgreich angelegt!");
                     erstellVorgang = false;
-                    MenuManager.ownerList.add(new Mieter(mieterID, name, vorname, geburtsdatum, wohnung, eMail, adresse, telefon, status));
+                    MenuManager.currentManager.add(new Mieter(mieterID, name, vorname, geburtsdatum, wohnung, eMail, adresse, telefon, status));
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");

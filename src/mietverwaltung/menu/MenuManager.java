@@ -40,6 +40,8 @@ public class MenuManager extends Panel implements Serializable {
 
     private static final long serialVersionUID = 5699492648153643863L;
 
+    protected static MenuManager currentManager;
+
     protected static ArrayList<MenuEntry> menuList = new ArrayList<>();
 
     static {
@@ -85,6 +87,58 @@ public class MenuManager extends Panel implements Serializable {
     protected ArrayList<Interessent> interestList = new ArrayList<>();
     protected ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
     protected ArrayList<Mietvertrag> contractList = new ArrayList<>();
+
+    public MenuManager() {
+        MenuManager.currentManager = this;
+    }
+
+    public ArrayList<Mitarbeiter> getWorkerList() {
+        return this.workerList;
+    }
+
+    public void setWorkerList(final ArrayList<Mitarbeiter> workerList) {
+        this.workerList = workerList;
+    }
+
+    public ArrayList<Wohnung> getFlatList() {
+        return this.flatList;
+    }
+
+    public void setFlatList(final ArrayList<Wohnung> flatList) {
+        this.flatList = flatList;
+    }
+
+    public ArrayList<Mieter> getOwnerList() {
+        return this.ownerList;
+    }
+
+    public void setOwnerList(final ArrayList<Mieter> ownerList) {
+        this.ownerList = ownerList;
+    }
+
+    public ArrayList<Interessent> getInterestList() {
+        return this.interestList;
+    }
+
+    public void setInterestList(final ArrayList<Interessent> interestList) {
+        this.interestList = interestList;
+    }
+
+    public ArrayList<Handwerkerauftrag> getRepairList() {
+        return this.repairList;
+    }
+
+    public void setRepairList(final ArrayList<Handwerkerauftrag> repairList) {
+        this.repairList = repairList;
+    }
+
+    public ArrayList<Mietvertrag> getContractList() {
+        return this.contractList;
+    }
+
+    public void setContractList(final ArrayList<Mietvertrag> contractList) {
+        this.contractList = contractList;
+    }
 
     public void add(final Mietvertrag mietvertrag) {
         this.contractList.add(mietvertrag);
@@ -249,4 +303,13 @@ public class MenuManager extends Panel implements Serializable {
         }
         return null;
     }
+    //
+    //    public void speichern(final File menueData) {
+    //        try(FileOutputStream fos = new FileOutputStream(menueData)) {
+    //            ObjectOutputStream out = new ObjectOutputStream(fos);
+    //            writeObject(out);
+    //        } catch (IOException e) {
+    //            System.err.println(e);
+    //        }
+    //    }
 }

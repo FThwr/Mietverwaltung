@@ -8,7 +8,7 @@ public class MietvertragAnzeigenAction extends MenuManager implements Action {
     @Override
     public void action() {
 
-        for (Mietvertrag contract : MenuManager.contractList) {
+        for (Mietvertrag contract : MenuManager.currentManager.getContractList()) {
 
             System.out.println("Mietvertrags-ID:              " + contract.getMietvertragID());
 

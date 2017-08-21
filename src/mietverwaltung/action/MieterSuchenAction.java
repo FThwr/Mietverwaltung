@@ -217,7 +217,7 @@ public class MieterSuchenAction extends MenuManager implements Action {
 
                     String vgl_telefon = "-";
 
-                    for (Mieter owner : MenuManager.ownerList) {
+                    for (Mieter owner : MenuManager.currentManager.getOwnerList()) {
 
                         if (check.contains("a")) {
                             vgl_mieterID = owner.getKundenID();

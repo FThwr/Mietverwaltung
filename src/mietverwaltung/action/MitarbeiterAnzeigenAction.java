@@ -10,7 +10,7 @@ public class MitarbeiterAnzeigenAction extends MenuManager implements Action {
 
         System.out.println("________________________________________ Mitarbeiter anzeigen ________________________________________");
 
-        for (Mitarbeiter worker : MenuManager.workerList) {
+        for (Mitarbeiter worker : MenuManager.currentManager.getWorkerList()) {
 
             System.out.println("Mitarbeiter ID: " + worker.getMitarbeiterID());
             System.out.println("Name:           " + worker.getName());

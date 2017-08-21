@@ -247,7 +247,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action {
                     int vgl_endeMonat = -100;
                     int vgl_endeJahr = -100;
 
-                    for (Mietvertrag contract : MenuManager.contractList) {
+                    for (Mietvertrag contract : MenuManager.currentManager.getContractList()) {
 
                         if (check.contains("a")) {
                             vgl_mietvertragID = contract.getMietvertragID();
