@@ -13,28 +13,16 @@ public class Mitarbeiter {
         this.name = name;
         this.passwort = passwort;
         this.vorname = vorname;
-        this.benutzername = vorname.trim().substring(0, 1) + "." + name;
+        this.benutzername = benutzername;
     }
 
     public Mitarbeiter(final int mitarbeiterID, final String name, final String vorname, final String passwort) {
-        this.mitarbeiterID = mitarbeiterID;
-        this.name = name;
-        this.passwort = passwort;
-        this.vorname = vorname;
-        this.benutzername = vorname.trim().substring(0, 1) + "." + name;
+        this(mitarbeiterID, name, vorname, vorname.trim().substring(0, 1) + "." + name, passwort);
     }
 
     public Mitarbeiter(final int mitarbeiterID, final String name, final String vorname) {
-        this.mitarbeiterID = mitarbeiterID;
-        this.name = name;
-        this.vorname = vorname;
+        this(mitarbeiterID, name, vorname, null);
     }
-
-    //	@Override
-    //	public String toString() {
-    //		return "Mitarbeiter: Name: " + name + "\nVorname: " + vorname + "\nBenutzername: " + benutzername + "\nPasswort: "
-    //				+ passwort;
-    //	}
 
     @Override
     public String toString() {

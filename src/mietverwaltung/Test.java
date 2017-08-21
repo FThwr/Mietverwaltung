@@ -20,6 +20,8 @@ import mietverwaltung.action.MitarbeiterAnzeigenAction;
 import mietverwaltung.action.MitarbeiterBearbeitenAction;
 import mietverwaltung.action.MitarbeiterErstellenAction;
 import mietverwaltung.action.WohnungAnzeigenAction;
+import mietverwaltung.action.WohnungErstellenAction;
+import mietverwaltung.action.WohnungBearbeitenAction;
 import mietverwaltung.action.WohnungSuchenAction;
 import mietverwaltung.menu.MenuEntry;
 import mietverwaltung.menu.MenuManager;
@@ -86,8 +88,8 @@ public class Test {
 
         m.add(new MenuEntry("Wohnung suchen", new WohnungSuchenAction()));
         m.add(new MenuEntry("Wohnung anzeigen", new WohnungAnzeigenAction()));
-        m.add(new MenuEntry("neue Wohnung erstellen", new WohnungCreate()));
-        m.add(new MenuEntry("Wohnung bearbeiten", new WohnungEdit()));
+        m.add(new MenuEntry("neue Wohnung erstellen", new WohnungErstellenAction()));
+        m.add(new MenuEntry("Wohnung bearbeiten", new WohnungBearbeitenAction()));
         m.add(new MenuEntry("Mieter anzeigen", new MieterAnzeigenAction()));
         m.add(new MenuEntry("Mieter bearbeiten", new MieterBearbeitenAction()));
         m.add(new MenuEntry("neuen Mieter erstellen", new MieterErstellenAction()));

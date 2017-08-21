@@ -25,7 +25,6 @@ public abstract class Kunde {
     @Override
     public String toString() {
         return String.format("Kunde: %nKunden-ID: %d%n Name: %s%n Vorname: %n%s Geburtdatum: %s&n Adresse: %s%n E-Mail: %s%n Telefonnummer: %s%n Rolle: %s%n", this.kundenID, this.name, this.vorname, this.geburtsdatum, this.adresse, this.email, this.telefonnummer, this.rolle);
-        //"\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nWohnungsnummer: " + "\nAdresse: " + this.adresse.toString() + "\nE-Mail: " + this.email + "\nTelefonnummer: " + this.telefonnummer + "\nRolle: " + this.rolle;
     }
 
     public int getKundenID() {
