@@ -154,6 +154,7 @@ public class WohnungErstellenAction extends MenuManager implements Action {
                 erstellVorgang = false;
 
                 MenuManager.currentManager.add(new Wohnung(wohnungsnummer, zimmeranzahl, fläche, kosten, etage, balkon, fußbodenheizung, aussicht, adresse, status, letztesRenovierungsdatum, renovierungsanzahl, letzeRenovierung_Details, handwerkerauftrag, zugeordneterMitarbeiter));
+
             }
             if (ok > 11) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nKeine Option vorhanden!\n");

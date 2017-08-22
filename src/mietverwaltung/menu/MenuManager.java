@@ -1,16 +1,24 @@
 package mietverwaltung.menu;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 import mietverwaltung.Handwerkerauftrag;
 import mietverwaltung.Interessent;
 import mietverwaltung.Mieter;
 import mietverwaltung.Mietvertrag;
 import mietverwaltung.Mitarbeiter;
+import mietverwaltung.Suchanfrage;
 import mietverwaltung.Wohnung;
 import mietverwaltung.action.HandwerkerauftragAnzeigenAction;
 import mietverwaltung.action.HandwerkerauftragBearbeitenAction;
@@ -36,13 +44,15 @@ import mietverwaltung.action.WohnungBearbeitenAction;
 import mietverwaltung.action.WohnungErstellenAction;
 import mietverwaltung.action.WohnungSuchenAction;
 
-public class MenuManager extends Panel implements Serializable {
+public class MenuManager implements Serializable {
 
     private static final long serialVersionUID = 5699492648153643863L;
 
     protected static MenuManager currentManager;
 
     protected static ArrayList<MenuEntry> menuList = new ArrayList<>();
+
+    private static final String dateiPfad = "..\\menumanager.dat";
 
     static {
         MenuManager.menuList.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Suche" }));
@@ -87,6 +97,7 @@ public class MenuManager extends Panel implements Serializable {
     protected ArrayList<Interessent> interestList = new ArrayList<>();
     protected ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
     protected ArrayList<Mietvertrag> contractList = new ArrayList<>();
+    protected ArrayList<Suchanfrage> searchList = new ArrayList<>();
 
     public MenuManager() {
         MenuManager.currentManager = this;
@@ -164,21 +175,62 @@ public class MenuManager extends Panel implements Serializable {
         this.flatList.add(wohnung);
     }
 
+    public void add(final Suchanfrage suchanfrage) {
+        this.searchList.add(suchanfrage);
+    }
+
     public void start() {
-        //		String anmeldung = " ";
-        //		boolean passwort‹bereinstimmung = false;
+
+        //      FileInputStream inputWohnungen = new FileInputStream("wohnungen.ser");
+        //        // Deserialisierung
+        //        ObjectInputStream objectInputWohnungen = new ObjectInputStream(inputWohnungen);
+        //        // ArrayList auslesen
+        //        flatList = (ArrayList <Wohnung>) objectInputWohnungen.readObject();
         //
-        //		while (passwort‹bereinstimmung == false) {
-        //			anmeldung = anmelden();
-        //			boolean passwort = passwortExistens(anmeldung);
+        //        FileInputStream inputMitarbeiter = new FileInputStream("mitarbeiter.ser");
+        //        // Deserialisierung
+        //        ObjectInputStream objectInputMitarbeiter = new ObjectInputStream(inputMitarbeiter);
+        //        // ArrayList auslesen
+        //        workerList = (ArrayList <Mitarbeiter>) objectInputMitarbeiter.readObject();
         //
-        //			if (passwort == false) {
-        //				System.out.println("Anmeldung nicht erfolgreich!\n");
-        //			} else {
-        //				passwort‹bereinstimmung = true;
-        //			}
-        //		}
-        //		personHerausfinden(anmeldung);
+        //        FileInputStream inputInteressenten = new FileInputStream("interessenten.ser");
+        //        // Deserialisierung
+        //        ObjectInputStream objectInputInteressenten = new ObjectInputStream(inputInteressenten);
+        //        // ArrayList auslesen
+        //        interestList = (ArrayList <Interessent>) objectInputInteressenten.readObject();
+        //
+        //        FileInputStream inputMieter = new FileInputStream("mieter.ser");
+        //        // Deserialisierung
+        //        ObjectInputStream objectInputMieter = new ObjectInputStream(inputMieter);
+        //        // ArrayList auslesen
+        //        ownerList = (ArrayList <Mieter>) objectInputMieter.readObject();
+        //
+        //        FileInputStream inputHandwerkerauftr‰ge = new FileInputStream("handwerkerauftr‰ge.ser");
+        //        // Deserialisierung
+        //        ObjectInputStream objectInputHandwerkerauftr‰ge = new ObjectInputStream(inputHandwerkerauftr‰ge);
+        //        // ArrayList auslesen
+        //        repairList = (ArrayList <Handwerkerauftrag>) objectInputHandwerkerauftr‰ge.readObject();
+        //
+        //        FileInputStream inputMietvertr‰ge = new FileInputStream("mietvertr‰ge.ser");
+        //        // Deserialisierung
+        //        ObjectInputStream objectInputMietvertr‰ge = new ObjectInputStream(inputMietvertr‰ge);
+        //        // ArrayList auslesen
+        //        contractList = (ArrayList <Mietvertrag>) objectInputMietvertr‰ge.readObject();
+
+        //      String anmeldung = " ";
+        //      boolean passwort‹bereinstimmung = false;
+        //
+        //      while (passwort‹bereinstimmung == false) {
+        //          anmeldung = anmelden();
+        //          boolean passwort = passwortExistens(anmeldung);
+        //
+        //          if (passwort == false) {
+        //              System.out.println("Anmeldung nicht erfolgreich!\n");
+        //          } else {
+        //              passwort‹bereinstimmung = true;
+        //          }
+        //      }
+        //      personHerausfinden(anmeldung);
 
         System.out.println("\nBei Eingabe von \"0\" kehren Sie zum vorherigen Men¸ zur¸ck. \nBei \"-1\" wird das Programm beendet.");
         MenuEntry meAktuell = ersterEintrag();
@@ -199,12 +251,12 @@ public class MenuManager extends Panel implements Serializable {
             }
         }
     }
-
-    private String anmelden() {
-        System.out.println("Anmeldungsvorgang");
-        String anmeldung = JOptionPane.showInputDialog(null, "Bitte Passwort eingeben!");
-        return anmeldung;
-    }
+    //
+    //    private String anmelden() {
+    //        System.out.println("Anmeldungsvorgang");
+    //        String anmeldung = JOptionPane.showInputDialog(null, "Bitte Passwort eingeben!");
+    //        return anmeldung;
+    //    }
 
     public boolean passwortExistens(final String anmeldung) {
         for (Mitarbeiter ma : this.workerList) {
@@ -303,13 +355,26 @@ public class MenuManager extends Panel implements Serializable {
         }
         return null;
     }
-    //
-    //    public void speichern(final File menueData) {
-    //        try(FileOutputStream fos = new FileOutputStream(menueData)) {
-    //            ObjectOutputStream out = new ObjectOutputStream(fos);
-    //            writeObject(out);
-    //        } catch (IOException e) {
-    //            System.err.println(e);
-    //        }
-    //    }
+
+    public static void speichern() {
+        File file = new File(MenuManager.dateiPfad);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            ObjectOutputStream out = new ObjectOutputStream(fos);
+            out.writeObject(MenuManager.currentManager);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
+
+    public static MenuManager laden() throws FileNotFoundException, IOException {
+        File file = new File(MenuManager.dateiPfad);
+        try (FileInputStream fos = new FileInputStream(file)) {
+            ObjectInputStream in = new ObjectInputStream(fos);
+            MenuManager.currentManager = (MenuManager) in.readObject();
+            return MenuManager.currentManager;
+        } catch (ClassNotFoundException e) {
+            System.err.println("Klasse nicht gefunden! " + e);
+        }
+        return null;
+    }
 }
