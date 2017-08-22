@@ -232,7 +232,7 @@ public class MenuManager implements Serializable {
         //      }
         //      personHerausfinden(anmeldung);
 
-        System.out.println("\nBei Eingabe von \"0\" kehren Sie zum vorherigen Menü zurück. \nBei \"-1\" wird das Programm beendet.");
+        System.out.println("\nBei Eingabe von \"0\" kehren Sie zum vorherigen Menü zurück. \nBei \"-1\" wird das Programm gespeichert und beendet.");
         MenuEntry meAktuell = ersterEintrag();
         try {
             meAktuell = aufruf(meAktuell);
@@ -285,6 +285,8 @@ public class MenuManager implements Serializable {
             } else if (eingabe == 0) {
                 meAktuell = zeigeAufObermenue(meAktuell);
             } else if (eingabe == -1) {
+                System.out.println("speichere...");
+                MenuManager.speichern();
                 System.out.println("Programm wurde beendet.");
                 System.exit(0);
             } else {
