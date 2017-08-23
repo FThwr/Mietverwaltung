@@ -2,19 +2,23 @@ package mietverwaltung;
 
 import java.io.Serializable;
 
-public abstract class Kunde implements Serializable{
-	
+import mietverwaltung.Mietvertrag;
+
+public abstract class Kunde implements Serializable {
+
 	protected int kundenID;
 	protected String name;
 	protected String vorname;
 	protected Datum geburtsdatum;
-	protected int wohnungsnummer; 
+	protected int wohnungsnummer;
 	protected Adresse adresse;
 	protected String email;
 	protected String telefonnummer;
-	protected String rolle; 
-	
-	public Kunde (int kundenID, String name, String vorname, Datum geburtsdatum, int wohnungsnummer, String email, Adresse adresse, String telefonnummer, String rolle) {
+	protected String rolle;
+
+	// Konstruktor mit Wohnungsnummer
+	public Kunde(int kundenID, String name, String vorname, Datum geburtsdatum, int wohnungsnummer, String email,
+			Adresse adresse, String telefonnummer, String rolle) {
 		this.kundenID = kundenID;
 		this.name = name;
 		this.vorname = vorname;
@@ -25,8 +29,10 @@ public abstract class Kunde implements Serializable{
 		this.telefonnummer = telefonnummer;
 		this.rolle = rolle;
 	}
-	
-	public Kunde (int kundenID, String name, String vorname, Datum geburtsdatum, String email, Adresse adresse, String telefonnummer, String rolle) {
+
+	// Konstruktor ohne Wohnungsnummer
+	public Kunde(int kundenID, String name, String vorname, Datum geburtsdatum, String email, Adresse adresse,
+			String telefonnummer, String rolle) {
 		this.kundenID = kundenID;
 		this.name = name;
 		this.vorname = vorname;
@@ -36,11 +42,12 @@ public abstract class Kunde implements Serializable{
 		this.telefonnummer = telefonnummer;
 		this.rolle = rolle;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Kunde: \nKunden-ID:" + kundenID + "\nName: " + name + "\nVorname: " + vorname + "\nGeburtsdatum: "
-				+ geburtsdatum.toString() + "\nWohnungsnummer: " + wohnungsnummer + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer + "\nRolle: " + rolle;
+				+ geburtsdatum.toString() + "\nWohnungsnummer: " + wohnungsnummer + "\nAdresse: " + adresse.toString()
+				+ "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer  + "\nRolle: " + rolle;
 	}
 
 	public void display() {

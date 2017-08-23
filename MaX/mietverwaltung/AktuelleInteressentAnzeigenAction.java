@@ -2,12 +2,18 @@ package mietverwaltung;
 
 import java.io.Serializable;
 
-public class InteressentAnzeigenAction extends MenueManager implements Action , Serializable{
+public class AktuelleInteressentAnzeigenAction extends MenueManager implements Action, Serializable {
 
 	@Override
 	public void action() {
-		
-		System.out.println("________________________________________ Interessent anzeigen ________________________________________");
+
+		System.out.println(
+				"________________________________________ aktuelle Interessent anzeigen ________________________________________");
+
+		/*
+		 * Für jedes Element in der Interessentenliste werden die dazugehörigen
+		 * Daten ausgegeben.
+		 */
 
 		for (Interessent interest : interestList) {
 
@@ -24,4 +30,3 @@ public class InteressentAnzeigenAction extends MenueManager implements Action , 
 	}
 
 }
-

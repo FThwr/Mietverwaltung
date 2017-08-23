@@ -7,24 +7,6 @@ public class WohnungAnzeigenAction extends MenueManager implements Action , Seri
 	@Override
 	public void action() {
 
-		// wenn ein Mieter eine vorhandene wohnung bewohnt
-		// setzte Status auf vermietet, wenn nicht auf frei
-
-		for (Wohnung flat : flatList) {
-			int status = 0;
-			for (Mieter owner : ownerList) {
-				if (owner.getWohnungsnummer() == flat.getWohnungsID() && flat.getWohnungsID() != -100
-						&& owner.getWohnungsnummer() != -100) {
-					status = 1;
-				}
-			}
-			if (status == 1) {
-				flat.setStatus("vermietet");
-			} else {
-				flat.setStatus("frei");
-			}
-		}
-
 		for (Wohnung flat : flatList) {
 
 			if (flat.getWohnungsID() != -100) {

@@ -2,14 +2,19 @@ package mietverwaltung;
 
 import java.io.Serializable;
 
-public class HandwerkerauftragAnzeigenAction extends MenueManager implements Action, Serializable {
+public class AktiveHandwerkeraufträgeAnzeigenAction extends MenueManager implements Action, Serializable {
 
 	@Override
 	public void action() {
-		
-		System.out.println("________________________________________ Handwerkerauftrag anzeigen ________________________________________");
 
+		System.out.println(
+				"________________________________________ Handwerkerauftrag anzeigen ________________________________________");
 
+		/*
+		 * Jedes Element der ArrayList 'repairList' wird ausgelesen z.B. die
+		 * Auftragsnummer, das Eingangsdatum des Auftrags, etc. Die ArrayList
+		 * beeinhaltet alle zurzeit aktiven Handwerkeraufträge.
+		 */
 		for (Handwerkerauftrag repair : repairList) {
 
 			System.out.println("Auftrags ID: " + repair.getAuftragsID());

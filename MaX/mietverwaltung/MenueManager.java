@@ -3,6 +3,7 @@ package mietverwaltung;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,6 +20,14 @@ public class MenueManager {
 	protected static ArrayList<Handwerkerauftrag> repairList = new ArrayList<Handwerkerauftrag>();
 	protected static ArrayList<Mietvertrag> contractList = new ArrayList<Mietvertrag>();
 	protected static ArrayList<Suchanfrage> searchList = new ArrayList<Suchanfrage>();
+	
+	
+	protected static ArrayList<Mitarbeiter> ehemaligeMitarbeiter = new ArrayList<Mitarbeiter>();
+	protected static ArrayList<Mieter> ehemaligeMieter = new ArrayList<Mieter>();
+	protected static ArrayList<Interessent> ehemaligeInteressenten = new ArrayList<Interessent>();
+	protected static ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkerauftr‰ge = new ArrayList<Handwerkerauftrag>();
+	protected static ArrayList<Mietvertrag> beendeteMietvertr‰ge = new ArrayList<Mietvertrag>();
+	
 
 	public void add(MenueEntry menueEintrag) {
 		menuList.add(menueEintrag);
@@ -51,6 +60,26 @@ public class MenueManager {
 	public void add(Suchanfrage suchanfrage) {
 		searchList.add(suchanfrage);
 	}
+	
+	public void addToHistory(Handwerkerauftrag fertige_handwerkerauftrag) {
+		abgeschlosseneHandwerkerauftr‰ge.add(fertige_handwerkerauftrag);
+	}
+	
+	public void addToHistory(Mitarbeiter ehemalige_mitarbeiter) {
+		ehemaligeMitarbeiter.add(ehemalige_mitarbeiter);
+	}
+	
+	public void addToHistory(Mieter ehemalige_mieter) {
+		ehemaligeMieter.add(ehemalige_mieter);
+	}
+	
+	public void addToHistory(Interessent ehemalige_interessenten) {
+		ehemaligeInteressenten.add(ehemalige_interessenten);
+	}
+	
+	public void addToHistory(Mietvertrag beendete_mietvertr‰ge) {
+		beendeteMietvertr‰ge.add(beendete_mietvertr‰ge);
+	}
 
 	public void start() throws FileNotFoundException, IOException, ClassNotFoundException {
 		
@@ -78,17 +107,28 @@ public class MenueManager {
 //        // ArrayList auslesen
 //        ownerList = (ArrayList <Mieter>) objectInputMieter.readObject();
 //        
-//        FileInputStream inputHandwerkerauftr‰ge = new FileInputStream("handwerkerauftr‰ge.ser");
+//        FileInputStream inputHandwerkerauftr‰ge = new FileInputStream("aktive_handwerkerauftr‰ge.ser");
 //        // Deserialisierung
 //        ObjectInputStream objectInputHandwerkerauftr‰ge = new ObjectInputStream(inputHandwerkerauftr‰ge);
 //        // ArrayList auslesen
 //        repairList = (ArrayList <Handwerkerauftrag>) objectInputHandwerkerauftr‰ge.readObject();
 //        
+		
+//		FileInputStream inputFertigeHandwerkerauftr‰ge = new FileInputStream("fertige_handwerkerauftr‰ge.ser");
+//      // Deserialisierung
+//      ObjectInputStream objectInputFertigeHandwerkerauftr‰ge = new ObjectInputStream(inputFertigeHandwerkerauftr‰ge);
+//      // ArrayList auslesen
+//      fertigeHandwerkerauftr‰ge = (ArrayList <Handwerkerauftrag>) objectInputFertigeHandwerkerauftr‰ge.readObject();
+		
+//		try {
 //        FileInputStream inputMietvertr‰ge = new FileInputStream("mietvertr‰ge.ser");
 //        // Deserialisierung
 //        ObjectInputStream objectInputMietvertr‰ge = new ObjectInputStream(inputMietvertr‰ge);
 //        // ArrayList auslesen
 //        contractList = (ArrayList <Mietvertrag>) objectInputMietvertr‰ge.readObject();
+//	} catch (Exception e) {
+//		System.out.println("Datei existiert nicht oder ist leer.");
+//	}
 		
 //		String anmeldung = " ";
 //		boolean passwort‹bereinstimmung = false;

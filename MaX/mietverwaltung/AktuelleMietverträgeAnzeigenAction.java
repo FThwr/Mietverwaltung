@@ -2,7 +2,7 @@ package mietverwaltung;
 
 import java.io.Serializable;
 
-public class MietvertragAnzeigenAction extends MenueManager implements Action, Serializable {
+public class AktuelleMietverträgeAnzeigenAction extends MenueManager implements Action, Serializable {
 
 	@Override
 	public void action() {

@@ -20,7 +20,7 @@ public class Gregorien {
 
 	public void display() {
 		
-		System.out.println(tag + "." + monat + "." + jahr);
+		System.out.print(tag + "." + monat + "." + jahr);
 		
 	}
 	

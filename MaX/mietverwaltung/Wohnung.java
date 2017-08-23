@@ -2,6 +2,8 @@ package mietverwaltung;
 
 import java.io.Serializable;
 
+import mietverwaltung.Mietvertrag;
+
 public class Wohnung implements Serializable{
 	
 	private int wohnungsID;

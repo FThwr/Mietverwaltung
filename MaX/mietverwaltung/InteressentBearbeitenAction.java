@@ -1,278 +1,388 @@
 package mietverwaltung;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class InteressentBearbeitenAction extends MenueManager implements Action , Serializable{
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class InteressentBearbeitenAction extends MenueManager implements Action, Serializable {
+
+	static int bearbeitungsAuswahl_interessentenID;
+	static int such_wohnung;
+	static int such_mitarbeiterID;
+	static boolean window = false;
 
 	@Override
-	public void action() {
-		
-		System.out.println("________________________________________ Interessent bearbeiten ________________________________________");
+	public void action() throws IOException {
 
-		Scanner s = new Scanner(System.in);
-		System.out.println("\nWählen Sie den Interessenten (ID) aus, den Sie bearbeiten möchten!\n");
+		System.out.println(
+				"________________________________________ Interessent bearbeiten ________________________________________");
 
-		// Ausgabe aller Interessenten (ID, Name, Vorname) zur einfacheren Auswahl
+		/*
+		 * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
+		 * bearbeitenden Attributs.
+		 */
+		int änderung = -99;
+
+		// Ausgabe aller Auftrag-IDs zur einfacheren Auswahl
+		auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
+
+		int zu_bearbeitenden_interessent = bearbeitungsAuswahl_interessentenID;
+
+		boolean bearbeitungsVorgang = true;
+		String[] kategorie = { "Interessenten ID", "Name", "Vorname", "Geburtsdatum", "E-Mail", "Adresse",
+				"Telefonnummer", "Rolle" };
+
+		/*
+		 * diese Variablen dienen später für eine tabellarische Ausgabe auf der
+		 * Konsole
+		 */
+		String längenAnpassung_interessentenID = "";
+		String längenAnpassung_Name = "";
+		String längenAnpassung_Vorname = "";
+		String längenAnpassung_EMail = "";
+		String längenAnpassung_Telefonnummer = "";
+		String längenAnpassung_Rolle = "";
+
+		/*
+		 * allgemeine Variablen alte = aktuelle Werte neue = neue/veränderten
+		 * Werte
+		 */
+		int aktuelleInteressentenID = 0;
+		int neueInteressentenID = 0;
+
+		String aktuellerName = "";
+		String neuerName = "";
+
+		String aktuellerVorname = "";
+		String neuerVorname = "";
+
+		Datum aktuellesGeburtsdatum = null;
+		Datum neuesGeburtsdatum = null;
+
+		String aktuelleEMail = "";
+		String neueEMail = "";
+
+		Adresse aktuelleAdresse = null;
+		Adresse neueAdresse = null;
+
+		String aktuelleTelefon = "";
+		String neueTelefon = "";
+
+		String aktuelleRolle = "";
+		String neueRolle = "";
+
+		/*
+		 * Variablen enthalten die Leerzeichen, die nach den Objekten (Daten)
+		 * eingesetzt werden. Die Längen der einzelnen Komponenten der Objekte
+		 * werden verwendet
+		 */
+		String GD_Leerzeichen = "";
+		String ADR_Leerzeichen = "";
+
+		/*
+		 * Für jedes Element in der Interessentenliste wird überprüft, welches
+		 * Element mit der eingegebenen Interessenten-ID übereinstimmt und diese
+		 * wird daraufhin zum Bearbeiten freigegeben.
+		 */
 		for (Interessent interest : interestList) {
-			System.out.println(interest.getName() + "; " + interest.getVorname() + "  ID: " + interest.getKundenID());
+			if (zu_bearbeitenden_interessent == interest.getKundenID()) {
+
+				aktuelleInteressentenID = interest.getKundenID();
+				neueInteressentenID = aktuelleInteressentenID;
+
+				aktuellerName = interest.getName();
+				neuerName = aktuellerName;
+
+				aktuellerVorname = interest.getVorname();
+				neuerVorname = aktuellerVorname;
+
+				aktuellesGeburtsdatum = interest.getGeburtsdatum();
+				neuesGeburtsdatum = aktuellesGeburtsdatum;
+
+				aktuelleEMail = interest.getEmail();
+				neueEMail = aktuelleEMail;
+
+				aktuelleAdresse = interest.getAdresse();
+				neueAdresse = aktuelleAdresse;
+
+				aktuelleTelefon = interest.getTelefonnummer();
+				neueTelefon = aktuelleTelefon;
+
+				aktuelleRolle = interest.getRolle();
+				neueRolle = aktuelleRolle;
+
+				/*
+				 * Initialisierung der tabellarischen Variablen + Ausfüllung mit
+				 * Leerzeichen (Umwandlung in die Tabelle)
+				 */
+				längenAnpassung_interessentenID = "" + aktuelleInteressentenID;
+				längenAnpassung_interessentenID = länge_anpassen(längenAnpassung_interessentenID);
+
+				längenAnpassung_Name = aktuellerName;
+				längenAnpassung_Name = länge_anpassen(längenAnpassung_Name);
+
+				längenAnpassung_Vorname = aktuellerVorname;
+				längenAnpassung_Vorname = länge_anpassen(längenAnpassung_Vorname);
+
+				GD_Leerzeichen = länge_anpassen_Datum(aktuellesGeburtsdatum);
+
+				längenAnpassung_EMail = aktuelleEMail;
+				längenAnpassung_EMail = länge_anpassen(längenAnpassung_EMail);
+
+				ADR_Leerzeichen = länge_anpassen_Adresse(aktuelleAdresse);
+
+				längenAnpassung_Telefonnummer = aktuelleTelefon;
+				längenAnpassung_Telefonnummer = länge_anpassen(längenAnpassung_Telefonnummer);
+
+				längenAnpassung_Rolle = aktuelleRolle;
+				längenAnpassung_Rolle = länge_anpassen(längenAnpassung_Rolle);
+			}
 		}
 
-		// wenn die Eingabe korrekt (ohne Buchstaben) ist, dann 
-		// beginnt der Bearbeitungsvorgang
-		try {
-			int zu_bearbeitenden_interessent = s.nextInt();
+		/*
+		 * Solange der Bearbeitungsvorgang nicht beendet ist, wird immer eine
+		 * Übersicht über den alten Wert und den neuen Wert des jeweiligen
+		 * Attributs ausgegeben. Es wird pro Durchlauf immer 1 Attribut
+		 * ausgewählt, welches man draufhin verändern kann.
+		 */
+		while (bearbeitungsVorgang == true) {
 
-			boolean bearbeitungsVorgang = true;
-			boolean interessentenEingabe_erfolgreich = false;
-			String [] kategorie = {"Interessenten ID", "Name", "Vorname", "Geburtsdatum", "E-Mail", "Adresse", "Telefonnummer", "Rolle"};
-			
-			// diese Variablen dienen später für eine tabellarische Ausgabe auf der Konsole
-			String längenAnpassung_interessentenID = "";
-			String längenAnpassung_Name = "";
-			String längenAnpassung_Vorname = "";
-			String längenAnpassung_EMail = "";
-			String längenAnpassung_Telefonnummer = "";
-			String längenAnpassung_Rolle = "";
-			
-			// allgemeine Variablen 
-			// alte = aktuelle Werte
-			// neue = neue/veränderten Werte
-			int aktuelleInteressentenID = 0;
-			int neueInteressentenID = 0;
+			System.out.println("1. Interessenten ID: " + längenAnpassung_interessentenID + "neue Interessenten ID: "
+					+ neueInteressentenID);
+			System.out.println("2. Name:             " + längenAnpassung_Name + "neuer Name:            " + neuerName);
+			System.out.println(
+					"3. Vorname:          " + längenAnpassung_Vorname + "neuer Vorname:         " + neuerVorname);
+			System.out
+					.println("4. Geburtsdatum:     " + GD_Leerzeichen + "neues Geburtsdatum:    " + neuesGeburtsdatum);
+			System.out.println("5. E-Mail:           " + längenAnpassung_EMail + "neue E-Mail:           " + neueEMail);
+			System.out.println("6. Adresse:          " + ADR_Leerzeichen + "neue Adresse:          " + neueAdresse);
+			System.out.println(
+					"7. Telefonnummer:    " + längenAnpassung_Telefonnummer + "neue Telefonnummer:    " + neueTelefon);
+			System.out.println("8. Rolle:            " + längenAnpassung_Rolle + "neue Rolle:            " + neueRolle);
+			System.out.println("9. Bearbeitung abschließen");
+			System.out.println("0. Abbruch");
+			System.out.println("");
 
-			String aktuellerName = "";
-			String neuerName = "";
+			Scanner t = new Scanner(System.in);
 
-			String aktuellerVorname = "";
-			String neuerVorname = "";
+			/*
+			 * Die try-catch Klammer existiert für nicht erwünschte Eingaben wie
+			 * Zeichen, wo Zahlen erwartet werden.
+			 */
+			try {
 
-			Datum aktuellesGeburtsdatum = null;
-			Datum neuesGeburtsdatum = null;
+				// Variable zur Auswahl des zu bearbeitenden Attributs
+				änderung = t.nextInt();
 
-			String aktuelleEMail = "";
-			String neueEMail = "";
-
-			Adresse aktuelleAdresse = null;
-			Adresse neueAdresse = null;
-
-			String aktuelleTelefon = "";
-			String neueTelefon = "";
-			
-			String aktuelleRolle = "";
-			String neueRolle = "";
-
-			String GD_Leerzeichen = "";
-			String ADR_Leerzeichen = "";
-
-			// wenn die Eingabe der Interessenten-ID einer existierenden ID entspricht wird fortgefahren
-			for (Interessent interest : interestList) {
-				if (zu_bearbeitenden_interessent == interest.getKundenID()) {
-
-					interessentenEingabe_erfolgreich = true;
-
-					aktuelleInteressentenID = interest.getKundenID();
-					neueInteressentenID = aktuelleInteressentenID;
-
-					aktuellerName = interest.getName();
-					neuerName = aktuellerName;
-
-					aktuellerVorname = interest.getVorname();
-					neuerVorname = aktuellerVorname;
-
-					aktuellesGeburtsdatum = interest.getGeburtsdatum();
-					neuesGeburtsdatum = aktuellesGeburtsdatum;
-
-					aktuelleEMail = interest.getEmail();
-					neueEMail = aktuelleEMail;
-
-					aktuelleAdresse = interest.getAdresse();
-					neueAdresse = aktuelleAdresse;
-
-					aktuelleTelefon = interest.getTelefonnummer();
-					neueTelefon = aktuelleTelefon;
-
-					aktuelleRolle = interest.getRolle();
-					neueRolle = aktuelleRolle;
-
-					// Initialisierung der tabellarischen Variablen + Ausfüllung mit Leerzeichen (Umwandlung in die Tabelle)
-					längenAnpassung_interessentenID = "" + aktuelleInteressentenID;
-					längenAnpassung_interessentenID = länge_anpassen(längenAnpassung_interessentenID);
-
-					längenAnpassung_Name = aktuellerName;
-					längenAnpassung_Name = länge_anpassen(längenAnpassung_Name);
-
-					längenAnpassung_Vorname = aktuellerVorname;
-					längenAnpassung_Vorname = länge_anpassen(längenAnpassung_Vorname);
-
-					GD_Leerzeichen = länge_anpassen_Datum(aktuellesGeburtsdatum);
-
-					längenAnpassung_EMail = aktuelleEMail;
-					längenAnpassung_EMail = länge_anpassen(längenAnpassung_EMail);
-
-					ADR_Leerzeichen = länge_anpassen_Adresse(aktuelleAdresse);
-
-					längenAnpassung_Telefonnummer = aktuelleTelefon;
-					längenAnpassung_Telefonnummer = länge_anpassen(längenAnpassung_Telefonnummer);
-
-					längenAnpassung_Rolle = aktuelleRolle;
-					längenAnpassung_Rolle = länge_anpassen(längenAnpassung_Rolle);
-				}
-			}
-
-			if (interessentenEingabe_erfolgreich == true) {
-				while (bearbeitungsVorgang == true) {
-
-					System.out.println("Interessenten ID: " + längenAnpassung_interessentenID + "neue Interessenten ID: " + neueInteressentenID);
-					System.out.println("Name:             " + längenAnpassung_Name            + "neuer Name:            " + neuerName);
-					System.out.println("Vorname:          " + längenAnpassung_Vorname         + "neuer Vorname:         " + neuerVorname);
-					System.out.println("Geburtsdatum:     " + GD_Leerzeichen                  + "neues Geburtsdatum:    " + neuesGeburtsdatum);
-					System.out.println("E-Mail:           " + längenAnpassung_EMail           + "neue E-Mail:           " + neueEMail);
-					System.out.println("Adresse:          " + ADR_Leerzeichen                 + "neue Adresse:          " + neueAdresse);
-					System.out.println("Telefonnummer:    " + längenAnpassung_Telefonnummer   + "neue Telefonnummer:    " + neueTelefon);
-					System.out.println("Rolle:            " + längenAnpassung_Rolle           + "neue Rolle:            " + neueRolle);
-					System.out.println("");
-
-					Scanner t = new Scanner(System.in);
+				// Abbruch
+				if (änderung == 0) {
 					System.out.println(
-							"............................... Wählen Sie die zu bearbeitende Eigenschaft aus! ..............................."
-									+ "\n Drücke '1' für Interessenten-ID  "
-									+ "\n Drücke '2' für Name  " 
-									+ "\n Drücke '3' für Vorname  "
-									+ "\n Drücke '4' für Geburtsdatum  " 
-									+ "\n Drücke '5' für E-Mail  "
-									+ "\n Drücke '6' für Adresse  " 
-									+ "\n Drücke '7' für Telefon  "
-									+ "\n Drücke '8' für Rolle  " 
-									+ "\n Drücke '9' für bestätigen  "
-									+ "\n Drücke '0' für abbruch der Suche!\n");
+							"-------------------------------Bearbeitungsvorgang wurde abgebrochen!-------------------------------\n");
+					bearbeitungsVorgang = false;
+				}
+
+				// Interessenten-ID
+				if (änderung == 1) {
+
+					int eingabe = einlesen_Zahl(kategorie, änderung);
+					if (eingabe == 0) {
+
+					} else {
+
+						int vorhanden = 0;
+						/*
+						 * Für jedes Element in der Interessentenliste wird
+						 * geguckt, ob die eingegebende ID mit einer bereits
+						 * existierenden übereinstimmt.
+						 */
+						for (Interessent interest : interestList) {
+							if (eingabe == interest.getKundenID()) {
+								vorhanden = 1;
+							}
+						}
+
+						/*
+						 * Für jedes Element in der Liste der ehemaligen
+						 * Interessenten wird geguckt, ob die eingegebende ID
+						 * mit einer bereits existierenden übereinstimmt.
+						 */
+						for (Interessent ehemaligerInteressent : ehemaligeInteressenten) {
+							if (eingabe == ehemaligerInteressent.getKundenID()) {
+								vorhanden = 1;
+							}
+						}
+
+						/*
+						 * Wenn vorhanden = 1 ist, dann existiert ein
+						 * Interessent mit dieser ID bereits
+						 */
+						if (vorhanden == 1) {
+							System.out.println(
+									"\n------------------------------- Fehler! ------------------------------- \nKunden ID bereits vergeben!\n");
+						} else {
+							neueInteressentenID = eingabe;
+						}
+					}
+				}
+
+				// Name
+				if (änderung == 2) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+						neuerName = aktuellerName;
+					} else {
+						neuerName = eingabe;
+					}
+				}
+
+				// Vorname
+				if (änderung == 3) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+						neuerVorname = aktuellerVorname;
+					} else {
+						neuerVorname = eingabe;
+					}
+				}
+
+				// Geburtsdatum
+				if (änderung == 4) {
+
+					neuesGeburtsdatum = Datum_Eingabe(aktuellesGeburtsdatum);
+
+				}
+
+				// E-Mail
+				if (änderung == 5) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+						neueEMail = aktuelleEMail;
+					} else {
+						neueEMail = eingabe;
+					}
+				}
+
+				// Adresse
+				if (änderung == 6) {
+					String[] auswahl = { "Straße", "Hausnummer", "Platz", "Stadt" };
+					int zähler = 1;
+					String straße = einlesen_Wort(auswahl, zähler);
+					zähler = 2;
+					int hausnummer = einlesen_Zahl(auswahl, zähler);
+					zähler = 3;
+					int platz = einlesen_Zahl(auswahl, zähler);
+					zähler = 4;
+					String stadt = einlesen_Wort(auswahl, zähler);
+
+					/*
+					 * Wenn einer der Werte versucht wird zu überspringen/
+					 * auszulassen, dann bleibt es beim unveränderten Datum.
+					 */
+					if (straße.equals("" + 0) || hausnummer == 0 || hausnummer == -100 || platz == 0 || platz == -100
+							|| stadt.equals("" + 0)) {
+						neueAdresse = aktuelleAdresse;
+					} else {
+						neueAdresse = new Adresse(straße, hausnummer, platz, stadt);
+					}
+				}
+
+				// Telefonnummer
+				if (änderung == 7) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+						neueTelefon = aktuelleTelefon;
+					} else {
+						neueTelefon = eingabe;
+					}
+				}
+
+				// Rolle
+				if (änderung == 8) {
+					String[] auswahl = { "Interessent", "Mieter", "Delete" };
+
+					Scanner a = new Scanner(System.in);
+					System.out.println("Geben Sie die Zahl vom gewünschten Status aus: " + "1" + auswahl[0] + "2"
+							+ auswahl[1] + "3" + auswahl[2]);
 
 					try {
-						int änderung = t.nextInt();
+						int eingabe = a.nextInt();
 
-						if (änderung == 0) {
-							bearbeitungsVorgang = false;
+						if (eingabe == 0) {
 						}
-						if (änderung == 1) {
-							int eingabe = einlesen_Zahl(kategorie, änderung);
-							if (eingabe == 0) {
-								neueInteressentenID = aktuelleInteressentenID;
-							} else {
-								neueInteressentenID = eingabe;
-							}
-						}
-						if (änderung == 2) {
-							String eingabe = einlesen_Wort(kategorie, änderung);
-							if (eingabe.equals("" + 0)) {
-								neuerName = aktuellerName;
-							} else {
-								neuerName = eingabe;
-							}
-						}
-						if (änderung == 3) {		
-							String eingabe = einlesen_Wort(kategorie, änderung);
-							if (eingabe.equals("" + 0)) {
-								neuerVorname = aktuellerVorname;
-							} else {
-								neuerVorname = eingabe;
-							}
-						}
-						if (änderung == 4) {		
-							String[] auswahl = { "Tag", "Monat", "Jahr" };
-							int zähler = 1;
-							int tag = einlesen_Zahl(auswahl, zähler);
-							zähler = 2;
-							int monat = einlesen_Zahl(auswahl, zähler);
-							zähler = 3;
-							int jahr = einlesen_Zahl(auswahl, zähler);
+						if (eingabe == 1) {
 
-							if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
-								neuesGeburtsdatum = aktuellesGeburtsdatum;
-							} 
-							else {
-								neuesGeburtsdatum = new Datum(tag, monat, jahr);
+							neueRolle = "Interessent";
+						}
+						if (eingabe == 2) {
+							neueRolle = "Mieter";
+						}
+						if (eingabe == 3) {
+							neueRolle = "Delete";
+						} else {
+							System.out.println(
+									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+						}
+					} catch (InputMismatchException e) {
+						System.out.println(
+								"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+					}
+
+				}
+
+				// Bearbeitung abschließen
+				if (änderung == 9) {
+					bearbeitungsVorgang = false;
+
+					/*
+					 * Wenn die neue Rolle des Interessenten wieder die des
+					 * Interessenten ist, dann werden für ihn die neuen Daten
+					 * eingetragen und die alten überschrieben.
+					 */
+					if (neueRolle.equals("Interessent")) {
+
+						for (Interessent interest : interestList) {
+							if (zu_bearbeitenden_interessent == interest.getKundenID()) {
+								interest.setKundenID(neueInteressentenID);
+								interest.setName(neuerName);
+								interest.setVorname(neuerVorname);
+								interest.setGeburtsdatum(neuesGeburtsdatum);
+								interest.setEmail(neueEMail);
+								interest.setAdresse(neueAdresse);
+								interest.setTelefonnummer(neueTelefon);
 							}
 						}
-						if (änderung == 5) {
-							String eingabe = einlesen_Wort(kategorie, änderung);
-							if (eingabe.equals("" + 0)) {
-								neueEMail = aktuelleEMail;
-							} else {
-								neueEMail = eingabe;
-							}
-						}
-						if (änderung == 6) {
-							String [] auswahl = {"Straße", "Hausnummer", "Platz", "Stadt"};
-							int zähler = 1;
-							String straße = einlesen_Wort(auswahl, zähler);
-							zähler = 2;
-							int hausnummer = einlesen_Zahl(auswahl, zähler);
-							zähler = 3;
-							int platz = einlesen_Zahl(auswahl, zähler);
-							zähler = 4;
-							String stadt = einlesen_Wort(auswahl, zähler);
+					}
 
-							if (straße.equals("" + 0) || hausnummer == 0 || hausnummer == -100 || platz == 0 || platz == -100 || stadt.equals("" + 0)) {
-								neueAdresse = aktuelleAdresse;
-							} 
-							else {
-								neueAdresse = new Adresse(straße, hausnummer, platz, stadt);
-							}
-						}
-						if (änderung == 7) {
-							String eingabe = einlesen_Wort(kategorie, änderung);
-							if (eingabe.equals("" + 0)) {
-								neueTelefon = aktuelleTelefon;
-							} else {
-								neueTelefon = eingabe;
-							}
-						}
-						if (änderung == 8) {
-							String [] auswahl = {"Interessent", "Mieter", "Delete"};
-							
-							Scanner a = new Scanner(System.in);
-							System.out.println("Geben Sie die Zahl vom gewünschten Status aus: " + "1" + auswahl[0] + "2" + auswahl[1] + "3" + auswahl[2]);
-							int eingabe = a.nextInt();
-							
-							if (eingabe == 0 || eingabe == 1) {
-								neueRolle = aktuelleRolle;
-							} 
-							if (eingabe == 2) {
-								neueRolle = "Mieter";
-							}
-							if (eingabe == 3) {
-								neueRolle = "Delete";
-							}
+					/*
+					 * Wenn die neue Rolle des Interessenten die des 'Mieters'
+					 * ist, dann wird in der Interessentenliste nach dem so eben
+					 * bearbeitenenden Interessenten gesucht und dieser zur
+					 * Liste der Mieter hinzugefügt und die Liste gespeichert.
+					 * Außerdem wird er aus der Liste der Interessenten
+					 * gelöscht.
+					 */
+					if (neueRolle.equals("Mieter")) {
+						for (Interessent interest : interestList) {
+							if (zu_bearbeitenden_interessent == interest.getKundenID()) {
+								ownerList.add(new Mieter(neueInteressentenID, neuerName, neuerVorname,
+										neuesGeburtsdatum, -100, neueEMail, neueAdresse, neueTelefon, neueRolle));
 
-						}
-						if (änderung == 9) {
-							bearbeitungsVorgang = false;
-
-							if (neueRolle.equals("Interessent")) {
-
-								for (Interessent interest : interestList) {
-									if (zu_bearbeitenden_interessent == interest.getKundenID()) {
-										interest.setKundenID(neueInteressentenID);
-										interest.setName(neuerName);
-										interest.setVorname(neuerVorname);
-										interest.setGeburtsdatum(neuesGeburtsdatum);
-										interest.setEmail(neueEMail);
-										interest.setAdresse(neueAdresse);							
-										interest.setTelefonnummer(neueTelefon);
-									}
-								}
-							}
-							if (neueRolle.equals("Mieter")) {
-								for (Interessent interest : interestList) {
-									if (zu_bearbeitenden_interessent == interest.getKundenID()) {
-										ownerList.add(new Mieter(neueInteressentenID, neuerName, neuerVorname, neuesGeburtsdatum, -100, neueEMail, neueAdresse, neueTelefon, neueRolle));
-									}
-								}						
-							}
-							if (neueRolle.equals("Delete")) {
-
+								// Löschen
 								Iterator<Interessent> iter = interestList.iterator();
 
 								while (iter.hasNext()) {
@@ -284,32 +394,216 @@ public class InteressentBearbeitenAction extends MenueManager implements Action 
 								}
 							}
 						}
-					} catch (InputMismatchException e) {
-						System.out.println(
-								"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+					}
+
+					/*
+					 * Wenn die neue Rolle des Interessenten auf 'Delete'
+					 * gesetzt wird, dann wird in der Interessentenliste nach
+					 * dem so eben bearbeitenenden Interessenten gesucht und
+					 * dieser aus der Liste der Interessenten gelöscht.
+					 */
+					if (neueRolle.equals("Delete")) {
+
+						Iterator<Interessent> iter = interestList.iterator();
+
+						while (iter.hasNext()) {
+							Interessent str = iter.next();
+
+							if (str.getKundenID() == neueInteressentenID) {
+								iter.remove();
+							}
+						}
+
 					}
 				}
-			} 
-			else {
-				System.out.println("------------------------------- Fehler! ------------------------------- \nIhre Eingabe war nicht erfolgreich, weil die ID nicht existiert!\n");
+				// Eingabe > 9
+				else {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+				}
+			} catch (InputMismatchException e) {
+				System.out.println(
+						"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
 			}
+		}
+	}
+
+	/**
+	 * Methode zur Eingabe des Datums
+	 * 
+	 * @param aktuellesDatum,
+	 *            was der Handwerkerauftrag zu dem Zeitpunkt noch benutzt
+	 * @return das neue Datum, welches weiterverwendet werden soll
+	 */
+	public Datum Datum_Eingabe(Datum aktuellesDatum) {
+
+		System.out
+				.println("Eingabe des Geburtsdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+		String[] auswahl = { "Jahr", "Monat", "Tag" };
+
+		Datum neuesDatum = null;
+		boolean datumsEingabeErfolgreich = false;
+
+		int zähler = 1;
+		int jahr = einlesen_Zahl(auswahl, zähler);
+
+		zähler = 2;
+		int monat = 0;
+		do {
+			monat = einlesen_Zahl(auswahl, zähler);
+			if (monat > 12) {
+				System.out.println(
+						"\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+			}
+		} while (monat > 12);
+
+		zähler = 3;
+		int tag = 0;
+		do {
+			tag = einlesen_Zahl(auswahl, zähler);
+			if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
+				if (tag > 31) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+				} else {
+					datumsEingabeErfolgreich = true;
+				}
+			}
+
+			if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
+				if (tag > 30) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+				} else {
+					datumsEingabeErfolgreich = true;
+				}
+			}
+
+			if (monat == 2) {
+				if (tag > 29) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+				} else {
+					datumsEingabeErfolgreich = true;
+				}
+			}
+		} while (datumsEingabeErfolgreich == false);
+
+		/*
+		 * Wenn einer der Werte versucht wird zu überspringen/ auszulassen, dann
+		 * bleibt es beim unveränderten Datum.
+		 */
+		if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
+			neuesDatum = aktuellesDatum;
+		} else {
+			neuesDatum = new Datum(tag, monat, jahr);
+		}
+		return neuesDatum;
+	}
+
+	/**
+	 * Methode zur Auswahl eines bereits existierend Attributs durch Vorschlag
+	 * jedes einzelnen Elements in einer ArrayList
+	 * 
+	 * @param änderung
+	 *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt
+	 *            (ob eine Wohnung, etc. bearbeitet wird)
+	 */
+	private void auswahl_AuftragsID_Wohnung_MitarbeiterID(int änderung) {
+		window = false;
+
+		such_wohnung = -100;
+		JFrame meinRahmen = new JFrame();
+
+		meinRahmen.setSize(250, 250);
+		JPanel meinPanel = new JPanel();
+		meinRahmen.setLocationRelativeTo(null);
+
+		JComboBox combo2 = new JComboBox();
+		combo2.addItem("" + 0);
+
+		if (änderung == -99) {
+			meinRahmen.setTitle("Interessenten ID");
+			JLabel frage = new JLabel("Welchen Interessenten möchten Sie bearbeiten?");
+			meinPanel.add(frage);
+			for (Interessent interest : interestList) {
+				combo2.addItem(interest.getKundenID());
+			}
+		}
+
+		if (änderung == 2) {
+			meinRahmen.setTitle("Wohnungsnummer");
+			JLabel frage = new JLabel("Welche Wohnung möchten Sie auswählen?");
+			meinPanel.add(frage);
+			for (Wohnung flat : flatList) {
+				combo2.addItem(flat.getWohnungsID());
+			}
+		}
+
+		if (änderung == 3) {
+			meinRahmen.setTitle("Mitarbeiter-ID");
+			JLabel frage = new JLabel("Welchen Mitarbeiter (ID) möchten Sie auswählen?");
+			meinPanel.add(frage);
+			for (Mitarbeiter worker : workerList) {
+				combo2.addItem(worker.getMitarbeiterID());
+			}
+		}
+
+		meinRahmen.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				window = true;
+			}
+		});
+
+		ActionListener cbActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (änderung == -99) {
+					bearbeitungsAuswahl_interessentenID = (int) combo2.getSelectedItem();
+				}
+				if (änderung == 2) {
+					such_wohnung = (int) combo2.getSelectedItem();
+				}
+				if (änderung == 3) {
+					such_mitarbeiterID = (int) combo2.getSelectedItem();
+				}
+
+			}
+		};
+		meinPanel.add(combo2);
+		meinRahmen.add(meinPanel, BorderLayout.SOUTH);
+		meinRahmen.pack();
+		meinRahmen.setVisible(true);
+		while (window == false) {
+			combo2.addActionListener(cbActionListener);
+		}
+
+	}
+
+	private int einlesen_Zahl(String[] auswahl, int zähler) {
+		Scanner s = new Scanner(System.in);
+		int zahl = -100;
+		try {
+
+			do {
+				System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+				zahl = s.nextInt();
+				if (zahl < 0) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+				}
+			} while (zahl < 0);
 		} catch (InputMismatchException e) {
 			System.out.println(
 					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
 		}
+		return zahl;
 	}
 
-	private int einlesen_Zahl(String [] auswahl, int zähler) {
-		System.out.println("Geben Sie ein: " + auswahl[zähler-1]);
+	private String einlesen_Wort(String[] auswahl, int zähler) {
+		System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
 		Scanner s = new Scanner(System.in);
-		int wort = s.nextInt();
-		return wort;
-	}
-	
-	private String einlesen_Wort(String [] auswahl, int zähler) {
-		System.out.println("Geben Sie ein: " + auswahl[zähler-1]);
-		Scanner s = new Scanner(System.in);
-		String wort = s.next();
+		String wort = s.nextLine();
 		return wort;
 	}
 

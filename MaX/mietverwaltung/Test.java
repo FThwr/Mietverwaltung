@@ -29,15 +29,15 @@ public class Test {
 //		m.add(new Mieter (90003, "Harry", "Potter", "12.10.1997", -100, "potter@web.de", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "03089653", "Mieter"));
 		
 		 //Wohnungen
-//		m.add(new Wohnung (301, 4, 80.60, 1100.00, 1, true, true, "Park", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag ("") , new Mitarbeiter (6, "Menz", "Max")));
-//		m.add(new Wohnung (302, 6, 80.60, 1100.00, 4, true, true, "Park", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (2, "Tsakonas", "Felicia")));
-//		m.add(new Wohnung (303, 6, 80.60, 1100.00, 3, true, true, "Spree", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (6, "Menz", "Max")));
-//		m.add(new Wohnung (304, 3, 80.60, 1100.00, 1, true, true, "Schienen", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (2, "Tsakonas", "Felicia")));
+		m.add(new Wohnung (301, 4, 80.60, 1100.00, 1, true, true, "Park", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag ("") , new Mitarbeiter (6, "Menz", "Max")));
+		m.add(new Wohnung (302, 6, 80.60, 1100.00, 4, true, true, "Park", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (2, "Tsakonas", "Felicia")));
+		m.add(new Wohnung (303, 6, 80.60, 1100.00, 3, true, true, "Spree", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (6, "Menz", "Max")));
+		m.add(new Wohnung (304, 3, 80.60, 1100.00, 1, true, true, "Schienen", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (2, "Tsakonas", "Felicia")));
 
 		//		
-		m.add(new Handwerkerauftrag("H-404", 303, 1, "Kaputte Wand", "in Arbeit", new Datum (3, 12, 2016), new Datum (0,0,0)));
-		m.add(new Handwerkerauftrag("H-40003", 302, 1, "Kaputte Tür", "fertig", new Datum (1, 12, 2014), new Datum (0,0,0)));
-		m.add(new Handwerkerauftrag("H-40002", 303, 2, "Kaputte Badewanne", "fertig", new Datum (1, 11, 2013), new Datum (0,0,0)));
+		m.add(new Handwerkerauftrag("H-404", 303, 1, "Kaputte Wand", "in Arbeit", new Datum (3, 12, 2016), new Datum (0,2,2002)));
+		m.add(new Handwerkerauftrag("H-40003", 302, 1, "Kaputte Tür", "fertig", new Datum (1, 12, 2014), new Datum (0,12,2003)));
+		m.add(new Handwerkerauftrag("H-40002", 303, 2, "Kaputte Badewanne", "fertig", new Datum (1, 11, 2013), new Datum (0,2,2007)));
 		
 		
 		m.add(new MenueEntry("", new String [] {"Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Suche"}));
@@ -47,7 +47,7 @@ public class Test {
 		m.add(new MenueEntry("Mietvertrag", new String [] {"Mietvertrag anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen"}));
 		
 		m.add(new MenueEntry("Suche", new String [] {"Suchanfrage erstellen", "Suchanfragen anzeigen"}));	
-		m.add(new MenueEntry("Handwerkerauftrag", new String [] {"Handwerkerauftrag anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen"}));
+		m.add(new MenueEntry("Handwerkerauftrag", new String [] {"fertige Handwerkeraufträge anzeigen" , "Handwerkerauftrag anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen"}));
 		
 		m.add(new MenueEntry("Mieter", new String [] {"Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen"}));
 		m.add(new MenueEntry("Interessent", new String [] {"Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen"}));
@@ -58,11 +58,11 @@ public class Test {
 		m.add(new MenueEntry("Wohnung anzeigen", new WohnungAnzeigenAction()));
 		m.add(new MenueEntry("neue Wohnung erstellen", new WohnungCreate()));
 		m.add(new MenueEntry("Wohnung bearbeiten", new WohnungEdit()));
-		m.add(new MenueEntry("Mieter anzeigen", new MieterAnzeigenAction()));
+		m.add(new MenueEntry("Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
 		m.add(new MenueEntry("Mieter bearbeiten", new MieterBearbeitenAction()));
 		m.add(new MenueEntry("neuen Mieter erstellen", new MieterErstellenAction()));
 		m.add(new MenueEntry("Mieter suchen", new MieterSuchenAction()));
-		m.add(new MenueEntry("Interessenten anzeigen", new InteressentAnzeigenAction()));
+		m.add(new MenueEntry("Interessenten anzeigen", new AktuelleInteressentAnzeigenAction()));
 		m.add(new MenueEntry("Interessent bearbeiten", new InteressentBearbeitenAction()));
 		m.add(new MenueEntry("neuen Interessenten erstellen", new InteressentErstellenAction()));
 		m.add(new MenueEntry("Interessenten suchen", new InteressentSuchenAction()));
@@ -70,11 +70,12 @@ public class Test {
 		m.add(new MenueEntry("neuen Mitarbeiter erstellen", new MitarbeiterErstellenAction()));
 		m.add(new MenueEntry("Mitarbeiter bearbeiten", new MitarbeiterBearbeitenAction()));
 		m.add(new MenueEntry("Handwerkerauftrag suchen", new HandwerkerauftragSuchenAction()));
-		m.add(new MenueEntry("Handwerkerauftrag anzeigen", new HandwerkerauftragAnzeigenAction()));
+		m.add(new MenueEntry("fertige Handwerkeraufträge anzeigen", new AlleAbgeschlossenenHandwerkeraufträgeAnzeigenAction()));
+		m.add(new MenueEntry("Handwerkerauftrag anzeigen", new AktiveHandwerkeraufträgeAnzeigenAction()));
 		m.add(new MenueEntry("Handwerkerauftrag erstellen", new HandwerkerauftragErstellenAction()));
 		m.add(new MenueEntry("Handwerkerauftrag bearbeiten", new HandwerkerauftragBearbeitenAction()));
 		m.add(new MenueEntry("Mietvertrag suchen", new MietvertragSuchenAction()));
-		m.add(new MenueEntry("Mietvertrag anzeigen", new MietvertragAnzeigenAction()));
+		m.add(new MenueEntry("Mietvertrag anzeigen", new AktuelleMietverträgeAnzeigenAction()));
 		m.add(new MenueEntry("Mietvertrag erstellen", new MietvertragErstellenAction()));
 		m.add(new MenueEntry("Mietvertrag bearbeiten", new MietvertragBearbeitenAction()));
 

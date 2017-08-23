@@ -7,26 +7,64 @@ public class Suchanfrage implements Serializable {
 	private int mitarbeiterID;
 	private int kundenID;
 	private double zimmeranzahl;
+	private char relaZimmeranzahl;
 	private double fl‰che;
+	private char relaFl‰che;
 	private double kosten;
+	private char relaKosten;
 	private double etage;
+	private char relaEtage;
 	private boolean balkon;
 	private boolean fuﬂbodenheizung;
 	private String aussicht;
 	private Gregorien aktuellesDatum;
-	public Suchanfrage(int mitarbeiterID, int kundenID, double such_zimmeranzahl, double fl‰che, double kosten, double such_etage,
+	public Suchanfrage(int mitarbeiterID, int kundenID, char relaZimmeranzahl , double such_zimmeranzahl, char relaFl‰che, double fl‰che, char relaKosten, double kosten, char relaEtage, double such_etage,
 			boolean balkon, boolean fuﬂbodenheizung, String aussicht, Gregorien aktuellesDatum) {
 		
 		this.mitarbeiterID = mitarbeiterID;
 		this.kundenID = kundenID;
 		this.zimmeranzahl = such_zimmeranzahl;
+		this.relaZimmeranzahl = relaZimmeranzahl;
 		this.fl‰che = fl‰che;
+		this.relaFl‰che = relaFl‰che;
 		this.kosten = kosten;
+		this.relaKosten = relaKosten;
 		this.etage = such_etage;
+		this.relaEtage = relaEtage;
 		this.balkon = balkon;
 		this.fuﬂbodenheizung = fuﬂbodenheizung;
 		this.aussicht = aussicht;
-		this.
+		this.aktuellesDatum = aktuellesDatum;
+	}
+	public char getRelaZimmeranzahl() {
+		return relaZimmeranzahl;
+	}
+	public void setRelaZimmeranzahl(char relaZimmeranzahl) {
+		this.relaZimmeranzahl = relaZimmeranzahl;
+	}
+	public char getRelaFl‰che() {
+		return relaFl‰che;
+	}
+	public void setRelaFl‰che(char relaFl‰che) {
+		this.relaFl‰che = relaFl‰che;
+	}
+	public char getRelaKosten() {
+		return relaKosten;
+	}
+	public void setRelaKosten(char relaKosten) {
+		this.relaKosten = relaKosten;
+	}
+	public char getRelaEtage() {
+		return relaEtage;
+	}
+	public void setRelaEtage(char relaEtage) {
+		this.relaEtage = relaEtage;
+	}
+	public Gregorien getAktuellesDatum() {
+		return aktuellesDatum;
+	}
+	public void setAktuellesDatum(Gregorien aktuellesDatum) {
+		this.aktuellesDatum = aktuellesDatum;
 	}
 	public int getMitarbeiterID() {
 		return mitarbeiterID;

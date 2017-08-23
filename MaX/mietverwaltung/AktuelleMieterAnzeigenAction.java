@@ -1,12 +1,18 @@
 package mietverwaltung;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 
-public class MieterAnzeigenAction extends MenueManager implements Action , Serializable{
+public class AktuelleMieterAnzeigenAction extends MenueManager implements Action, Serializable {
 
 	@Override
-	public void action() {
+	public void action() throws FileNotFoundException, IOException, ClassNotFoundException {
 
+		/*
+		 * Jedes Element der ArrayList 'ownerList' wird ausgelesen. Die
+		 * ArrayList beeinhaltet alle aktuellen Mieter.
+		 */
 		for (Mieter owner : ownerList) {
 
 			System.out.println("Mieter ID:      " + owner.getKundenID());

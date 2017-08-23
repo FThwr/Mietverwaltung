@@ -10,6 +10,18 @@ public class Mietvertrag implements Serializable {
 	private int mitarbeiterID;
 	private Datum mietbeginn;
 	private Datum mietende;
+	private String status; 
+	
+	public Mietvertrag(String mietvertragID, int wohnungsID, int kundenID, int mitarbeiterID, Datum mietbeginn, Datum mietende, String status) {
+		
+		this.mietvertragID = mietvertragID;
+		this.wohnungsID = wohnungsID;
+		this.kundenID = kundenID;
+		this.mitarbeiterID = mitarbeiterID;
+		this.mietbeginn = mietbeginn;
+		this.mietende = mietende;
+		this.status = status;
+	}
 	
 	public int getWohnungsID() {
 		return wohnungsID;
@@ -47,14 +59,12 @@ public class Mietvertrag implements Serializable {
 	public void setMietvertragID(String mietvertragID) {
 		this.mietvertragID = mietvertragID;
 	}
-	public Mietvertrag(String mietvertragID, int wohnungsID, int kundenID, int mitarbeiterID, Datum mietbeginn, Datum mietende) {
-		
-		this.mietvertragID = mietvertragID;
-		this.wohnungsID = wohnungsID;
-		this.kundenID = kundenID;
-		this.mitarbeiterID = mitarbeiterID;
-		this.mietbeginn = mietbeginn;
-		this.mietende = mietende;
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 

@@ -10,8 +10,6 @@ public class Datum implements Comparable<Datum> , Serializable{
 	private int monat;
 	private int jahr;
 	
-	GregorianCalendar cal = new GregorianCalendar();
-	
 	public Datum (int tag, int monat, int jahr) {
 		this.tag = tag;
 		this.monat = monat;
@@ -40,13 +38,6 @@ public class Datum implements Comparable<Datum> , Serializable{
 
 	public void setJahr(int jahr) {
 		this.jahr = jahr;
-	}
-
-	public Datum(){
-		this.tag = cal.get(Calendar.DATE);
-		this.monat = 1 + cal.get(Calendar.MONTH);
-		this.jahr = cal.get(Calendar.YEAR);
-		
 	}
 	
 	public void print (){

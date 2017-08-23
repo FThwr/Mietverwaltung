@@ -28,7 +28,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 	public void action() {
 
 		System.out.println(
-				"________________________________________ Kundenwunsch: Wohnung suchen ________________________________________");
+				"________________________________________ Suchanfrage: Wohnung suchen ________________________________________");
 
 		boolean suchVorgang = true;
 
@@ -43,6 +43,9 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 
 		double such_etage = -100;
 		char etage_rela = ' ';
+		
+		Gregorien aktuellesDatum = new Gregorien();
+		aktuellesDatum.init();
 
 		boolean such_balkon = false;
 		
@@ -60,6 +63,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 		String auswahl = " ";
 		
 		jFrameErstellen_Mitarbeiter();
+		
 		jFrameErstellen_Interessent();
 
 		while (suchVorgang == true) {
@@ -341,7 +345,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 
 					erg = xxx(flatList, bedingungList);
 					
-					searchList.add(new Suchanfrage (such_mitarbeiterID , such_kundenID, such_zimmeranzahl, such_fl‰che, such_kosten, such_etage, such_balkon, such_fuﬂbodenheizung, such_aussicht));
+					searchList.add(new Suchanfrage (such_mitarbeiterID , such_kundenID, zimmeranzahl_rela, such_zimmeranzahl, fl‰che_rela, such_fl‰che, kosten_rela, such_kosten, etage_rela, such_etage, such_balkon, such_fuﬂbodenheizung, such_aussicht, aktuellesDatum));
 
 					for (Wohnung flat : erg) {
 
@@ -377,6 +381,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 	}
 
 	private void jFrameErstellen_Interessent() {
+		such_kundenID = 0;
 		JFrame meinRahmen = new JFrame();
 		meinRahmen.setTitle("Interessenten ID");
 		meinRahmen.setSize(250, 250);
@@ -385,17 +390,17 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 		meinPanel.add(frage);
 		meinRahmen.setLocationRelativeTo(null);
 
-		meinRahmen.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				fenster = true;
-			}
-		});
-
 		JComboBox combo2 = new JComboBox();
 		combo2.addItem("" + 0);
 		for (Interessent interest : interestList) {
 			combo2.addItem(interest.getKundenID());
 		}
+		
+		meinRahmen.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				fenster = true;
+			}
+		});
 
 		ActionListener cbActionListener = new ActionListener() {
 			@Override
@@ -414,6 +419,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 	}
 	
 	private void jFrameErstellen_Mitarbeiter() {
+		such_mitarbeiterID = 0;
 		JFrame meinRahmen = new JFrame();
 		meinRahmen.setTitle("Mitarbeiter ID");
 		meinRahmen.setSize(250, 250);
@@ -422,17 +428,17 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 		meinPanel.add(frage);
 		meinRahmen.setLocationRelativeTo(null);
 
-		meinRahmen.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				window = true;
-			}
-		});
-
 		JComboBox combo2 = new JComboBox();
 		combo2.addItem("" + 0);
 		for (Mitarbeiter worker : workerList) {
 			combo2.addItem(worker.getMitarbeiterID());
 		}
+	
+		meinRahmen.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				window = true;
+			}
+		});		
 
 		ActionListener cbActionListener = new ActionListener() {
 			@Override
@@ -441,9 +447,6 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 			}
 		};
 		meinPanel.add(combo2);
-		
-		JLabel quest = new JLabel("rtr");
-		meinPanel.add(quest);
 		meinRahmen.add(meinPanel, BorderLayout.SOUTH);
 		meinRahmen.pack();
 		meinRahmen.setVisible(true);

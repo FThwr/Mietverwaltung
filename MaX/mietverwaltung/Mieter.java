@@ -6,6 +6,7 @@ public class Mieter extends Kunde implements Serializable{
 	
 	public Mieter (int kundenID, String name, String vorname, Datum geburtsdatum, int wohnungsnummer, String email, Adresse adresse, String telefonnummer, String rolle) {
 		super(kundenID, name, vorname, geburtsdatum, wohnungsnummer, email, adresse, telefonnummer, rolle);
+		
 	}
 
 	@Override
