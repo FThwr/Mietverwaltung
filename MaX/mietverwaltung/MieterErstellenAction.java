@@ -234,7 +234,7 @@ public class MieterErstellenAction extends MenueManager implements Action, Seria
 				}
 				
 				//Eingabe > 9
-				else {
+				if (änderung > 9) {
 					System.out.println(
 							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
 				}

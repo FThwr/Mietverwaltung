@@ -21,9 +21,9 @@ import javax.swing.JPanel;
 
 public class MietvertragErstellenAction extends MenueManager implements Action, Serializable {
 
-	static int such_wohnung;
-	static int such_mieterID;
-	static int such_mitarbeiterID;
+	static int JFrame_wohnungsnummer_auswahl;
+	static int JFRame_mieterID_auswahl;
+	static int JFrame_mitarbeiterID_auswahl;
 	static boolean window = false;
 
 	@Override
@@ -36,7 +36,7 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 		 * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
 		 * bearbeitenden Attributs.
 		 */
-		int änderung = 0;
+		int änderung = -99;
 
 		boolean erstellVorgang = true;
 
@@ -55,6 +55,10 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 		 */
 		while (erstellVorgang == true) {
 
+			/*
+			 * Array beeinhaltet alle Attribute, die verändert werden können und
+			 * dient zur Ausgabe durch Zugriff auf deren Index
+			 */
 			String[] kategorie = { "Mietvertrags-ID", "Wohnungs-ID", "Kunden-ID", "Mitarbeiter-ID", "Mietbeginn",
 					"Mietende" };
 
@@ -77,6 +81,7 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 			 * Zeichen, wo Zahlen erwartet werden.
 			 */
 			try {
+
 				änderung = s.nextInt();
 
 				// Abbruch
@@ -123,7 +128,7 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 						 */
 						if (vorhanden == 1) {
 							System.out.println(
-									"\n------------------------------- Fehler! ------------------------------- \nAuftrags ID bereits vergeben!\n");
+									"\n------------------------------- Fehler! ------------------------------- \nMietvertrags-ID bereits vergeben!\n");
 						} else {
 							mietvertragID = eingabe;
 						}
@@ -132,20 +137,20 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 
 				// Wohnungsnummer
 				if (änderung == 2) {
-					auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
-					wohnungsID = such_wohnung;
+					auswahl_VertragsID_Wohnung_MitarbeiterID(änderung);
+					wohnungsID = JFrame_wohnungsnummer_auswahl;
 				}
 
 				// Mieter-ID
 				if (änderung == 3) {
-					auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
-					kundenID = such_mieterID;
+					auswahl_VertragsID_Wohnung_MitarbeiterID(änderung);
+					kundenID = JFRame_mieterID_auswahl;
 				}
 
 				// Mitarbeiter-ID
 				if (änderung == 4) {
-					auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
-					mitarbeiterID = such_mitarbeiterID;
+					auswahl_VertragsID_Wohnung_MitarbeiterID(änderung);
+					mitarbeiterID = JFrame_mitarbeiterID_auswahl;
 				}
 
 				// Mietbeginn
@@ -163,17 +168,20 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 				// Erstellen abschließen
 				if (änderung == 7) {
 					erstellVorgang = false;
-					
-					
 
 					contractList.add(new Mietvertrag(mietvertragID, wohnungsID, kundenID, mitarbeiterID, mietbeginn,
 							mietende, status));
-					
+
+					/*
+					 * Es wird überprüft, ob eine Wohnung besetzt ist und
+					 * daraufhin der Status auf 'vermietet' gesetzt, wenn das
+					 * der Fall ist und sonst auf 'frei'
+					 */
 					for (Wohnung flat : flatList) {
 						int belegt = 0;
 						for (Mietvertrag contract : contractList) {
 							if (contract.getWohnungsID() == flat.getWohnungsID() && flat.getWohnungsID() != -100
-									&& contract.getWohnungsID()!= -100) {
+									&& contract.getWohnungsID() != -100) {
 								belegt = 1;
 							}
 						}
@@ -183,11 +191,19 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 							flat.setStatus("frei");
 						}
 					}
+					
+					for (Mieter owner : ownerList) {
+						for (Mietvertrag contract: contractList) {
+							if (contract.getKundenID() == owner.getKundenID()) {
+								owner.setWohnungsnummer(wohnungsID);
+							}
+						}
+					}
 
 				}
-				
-				// Eingabe > 11
-				if (änderung > 11) {
+
+				// Eingabe > 7
+				if (änderung > 7) {
 					System.out.println(
 							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
 				}
@@ -207,11 +223,11 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 	 *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt
 	 *            (ob eine Wohnung, etc. bearbeitet wird)
 	 */
-	private void auswahl_AuftragsID_Wohnung_MitarbeiterID(int änderung) {
+	private void auswahl_VertragsID_Wohnung_MitarbeiterID(int änderung) {
 		window = false;
-		such_mitarbeiterID = -100;
-		such_mieterID = -100;
-		such_wohnung = -100;
+		JFrame_mitarbeiterID_auswahl = -100;
+		JFRame_mieterID_auswahl = -100;
+		JFrame_wohnungsnummer_auswahl = -100;
 		JFrame meinRahmen = new JFrame();
 
 		meinRahmen.setSize(250, 250);
@@ -226,7 +242,7 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 			meinPanel.add(frage);
 			for (Wohnung flat : flatList) {
 				if (flat.getStatus().equals("frei"))
-				combo2.addItem(flat.getWohnungsID());
+					combo2.addItem(flat.getWohnungsID());
 			}
 		}
 
@@ -234,8 +250,11 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 			meinRahmen.setTitle("Mieter-ID");
 			JLabel frage = new JLabel("Welchen Mieter (ID) möchten Sie auswählen?");
 			meinPanel.add(frage);
+			int hinzufügen = 0;
 			for (Mieter owner : ownerList) {
-				combo2.addItem(owner.getKundenID());
+				if (owner.getWohnungsnummer() == -100) {
+					combo2.addItem(owner.getKundenID());
+				}
 			}
 		}
 
@@ -258,13 +277,13 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (änderung == 2) {
-					such_wohnung = (int) combo2.getSelectedItem();
+					JFrame_wohnungsnummer_auswahl = (int) combo2.getSelectedItem();
 				}
 				if (änderung == 3) {
-					such_mieterID = (int) combo2.getSelectedItem();
+					JFRame_mieterID_auswahl = (int) combo2.getSelectedItem();
 				}
 				if (änderung == 4) {
-					such_mitarbeiterID = (int) combo2.getSelectedItem();
+					JFrame_mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
 				}
 
 			}
@@ -352,14 +371,30 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 		return neuesDatum;
 	}
 
+	/**
+	 * Methode zum Einlesen einer Zahl vom Nutzer
+	 * 
+	 * @param auswahl
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des
+	 *            Index des Arrays)
+	 * @param zähler
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des
+	 *            Index des Arrays)
+	 * @return die eingelesene Zahl
+	 */
 	private int einlesen_Zahl(String[] auswahl, int zähler) {
-		System.out.println("Erstellen: " + auswahl[zähler - 1]);
 		Scanner s = new Scanner(System.in);
 		int zahl = -100;
-		// wenn die Eingabe korrekt ist (ohne Buchstaben), dann
-		// wird die Eingabe übernommen, sonst wird eine Fehlermeldung ausgegeben
 		try {
-			zahl = s.nextInt();
+
+			do {
+				System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+				zahl = s.nextInt();
+				if (zahl < 0) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+				}
+			} while (zahl < 0);
 		} catch (InputMismatchException e) {
 			System.out.println(
 					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
@@ -367,59 +402,21 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 		return zahl;
 	}
 
+	/**
+	 * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+	 * 
+	 * @param auswahl
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des
+	 *            Index des Arrays)
+	 * @param zähler
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des
+	 *            Index des Arrays)
+	 * @return das eingelesene Wort
+	 */
 	private String einlesen_Wort(String[] auswahl, int zähler) {
 		System.out.println("Erstellen: " + auswahl[zähler - 1]);
 		Scanner s = new Scanner(System.in);
-		String wort = s.next();
+		String wort = s.nextLine();
 		return wort;
-	}
-
-	public int int_eingabe(String[] buttons, int ok) {
-
-		System.out.println("Erstellen: " + buttons[ok - 1]);
-		Scanner s = new Scanner(System.in);
-		int zahl = -100;
-		try {
-			zahl = s.nextInt();
-		} catch (InputMismatchException e) {
-			System.out.println(
-					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
-		}
-		return zahl;
-	}
-
-	public String String_eingabe(String[] buttons, int ok) {
-		System.out.println("Erstellen: " + buttons[ok - 1]);
-		Scanner s = new Scanner(System.in);
-		String wort = s.next();
-		return wort;
-	}
-
-	public boolean boolean_eingabe(String[] buttons, int ok) {
-
-		System.out.println("Erstellen: " + buttons[ok - 1]);
-		Scanner s = new Scanner(System.in);
-		boolean entscheidung = false;
-		try {
-			entscheidung = s.nextBoolean();
-		} catch (InputMismatchException e) {
-			System.out.println(
-					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
-		}
-		return entscheidung;
-	}
-
-	public double double_eingabe(String[] buttons, int ok) {
-
-		System.out.println("Erstellen: " + buttons[ok - 1]);
-		Scanner s = new Scanner(System.in);
-		double zahl = -100.00;
-		try {
-			zahl = s.nextDouble();
-		} catch (InputMismatchException e) {
-			System.out.println(
-					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
-		}
-		return zahl;
 	}
 }

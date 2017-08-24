@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javax.swing.BoxLayout;
@@ -17,399 +18,541 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-public class WohnungSuchenAktion extends MenueManager implements Action , Serializable{
+public class WohnungSuchenAktion extends MenueManager implements Action, Serializable {
 
 	@Override
 	public void action() {
-		String check = "";
+
+		System.out.println(
+				"________________________________________ Wohnung suchen ________________________________________");
 
 		boolean suchVorgang = true;
 
+		// Variablen zum R¸cksetzen, falls 0 eingegeben wurde
 		int wohnungsnummer = -100;
-		int such_wohnungsnummer = wohnungsnummer;
-
 		int zimmeranzahl = -100;
-		int such_zimmeranzahl = zimmeranzahl;
-
-		double fl‰che = -100;
-		double such_fl‰che = fl‰che;
-
-		double kosten = -100;
-		double such_kosten = kosten;
-
 		int etage = -100;
-		int such_etage = etage;
-
 		boolean balkon = false;
-		boolean such_balkon = balkon;
-
 		boolean fuﬂbodenheizung = false;
-		boolean such_fuﬂbodenheizung = fuﬂbodenheizung;
-
 		String aussicht = "-";
-		String such_aussicht = aussicht;
-
+		String straﬂe = "-";
 		int platz = -100;
-		int such_platz = platz;
-
 		String status = "-";
-		String such_status = status;
-
 		int monat = -100;
-		int such_monat = monat;
-
 		int jahr = -100;
-		int such_jahr = jahr;
-
 		int renovierungsanzahl = -100;
-		int such_renovierungsanzahl = renovierungsanzahl;
-
 		String handwerkerAuftragID = "-";
-		String such_handwerkerAuftragID = handwerkerAuftragID;
-
 		String name = "-";
+
+		// Variablen zur Speicherung des Suchwertes
+		int such_wohnungsnummer = wohnungsnummer;
+		int such_zimmeranzahl = zimmeranzahl;
+		int such_etage = etage;
+		boolean such_balkon = balkon;
+		boolean such_fuﬂbodenheizung = fuﬂbodenheizung;
+		String such_aussicht = aussicht;
+		String such_straﬂe = straﬂe;
+		int such_platz = platz;
+		String such_status = status;
+		int such_monat = monat;
+		int such_jahr = jahr;
+		int such_renovierungsanzahl = renovierungsanzahl;
+		String such_handwerkerAuftragID = handwerkerAuftragID;
 		String such_name = name;
 
-		String[] suche = { "Wohnungsnummer", "Zimmeranzahl", "Fl‰che", "Kosten", "Etage", "Balkon", "Fuﬂbodenheizung",
-				"Aussicht", "Adresse", "Status", "letztes Renovierungsdatum", "Renoveringsanzahl",
-				 "Handwerkerauftrag", "zugeordneter Mitarbeiter" };
+		String check = "";
 
+		/*
+		 * Array beeinhaltet alle Attribute, die ver‰ndert werden kˆnnen und
+		 * dient zur Ausgabe durch Zugriff auf deren Index
+		 */
+		String[] suche = { "Wohnungsnummer", "Zimmeranzahl", "Etage", "Balkon", "Fuﬂbodenheizung",
+				"Aussicht", "Adresse", "Status", "letztes Renovierungsdatum", "Renoveringsanzahl", "Handwerkerauftrag",
+				"zugeordneter Mitarbeiter" };
+
+		/*
+		 * Mit der Variable wird ¸berpr¸ft, welche Attribut-Abfragen der Nutzer
+		 * benutzt hatte. Es wird immer ein Buchstabe gespeichert, wodruch die
+		 * Variable weiﬂ, dass er in der Abfrage was ausgew‰hlt hatte. Sp‰ter
+		 * wird anhand dieses Kriteriums die Suche ermˆglicht.
+		 */
 		while (suchVorgang == true) {
 
 			Scanner s = new Scanner(System.in);
-			System.out.println("W‰hlen Sie ein zu suchenden Wert!");
-			System.out.println("Dr¸cke '1'  f¸r Wohnungsnummer");
-			System.out.println("Dr¸cke '2'  f¸r Zimmeranzahl");
-			System.out.println("Dr¸cke '3'  f¸r Fl‰che");
-			System.out.println("Dr¸cke '4'  f¸r Kosten");
-			System.out.println("Dr¸cke '5'  f¸r Etage");
-			System.out.println("Dr¸cke '6'  f¸r Balkon");
-			System.out.println("Dr¸cke '7'  f¸r Fuﬂbodenheizung");
-			System.out.println("Dr¸cke '8'  f¸r Aussicht");
-			System.out.println("Dr¸cke '9'  f¸r Adresse");
-			System.out.println("Dr¸cke '10' f¸r Status");
-			System.out.println("Dr¸cke '11' f¸r letztes Renovierungsdatum");
-			System.out.println("Dr¸cke '12' f¸r Renovierungsanzahl");
-			System.out.println("Dr¸cke '13' f¸r Handwerkerauftrag");
-			System.out.println("Dr¸cke '14' f¸r Aussicht");
-			System.out.println("Dr¸cke '15' f¸r Suchen");
-			System.out.println("Dr¸cke '0'  f¸r Abbruch");
+			System.out.println(
+					"............................... W‰hlen Sie die zu suchende Eigenschaft aus! ...............................");
+			System.out.println("........... Aktuelle Suche nach: ...........");
+			System.out.println("1.  Wohnungsnummer:               " + such_wohnungsnummer);
+			System.out.println("2.  Zimmeranzahl:                 " + such_zimmeranzahl);
+			System.out.println("3.  Etage:                        " + such_etage);
+			System.out.println("4.  Balkon:                       " + such_balkon);
+			System.out.println("5.  Fuﬂbodenheizung:              " + such_fuﬂbodenheizung);
+			System.out.println("6.  Aussicht:                     " + such_aussicht);
+			System.out.println("7.  Adresse:                      ");
+			System.out.println("    Straﬂe:                       " + such_straﬂe);
+			System.out.println("    Plz:                          " + such_platz);
+			System.out.println("8. Status:                       " + such_status);
+			System.out.print("9. letztes Renovierungsdatum:    ");
+			System.out.print("--.");
+			System.out.print(such_monat);
+			System.out.println(such_jahr);
+			System.out.println("10. Renovierungsanzahl:           " + such_renovierungsanzahl);
+			System.out.println("11. Handwerkerauftrag:            " + such_handwerkerAuftragID);
+			System.out.println("12. zugeordneter Miatrbeiter:     " + such_name);
+			System.out.println("13. Suche abschlieﬂen");
+			System.out.println("0.  Abbruch");
 
-			// try
-			int ok = s.nextInt();
+			/*
+			 * Die try-catch Klammer existiert f¸r nicht erw¸nschte Eingaben wie
+			 * Zeichen, wo Zahlen erwartet werden.
+			 */
+			try {
 
-			if (ok == 0) {
-				suchVorgang = false;
-			}
-			if (ok == 1) {
-				such_wohnungsnummer = einlesen_Zahl(suche, ok);
-				if (such_wohnungsnummer == 0) {
-					such_wohnungsnummer = wohnungsnummer;
-				} else {
-					check = check + "a";
+				/*
+				 * Variable zur Auswahl des zu bearbeitenden Attributs.
+				 */
+				int eingabe = s.nextInt();
+
+				// Abbruch
+				if (eingabe == 0) {
+					System.out.println(
+							"-------------------------------Suchvorgang wurde abgebrochen!-------------------------------\n");
+					suchVorgang = false;
 				}
-			}
-			if (ok == 2) {
-				such_zimmeranzahl = einlesen_Zahl(suche, ok);
-				if (such_zimmeranzahl == 0) {
-					such_zimmeranzahl = zimmeranzahl;
-				} else {
-					check = check + "b";
-				}
-			}
-			if (ok == 3) {
-				such_fl‰che = einlesen_Zahl(suche, ok);
-				if (such_fl‰che == 0) {
-					such_fl‰che = fl‰che;
-				} else {
-					check = check + "c";
-				}
-			}
-			if (ok == 4) {
-				such_kosten = einlesen_Zahl(suche, ok);
 
-				if (such_kosten == 0) {
-					such_kosten = kosten;
-				} else {
-					check = check + "d";
-				}
-			}
-			if (ok == 5) {
-				such_etage = einlesen_Zahl(suche, ok);
-				if (such_etage == 0) {
-					such_etage = etage;
-				} else {
-					check = check + "e";
-				}
-			}
-			if (ok == 6) {
-
-				Scanner t = new Scanner(System.in);
-				System.out.println("Balkon vorhanden: '1' Ja, '2' Nein, '3' Abbruch!");
-				int eingabe = t.nextInt();
-
-				check = check + "f";
-
+				// Wohnungsnummer
 				if (eingabe == 1) {
-					such_balkon = true;
+					such_wohnungsnummer = einlesen_Zahl(suche, eingabe);
+					if (such_wohnungsnummer == 0) {
+						such_wohnungsnummer = wohnungsnummer;
+					} else {
+						check = check + "a";
+					}
 				}
+
+				// Zimmeranzahl
 				if (eingabe == 2) {
-					such_balkon = false;
+					such_zimmeranzahl = einlesen_Zahl(suche, eingabe);
+					if (such_zimmeranzahl == 0) {
+						such_zimmeranzahl = zimmeranzahl;
+					} else {
+						check = check + "b";
+					}
 				}
+
+				// Etage
 				if (eingabe == 3) {
-					such_balkon = balkon;
-				} else {
-					System.out.println("Keine vorhandene Auswahlmˆglichkeit!");
+					such_etage = einlesen_Zahl(suche, eingabe);
+					if (such_etage == 0) {
+						such_etage = etage;
+					} else {
+						check = check + "e";
+					}
 				}
-			}
-			if (ok == 7) {
-				Scanner t = new Scanner(System.in);
-				System.out.println("Fuﬂbodenheizung vorhanden: '1' Ja, '2' Nein, '3' Abbruch!");
-				int eingabe = t.nextInt();
 
-				check = check + "g";
-
-				if (eingabe == 1) {
-					such_fuﬂbodenheizung = true;
-				}
-				if (eingabe == 2) {
-					such_fuﬂbodenheizung = false;
-				}
-				if (eingabe == 3) {
-					such_fuﬂbodenheizung = fuﬂbodenheizung;
-				} else {
-					System.out.println("Keine vorhandene Auswahlmˆglichkeit!");
-				}
-			}
-			if (ok == 8) {
-				Scanner t = new Scanner(System.in);
-				System.out.println("Aussicht auf: '1' Park, '2' Spree, '3' Schienen, '4' Straﬂe, '5' abbruch!");
-				int eingabe = t.nextInt();
-
-				check = check + "h";
-
-				if (eingabe == 1) {
-					such_aussicht = "Park";
-				}
-				if (eingabe == 2) {
-					such_aussicht = "Spree";
-				}
-				if (eingabe == 3) {
-					such_aussicht = "Schienen";
-				}
+				// Balkon
 				if (eingabe == 4) {
-					such_aussicht = "Straﬂe";
+
+					Scanner t = new Scanner(System.in);
+					System.out.println("Balkon vorhanden: '1' Ja, '2' Nein, '0' Abbruch!");
+					int wahl = t.nextInt();
+
+					if (wahl == 1) {
+						such_balkon = true;
+						check = check + "f";
+					}
+					if (wahl == 2) {
+						such_balkon = false;
+						check = check + "f";
+					}
+					if (wahl == 0) {
+						such_balkon = balkon;
+					}
+					if (wahl > 2) {
+						System.out.println(
+								"\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit existiert nicht!");
+					}
 				}
+
+				// Fuﬂbodenheizung
 				if (eingabe == 5) {
-					such_aussicht = aussicht;
-				} else {
-					System.out.println("Keine vorhandene Auswahlmˆglichkeit!");
-				}
-			}
-			if (ok == 9) {
-				such_platz = einlesen_Zahl(suche, ok);
-				if (such_platz == 0 || such_platz == -100) {
-					such_platz = platz;
-				} else {
-					check = check + "i";
-				}
-			}
-			if (ok == 10) {
-				Scanner t = new Scanner(System.in);
-				System.out.println("Status der Wohnung: '1' frei, '2' vermietet, '3' in Renovierung, '4' abbruch!");
-				int eingabe = t.nextInt();
+					Scanner t = new Scanner(System.in);
+					System.out.println("Fuﬂbodenheizung vorhanden: '1' Ja, '2' Nein, '0' Abbruch!");
+					int wahl = t.nextInt();
 
-				check = check + "j";
-
-				if (eingabe == 1) {
-					such_status = "frei";
+					if (wahl == 1) {
+						such_fuﬂbodenheizung = true;
+						check = check + "g";
+					}
+					if (wahl == 2) {
+						such_fuﬂbodenheizung = false;
+						check = check + "g";
+					}
+					if (wahl == 0) {
+						such_fuﬂbodenheizung = fuﬂbodenheizung;
+					}
+					if (wahl > 2) {
+						System.out.println(
+								"\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit existiert nicht!");
+					}
 				}
-				if (eingabe == 2) {
-					such_status = "vermietet";
+
+				// Aussicht
+				if (eingabe == 6) {
+					Scanner t = new Scanner(System.in);
+					System.out.println("Aussicht auf: '1' Park, '2' Spree, '3' Schienen, '4' Straﬂe, '0' abbruch!");
+					int wahl = t.nextInt();
+
+					if (wahl == 1) {
+						such_aussicht = "Park";
+						check = check + "h";
+					}
+					if (wahl == 2) {
+						such_aussicht = "Spree";
+						check = check + "h";
+					}
+					if (wahl == 3) {
+						such_aussicht = "Schienen";
+						check = check + "h";
+					}
+					if (wahl == 4) {
+						such_aussicht = "Straﬂe";
+						check = check + "h";
+					}
+					if (wahl == 0) {
+						such_aussicht = aussicht;
+					}
+					if (wahl > 4) {
+						System.out.println(
+								"\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit existiert nicht!");
+					}
 				}
-				if (eingabe == 3) {
-					such_status = "in Renovierung";
+
+				// Adresse
+				if (eingabe == 7) {
+
+					Scanner t = new Scanner(System.in);
+					System.out.println("Geben Sie eine Straﬂe ein: 0 = abbruch!");
+					String wahl = t.next();
+
+					if (wahl.equals("" + 0)) {
+						such_straﬂe = straﬂe;
+					} else {
+						such_straﬂe = wahl;
+						check = check + "i";
+					}
+
+					Scanner r = new Scanner(System.in);
+					System.out.println("Geben Sie eine PLZ ein: 0 = abbruch!");
+					int auswahl = r.nextInt();
+
+					if (auswahl == 0) {
+						such_platz = platz;
+					} else {
+						such_platz = auswahl;
+						check = check + "j";
+					}
 				}
-				if (eingabe == 4) {
-					such_status = status;
-				} else {
-					System.out.println("Keine vorhandene Auswahlmˆglichkeit!");
+
+				// Status
+				if (eingabe == 8) {
+					Scanner t = new Scanner(System.in);
+					System.out.println("Status der Wohnung: '1' frei, '2' vermietet, '3' in Renovierung, '0' abbruch!");
+					int wahl = t.nextInt();
+
+					if (wahl == 1) {
+						such_status = "frei";
+						check = check + "k";
+					}
+					if (wahl == 2) {
+						such_status = "vermietet";
+						check = check + "k";
+					}
+					if (wahl == 3) {
+						such_status = "in Renovierung";
+						check = check + "k";
+					}
+					if (wahl == 0) {
+						such_status = status;
+					}
+					if (wahl > 3) {
+						System.out.println(
+								"\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit existiert nicht!");
+					}
 				}
-			}
-			if (ok == 11) {
-				System.out.println("Spezialisierung des zu suchenden Eingabedatums: ");
-				System.out.println("Dr¸cke '2' f¸r Monat: ");
-				System.out.println("Dr¸cke '3' f¸r Jahr: ");
-				System.out.println("Dr¸cke '4' f¸r Best‰tigen: ");
-				System.out.println("Dr¸cke '5' f¸r Abbruch: ");
 
-				String[] auswahl = { "Monat", "Jahr" };
-				boolean datumseingabe = true;
-				String saveCheck = check;
+				// letztes Renovierungsdatum
+				if (eingabe == 9) {
+					String[] auswahl = { "Monat", "Jahr" };
+					boolean datumseingabe = true;
 
-				while (datumseingabe == true) {
+					/*
+					 * Variable um zu merken, welche Attributsver‰nderungen der
+					 * Nutzer betreten hat. Hinzugef¸gt zum 'check' werden die
+					 * Buchstaben jedoch erst, wenn die Suche abgeschlossen ist,
+					 * weil sonst Buchstaben enthalten w‰ren f¸r
+					 * Attribut‰nderungen, die garnicht existieren.
+					 */
+					String saveCheck = check;
 
-					Scanner q = new Scanner(System.in);
-					int z‰hler = q.nextInt();
+					while (datumseingabe == true) {
 
-					if (z‰hler == 2) {
-						such_monat = einlesen_Zahl(auswahl, z‰hler);
-						if (such_monat == 0) {
-							such_monat = monat;
-						} else {
-							saveCheck = saveCheck + "k";
+						System.out.println(
+								"Spezialisierung des zu suchenden Fertigstellungsdatums: Ihre Auswahl: Monat = "
+										+ such_monat + ", Jahr = " + such_jahr);
+						System.out.println("Dr¸cke '1' f¸r Monat: ");
+						System.out.println("Dr¸cke '2' f¸r Jahr: ");
+						System.out.println("Dr¸cke '3' f¸r Best‰tigen: ");
+						System.out.println("Dr¸cke '0' f¸r Abbruch: ");
+
+						Scanner q = new Scanner(System.in);
+						int z‰hler = q.nextInt();
+
+						// Monat
+						if (z‰hler == 1) {
+
+							do {
+								such_monat = einlesen_Zahl(auswahl, z‰hler);
+								if (such_monat > 12) {
+									System.out.println(
+											"\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht hˆher als 12 sein!");
+								}
+
+							} while (such_monat > 12);
+							if (such_monat == 0) {
+								such_monat = monat;
+							} else {
+								/*
+								 * Der Nutzer hat das Attribut
+								 * Fertigstellungsmonat betreten. Somit erh‰lt
+								 * 'safecheck' ein 'y' um sich zu merken, dass
+								 * es die Abfrage betreten hatte.
+								 */
+								saveCheck = saveCheck + "l";
+							}
+						}
+
+						// Jahr
+						if (z‰hler == 2) {
+
+							such_jahr = einlesen_Zahl(auswahl, z‰hler);
+							if (such_jahr == 0) {
+								such_jahr = jahr;
+							} else {
+								/*
+								 * Der Nutzer hat das Attribut
+								 * Fertigstellungsjahr betreten. Somit erh‰lt
+								 * 'safecheck' ein 'z' um sich zu merken, dass
+								 * es die Abfrage betreten hatte.
+								 */
+								saveCheck = saveCheck + "m";
+							}
+						}
+
+						// 'Eingangsdatum' Sucheingabe abschlieﬂen
+						if (z‰hler == 3) {
+							datumseingabe = false;
+							check = check + saveCheck;
+						}
+
+						// 'Eingangsdatum' Sucheingabe abbrechen
+						if (z‰hler == 0) {
+							datumseingabe = false;
+						}
+						if (z‰hler > 3) {
+							System.out.println(
+									"\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit existiert nicht!");
 						}
 					}
-					if (z‰hler == 3) {
-						such_jahr = einlesen_Zahl(auswahl, z‰hler);
-						if (such_jahr == 0) {
-							such_jahr = jahr;
-						} else {
-							saveCheck = saveCheck + "l";
+				}
+
+				// Renovierungsanzahl
+				if (eingabe == 10) {
+					such_renovierungsanzahl = einlesen_Zahl(suche, eingabe);
+					if (such_renovierungsanzahl == 0) {
+						such_renovierungsanzahl = renovierungsanzahl;
+					} else {
+						check = check + "n";
+					}
+				}
+
+				// Handwerkerauftrags-ID
+				if (eingabe == 11) {
+					such_handwerkerAuftragID = einlesen_Wort(suche, eingabe);
+					if (such_handwerkerAuftragID.equals("" + 0)) {
+						such_handwerkerAuftragID = handwerkerAuftragID;
+					} else {
+						check = check + "o";
+					}
+				}
+
+				// zugeordneter Mitarbeiter
+				if (eingabe == 12) {
+					such_name = einlesen_Wort(suche, eingabe);
+					if (such_name.equals("" + 0)) {
+						such_name = name;
+					} else {
+						check = check + "p";
+					}
+				}
+
+				// Suche abschlieﬂen
+				if (eingabe == 13) {
+					suchVorgang = false;
+
+					// Vergleichsvariablen zu den Suchvariablen
+					int vgl_wohnungsnummer = -100;
+					int vgl_zimmeranzahl = -100;
+					int vgl_etage = -100;
+					boolean vgl_balkon = false;
+					boolean vgl_fuﬂbodenheizung = false;
+					String vgl_aussicht = "-";
+					String vgl_straﬂe = "-";
+					int vgl_platz = -100;
+					String vgl_status = "-";
+					int vgl_monat = -100;
+					int vgl_jahr = -100;
+					int vgl_renovierungsanzahl = -100;
+					String vgl_handwerkerAuftragID = "-";
+					String vgl_name = "-";
+
+					/*
+					 * Wenn 'check' ein Buchstaben enth‰lt war der Nutzer bei
+					 * einer bestimmten Attributver‰nderung. Wenn ein Buchstabe
+					 * nicht enthalten ist, so ist der Suchwert und der
+					 * Vergleichswert gleich. Wenn nun ein Buchstabe enthalten
+					 * ist wird in jedem Handwerkerauftrag nach der zu suchenden
+					 * Eigenschaft gesucht und wenn diese gefunden wurde, wird
+					 * das dazugehˆrige Objekt ausgegeben. Bei mehreren
+					 * Buchstaben m¸ssen alle eingegebene Suchattribute in einem
+					 * Handwerkerauftrag vorhanden sein, damit eine Ausgabe
+					 * ermˆglicht werden kann.
+					 */
+					for (Wohnung flat : flatList) {
+
+						if (check.contains("a")) {
+							vgl_wohnungsnummer = flat.getWohnungsID();
+						}
+						if (check.contains("b")) {
+							vgl_zimmeranzahl = flat.getZimmeranzahl();
+						}
+						if (check.contains("e")) {
+							vgl_etage = flat.getEtage();
+						}
+						if (check.contains("f")) {
+							vgl_balkon = flat.getBalkon();
+						}
+						if (check.contains("g")) {
+							vgl_fuﬂbodenheizung = flat.getFuﬂbodenheizung();
+						}
+						if (check.contains("h")) {
+							vgl_aussicht = flat.getAussicht();
+						}
+						if (check.contains("i")) {
+							vgl_straﬂe = flat.getAdresse().getStrasse();
+						}
+						if (check.contains("j")) {
+							vgl_platz = flat.getAdresse().getPlz();
+						}
+						if (check.contains("k")) {
+							vgl_status = flat.getStatus();
+						}
+						if (check.contains("l")) {
+							vgl_monat = flat.getLetztesRenovierungsdatum().getMonat();
+						}
+						if (check.contains("m")) {
+							vgl_jahr = flat.getLetztesRenovierungsdatum().getJahr();
+						}
+						if (check.contains("n")) {
+							vgl_renovierungsanzahl = flat.getRenovierungsanzahl();
+						}
+						if (check.contains("o")) {
+							vgl_handwerkerAuftragID = flat.getHandwerkerauftrag().getAuftragsID();
+						}
+						if (check.contains("p")) {
+							vgl_name = flat.getZugeordneterMitarbeiter().getName();
+						}
+
+						if (vgl_wohnungsnummer == such_wohnungsnummer && vgl_zimmeranzahl == such_zimmeranzahl
+							 && vgl_etage == such_etage
+								&& vgl_balkon == such_balkon && vgl_fuﬂbodenheizung == such_fuﬂbodenheizung
+								&& vgl_aussicht.contains(such_aussicht) && vgl_straﬂe.contains(such_straﬂe)
+								&& vgl_platz == such_platz && vgl_status.contains(such_status)
+								&& vgl_monat == such_monat && vgl_jahr == such_jahr
+								&& vgl_renovierungsanzahl == such_renovierungsanzahl
+								&& vgl_handwerkerAuftragID.equals(such_handwerkerAuftragID)
+								&& vgl_name.contains(such_name)) {
+
+							System.out.println("Wohnungsnummer: " + flat.getWohnungsID());
+							System.out.println("Zimmeranzahl: " + flat.getZimmeranzahl());
+							System.out.println("Fl‰che: " + flat.getFl‰che());
+							System.out.println("Kosten: " + flat.getKosten());
+							System.out.println("Etage: " + flat.getEtage());
+							System.out.println("Balkon: " + flat.getBalkon());
+							System.out.println("Fuﬂbodenheizung: " + flat.getFuﬂbodenheizung());
+							System.out.println("Aussicht: " + flat.getAussicht());
+							System.out.println("Adresse: " + flat.getAdresse());
+							System.out.println("Status: " + flat.getStatus());
+							System.out.println("letztes Renovierungsdatum: " + flat.getLetztesRenovierungsdatum());
+							System.out.println("Renovierungsanzahl: " + flat.getRenovierungsanzahl());
+							System.out.println("letze Renovierungdetails: " + flat.getLetzeRenovierung_Details());
+							System.out.println("Handwerkerauftrag-ID: " + flat.getHandwerkerauftrag().getAuftragsID());
+							System.out.println(
+									"zugeordneter Mitarbeiter: " + flat.getZugeordneterMitarbeiter().getName());
 						}
 					}
-					if (z‰hler == 4) {
-						datumseingabe = false;
-						check = check + saveCheck;
-					}
-					if (z‰hler == 5) {
-						datumseingabe = false;
-					}
 				}
-			}
-			if (ok == 12) {
-				such_renovierungsanzahl = einlesen_Zahl(suche, ok);
-				if (such_renovierungsanzahl == 0) {
-					such_renovierungsanzahl = renovierungsanzahl;
-				} else {
-					check = check + "m";
+				// Eingabe > 15
+				if (eingabe > 13) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit existiert nicht!");
 				}
+
+			} catch (InputMismatchException e) {
+				System.out.println(
+						"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
 			}
-			if (ok == 13) {
-				such_handwerkerAuftragID = einlesen_Wort(suche, ok);
-				if (such_handwerkerAuftragID.equals("" + 0)) {
-					such_handwerkerAuftragID = handwerkerAuftragID;
-				} else {
-					check = check + "n";
-				}
-			}
-			if (ok == 14) {
-				such_name = einlesen_Wort(suche, ok);
-				if (such_name.equals("" + 0)) {
-					such_name = name;
-				} else {
-					check = check + "o";
-				}
-			}
-			if (ok == 15) {
-				suchVorgang = false;
-
-				// Vergleichsvariablen
-				int vgl_wohnungsnummer = -100;
-				int vgl_zimmeranzahl = -100;
-				double vgl_fl‰che = -100;
-				double vgl_kosten = -100;
-				int vgl_etage = -100;
-				boolean vgl_balkon = false;
-				boolean vgl_fuﬂbodenheizung = false;
-				String vgl_aussicht = "-";
-				int vgl_platz = -100;
-				String vgl_status = "-";
-				int vgl_monat = -100;
-				int vgl_jahr = -100;
-				int vgl_renovierungsanzahl = -100;
-				String vgl_handwerkerAuftragID = "-";
-				String vgl_name = "-";
-
-				for (Wohnung flat : flatList) {
-
-					if (check.contains("a")) {
-						vgl_wohnungsnummer = flat.getWohnungsID();
-					}
-					if (check.contains("b")) {
-						vgl_zimmeranzahl = flat.getZimmeranzahl();
-					}
-					if (check.contains("c")) {
-						vgl_fl‰che = flat.getFl‰che();
-					}
-					if (check.contains("d")) {
-						vgl_kosten = flat.getKosten();
-					}
-					if (check.contains("e")) {
-						vgl_etage = flat.getEtage();
-					}
-					if (check.contains("f")) {
-						vgl_balkon = flat.getBalkon();
-					}
-					if (check.contains("g")) {
-						vgl_fuﬂbodenheizung = flat.getFuﬂbodenheizung();
-					}
-					if (check.contains("h")) {
-						vgl_aussicht = flat.getAussicht();
-					}
-					if (check.contains("i")) {
-						vgl_platz = flat.getAdresse().getPlz();
-					}
-					if (check.contains("j")) {
-						vgl_status = flat.getStatus();
-					}
-					if (check.contains("k")) {
-						vgl_monat = flat.getLetztesRenovierungsdatum().getMonat();
-					}
-					if (check.contains("l")) {
-						vgl_jahr = flat.getLetztesRenovierungsdatum().getJahr();
-					}
-					if (check.contains("m")) {
-						vgl_renovierungsanzahl = flat.getRenovierungsanzahl();
-					}
-					if (check.contains("n")) {
-						vgl_handwerkerAuftragID = flat.getHandwerkerauftrag().getAuftragsID();
-					}
-					if (check.contains("o")) {
-						vgl_name = flat.getZugeordneterMitarbeiter().getName();
-					}
-
-					if (vgl_wohnungsnummer == such_wohnungsnummer && vgl_zimmeranzahl == such_zimmeranzahl
-							&& vgl_fl‰che == such_fl‰che && vgl_kosten == such_kosten && vgl_etage == such_etage
-							&& vgl_balkon == such_balkon && vgl_fuﬂbodenheizung == such_fuﬂbodenheizung
-							&& vgl_aussicht.contains(such_aussicht) && vgl_platz == such_platz
-							&& vgl_status.contains(such_status) && vgl_monat == such_monat && vgl_jahr == such_jahr
-							&& vgl_renovierungsanzahl == such_renovierungsanzahl
-							&& vgl_handwerkerAuftragID.equals(such_handwerkerAuftragID) && vgl_name.contains(such_name)) {
-
-						System.out.println("Wohnungsnummer: " + flat.getWohnungsID());
-						System.out.println("Zimmeranzahl: " + flat.getZimmeranzahl());
-						System.out.println("Fl‰che: " + flat.getFl‰che());
-						System.out.println("Kosten: " + flat.getKosten());
-						System.out.println("Etage: " + flat.getEtage());
-						System.out.println("Balkon: " + flat.getBalkon());
-						System.out.println("Fuﬂbodenheizung: " + flat.getFuﬂbodenheizung());
-						System.out.println("Aussicht: " + flat.getAussicht());
-						System.out.println("Adresse: " + flat.getAdresse());
-						System.out.println("Status: " + flat.getStatus());
-						System.out.println("letztes Renovierungsdatum: " + flat.getLetztesRenovierungsdatum());
-						System.out.println("Renovierungsanzahl: " + flat.getRenovierungsanzahl());
-						System.out.println("letze Renovierungdetails: " + flat.getLetzeRenovierung_Details());
-						System.out.println("Handwerkerauftrag-ID: " + flat.getHandwerkerauftrag().getAuftragsID());
-						System.out.println("zugeordneter Mitarbeiter: " + flat.getZugeordneterMitarbeiter().getName());
-					}
-				}
-			}
-
 		}
 	}
 
+	/**
+	 * Methode zum Einlesen einer Zahl vom Nutzer
+	 * 
+	 * @param auswahl = welches "ƒnderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param z‰hler  = welches "ƒnderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return die eingelesene Zahl
+	 */
 	private int einlesen_Zahl(String[] auswahl, int z‰hler) {
-		System.out.println("Geben Sie ein: " + auswahl[z‰hler - 1]);
 		Scanner s = new Scanner(System.in);
-		int wort = s.nextInt();
-		return wort;
+		int zahl = -100;
+		try {
+
+			do {
+				System.out.println("Geben Sie ein: " + auswahl[z‰hler - 1]);
+				zahl = s.nextInt();
+				if (zahl < 0) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+				}
+			} while (zahl < 0);
+		} catch (InputMismatchException e) {
+			System.out.println(
+					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+		}
+		return zahl;
 	}
 
+	/**
+	 * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+	 * 
+	 * @param auswahl = welches "ƒnderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param z‰hler = welches "ƒnderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return das eingelesene Wort
+	 */
 	private String einlesen_Wort(String[] auswahl, int z‰hler) {
-		System.out.println("Geben Sie ein: " + auswahl[z‰hler - 1]);
+		System.out.println("Erstellen: " + auswahl[z‰hler - 1]);
 		Scanner s = new Scanner(System.in);
-		String wort = s.next();
+		String wort = s.nextLine();
 		return wort;
 	}
 }

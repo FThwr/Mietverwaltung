@@ -320,7 +320,7 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 
 						for (Wohnung flat : flatList) {
 							if (neueWohnungsID == flat.getWohnungsID()) {
-								flat.setHandwerkerauftrag(new Handwerkerauftrag(neueAuftragsID));
+								flat.getHandwerkerauftrag().setAuftragsID(neueAuftragsID);
 
 							}
 						}

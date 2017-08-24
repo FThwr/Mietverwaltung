@@ -40,6 +40,10 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 		int such_fertigMonat = fertigMonat;
 		int such_fertigJahr = fertigJahr;
 
+		/*
+		 * Array beeinhaltet alle Attribute, die verändert werden können und
+		 * dient zur Ausgabe durch Zugriff auf deren Index
+		 */
 		String[] kategorie = { "Auftrags ID ", "Wohnungs ID", "Mitarbeiter ID", "Mängelbeschreibung", "Status",
 				"Eingangsdatum", "Fertigstellungsdatum" };
 
@@ -226,7 +230,7 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 					}
 
 					// Jede andere Eingabe führt zu einer Fehlermeldung.
-					else {
+					if (auswahl > 2) {
 						System.out.println(
 								"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 					}
@@ -255,7 +259,7 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 						System.out.println("Drücke '1' für Monat: ");
 						System.out.println("Drücke '2' für Jahr: ");
 						System.out.println("Drücke '3' für Bestätigen: ");
-						System.out.println("Drücke '4' für Abbruch: ");
+						System.out.println("Drücke '0' für Abbruch: ");
 
 						Scanner q = new Scanner(System.in);
 						int zähler = q.nextInt();
@@ -308,7 +312,7 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 						}
 
 						// 'Eingangsdatum' Sucheingabe abbrechen
-						if (zähler == 4) {
+						if (zähler == 0) {
 							datumseingabe = false;
 						} else {
 							System.out.println(
@@ -482,7 +486,7 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 				}
 
 				// Eingabe > 8
-				else {
+				if (eingabe > 8) {
 					System.out.println(
 							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 				}
@@ -493,6 +497,13 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 		}
 	}
 
+	/**
+	 * Methode zum Einlesen einer Zahl vom Nutzer
+	 * 
+	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param zähler  = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return die eingelesene Zahl
+	 */
 	private int einlesen_Zahl(String[] auswahl, int zähler) {
 		Scanner s = new Scanner(System.in);
 		int zahl = -100;
@@ -513,8 +524,15 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 		return zahl;
 	}
 
+	/**
+	 * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+	 * 
+	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param zähler = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return das eingelesene Wort
+	 */
 	private String einlesen_Wort(String[] auswahl, int zähler) {
-		System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+		System.out.println("Erstellen: " + auswahl[zähler - 1]);
 		Scanner s = new Scanner(System.in);
 		String wort = s.nextLine();
 		return wort;

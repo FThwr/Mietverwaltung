@@ -162,18 +162,22 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 		 */
 		while (bearbeitungsVorgang == true) {
 
-			System.out.println("1. Interessenten ID: " + längenAnpassung_interessentenID + "neue Interessenten ID: "
-					+ neueInteressentenID);
-			System.out.println("2. Name:             " + längenAnpassung_Name + "neuer Name:            " + neuerName);
+			System.out.println("1. Interessenten ID:             " + längenAnpassung_interessentenID
+					+ "neue Interessenten ID: " + neueInteressentenID);
 			System.out.println(
-					"3. Vorname:          " + längenAnpassung_Vorname + "neuer Vorname:         " + neuerVorname);
-			System.out
-					.println("4. Geburtsdatum:     " + GD_Leerzeichen + "neues Geburtsdatum:    " + neuesGeburtsdatum);
-			System.out.println("5. E-Mail:           " + längenAnpassung_EMail + "neue E-Mail:           " + neueEMail);
-			System.out.println("6. Adresse:          " + ADR_Leerzeichen + "neue Adresse:          " + neueAdresse);
-			System.out.println(
-					"7. Telefonnummer:    " + längenAnpassung_Telefonnummer + "neue Telefonnummer:    " + neueTelefon);
-			System.out.println("8. Rolle:            " + längenAnpassung_Rolle + "neue Rolle:            " + neueRolle);
+					"2. Name:                         " + längenAnpassung_Name + "neuer Name:            " + neuerName);
+			System.out.println("3. Vorname:                      " + längenAnpassung_Vorname + "neuer Vorname:         "
+					+ neuerVorname);
+			System.out.println("4. Geburtsdatum:                 " + aktuellesGeburtsdatum + GD_Leerzeichen
+					+ "neues Geburtsdatum:    " + neuesGeburtsdatum);
+			System.out.println("5. E-Mail:                       " + längenAnpassung_EMail + "neue E-Mail:           "
+					+ neueEMail);
+			System.out.println("6. Adresse:                      " + aktuelleAdresse + ADR_Leerzeichen
+					+ "neue Adresse:          " + neueAdresse);
+			System.out.println("7. Telefonnummer:                " + längenAnpassung_Telefonnummer
+					+ "neue Telefonnummer:    " + neueTelefon);
+			System.out.println("8. Rolle:                        " + längenAnpassung_Rolle + "neue Rolle:            "
+					+ neueRolle);
 			System.out.println("9. Bearbeitung abschließen");
 			System.out.println("0. Abbruch");
 			System.out.println("");
@@ -313,11 +317,10 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 
 				// Rolle
 				if (änderung == 8) {
-					String[] auswahl = { "Interessent", "Mieter", "Delete" };
 
 					Scanner a = new Scanner(System.in);
-					System.out.println("Geben Sie die Zahl vom gewünschten Status aus: " + "1" + auswahl[0] + "2"
-							+ auswahl[1] + "3" + auswahl[2]);
+					System.out.println(
+							"Geben Sie die Zahl vom gewünschten Status aus: '1' = Interessent, '2' = Mieter, '3' = Delete");
 
 					try {
 						int eingabe = a.nextInt();
@@ -333,7 +336,8 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 						}
 						if (eingabe == 3) {
 							neueRolle = "Delete";
-						} else {
+						}
+						if (eingabe > 3) {
 							System.out.println(
 									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 						}
@@ -374,7 +378,8 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 					 * bearbeitenenden Interessenten gesucht und dieser zur
 					 * Liste der Mieter hinzugefügt und die Liste gespeichert.
 					 * Außerdem wird er aus der Liste der Interessenten
-					 * gelöscht.
+					 * gelöscht. Das alles funktioniert nur bei midnestens 2
+					 * Elementen in der Liste.
 					 */
 					if (neueRolle.equals("Mieter")) {
 						for (Interessent interest : interestList) {
@@ -388,7 +393,7 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 								while (iter.hasNext()) {
 									Interessent str = iter.next();
 
-									if (str.getKundenID() == neueInteressentenID) {
+									if (str.getKundenID() == aktuelleInteressentenID) {
 										iter.remove();
 									}
 								}
@@ -409,7 +414,7 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 						while (iter.hasNext()) {
 							Interessent str = iter.next();
 
-							if (str.getKundenID() == neueInteressentenID) {
+							if (str.getKundenID() == aktuelleInteressentenID) {
 								iter.remove();
 							}
 						}
@@ -417,7 +422,7 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 					}
 				}
 				// Eingabe > 9
-				else {
+				if (änderung > 9) {
 					System.out.println(
 							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 				}
@@ -520,7 +525,6 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 		meinRahmen.setLocationRelativeTo(null);
 
 		JComboBox combo2 = new JComboBox();
-		combo2.addItem("" + 0);
 
 		if (änderung == -99) {
 			meinRahmen.setTitle("Interessenten ID");

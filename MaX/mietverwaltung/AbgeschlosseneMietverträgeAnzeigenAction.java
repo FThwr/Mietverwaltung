@@ -36,6 +36,7 @@ public class AbgeschlosseneMietverträgeAnzeigenAction extends MenueManager imple
 			} else {
 				System.out.println("Mietende:                     " + "-");
 			}
+			System.out.println("Status:                       " + abgeschlossenerMietvertrag.getStatus());
 
 			System.out.println("");
 		}

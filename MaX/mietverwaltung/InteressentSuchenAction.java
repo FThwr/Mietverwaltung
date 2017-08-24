@@ -19,7 +19,7 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 		String name = "-";
 		String vorname = "-";
 		String EMail = "-";
-		String straße = "";
+		String straße = "-";
 		int plz = -100;
 		String telefon = "-";
 
@@ -40,6 +40,7 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 		 * Variable weiß, dass er in der Abfrage was ausgewählt hatte. Später
 		 * wird anhand dieses Kriteriums die Suche ermöglicht.
 		 */
+		
 		String check = "";
 
 		/*
@@ -64,15 +65,13 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 			System.out.println("2. Name:                      " + such_name);
 			System.out.println("3. Vorname:                   " + such_vorname);
 			System.out.println("4. E-Mail:                    " + such_EMail);
-			System.out.println("5. Adresse Straße:            " + such_adresse_straße);
-			System.out.println("   Adresse Hausnummer:        " + "-");
-
+			System.out.println("5. Adresse:                   ");
+			System.out.println("   Straße:                    " + such_adresse_straße);
 			if (plz != -100) {
-				System.out.println("5. Adresse Platz:             " + such_adresse_plz);
+				System.out.print("   Adresse Platz:             " + such_adresse_plz);
 			} else {
-				System.out.println("5. Adresse Platz:             " + "-");
+				System.out.println("   Adresse Platz:             " + "-");
 			}
-			System.out.println("   Adresse Stadt:             " + "-");
 			System.out.println("6. Telefonnummer:             " + such_telefon);
 			System.out.println("7. Suche bestätigen");
 			System.out.println("0. Abbruch ");
@@ -119,7 +118,7 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 
 				// Vorname
 				if (eingabe == 3) {
-					such_name = einlesen_Wort(kategorie, eingabe);
+					such_vorname = einlesen_Wort(kategorie, eingabe);
 					if (such_vorname.equals("" + 0)) {
 						such_vorname = vorname;
 					} else {
@@ -140,9 +139,12 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 				// Adresse
 				if (eingabe == 5) {
 					System.out.println("Spezialisierung der zu suchenden Adresse: ");
-					System.out.println("Drücke '1' für Straße: ");
-					System.out.println("Drücke '2' für Platz: ");
-					System.out.println("Drücke '3' für Abbruch: ");
+					System.out.println("Drücke '1' für Straße: " + such_adresse_straße);
+					System.out.println("Drücke '2' für Platz: " + such_adresse_plz);
+					System.out.println("Drücke '3' zum bestätigen");
+					System.out.println("Drücke '0' für Abbruch: ");
+					
+					String savecheck = "";
 
 					String[] auswahl = { "Straße", "Platz"};
 					boolean adresseingabe = true;
@@ -157,7 +159,7 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 							if (such_adresse_straße.equals("" + 0)) {
 								such_adresse_straße = straße;
 							} else {
-								check = check + "y";
+								savecheck = savecheck + "y";
 							}
 						}
 						if (zähler == 2) {
@@ -165,13 +167,16 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 							if (such_adresse_plz == 0 || such_adresse_plz == -100) {
 								such_adresse_plz = plz;
 							} else {
-								check = check + "z";
+								savecheck = savecheck + "z";
 							}
 						}
 						if (zähler == 3) {
+							check = check + savecheck;
+						}
+						if (zähler == 0) {
 							adresseingabe = false;
 						}
-						else {
+						if (zähler > 3) {
 							System.out.println(
 									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 						}
@@ -259,7 +264,7 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 					}
 				}
 				// Eingabe > 7
-				else {
+				if(eingabe > 7) {
 					System.out.println(
 							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 				}

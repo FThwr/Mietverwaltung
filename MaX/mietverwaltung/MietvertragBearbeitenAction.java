@@ -21,11 +21,11 @@ import javax.swing.JPanel;
 
 public class MietvertragBearbeitenAction extends MenueManager implements Action, Serializable {
 
-	static boolean close = false;
+	static boolean window = false;
 	static String bearbeitungsAuswahl_MietvertragID;
-	static int such_MieterID;
-	static int such_WohnungsID;
-	static int such_Mitarbeiter;
+	static int JFRame_mieterID_auswahl;
+	static int JFrame_wohnungsnummer_auswahl;
+	static int JFrame_mitarbeiterID_auswahl;
 
 	@Override
 	public void action() throws IOException {
@@ -46,9 +46,14 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		String zu_bearbeitenden_mietvertrag = bearbeitungsAuswahl_MietvertragID;
 
 		boolean bearbeitungsVorgang = true;
+
+		/*
+		 * Array beeinhaltet alle Attribute, die verändert werden können und
+		 * dient zur Ausgabe durch Zugriff auf deren Index
+		 */
 		String[] kategorie = { "Mietvertrag-ID", "Wohnungs-ID", "Kunden-ID", "Mitarbeiter-ID", "Mietbeginn",
-				"Mietende" };
-		
+				"Mietende", "Status" };
+
 		/*
 		 * diese Variablen dienen später für eine tabellarische Ausgabe auf der
 		 * Konsole
@@ -58,7 +63,7 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		String längenAnpassung_kundenID = "";
 		String längenAnpassnung_mitarbeiterID = "";
 		String längenAnpassung_status = "";
-		
+
 		/*
 		 * allgemeine Variablen alte = aktuelle Werte, neue = neue/veränderte
 		 * Werte
@@ -80,23 +85,22 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 
 		Datum aktuellesMietende = null;
 		Datum neuesMietende = null;
-		
+
 		String aktuellerStatus = "";
 		String neuerStatus = "";
 
 		/*
 		 * Variablen enthalten die Leerzeichen, die nach den Objekten (Daten)
 		 * eingesetzt werden. Die Längen der einzelnen Komponenten der Objekte
-		 * werden verwendet
+		 * werden verwendet. MB = Mietbeginn , ME = Mietende.
 		 */
 		String MB_Leerzeichen = "";
 		String ME_Leerzeichen = "";
 
-		
 		/*
-		 * Für jedes Element in der ArrayList 'contractList', welche alle aktiven
-		 * Handwerkeraufträge beeinhaltet, wir zeurst das Objekt in der
-		 * ArrayList gesucht, welche der eben ausgewählten Auftrags-ID
+		 * Für jedes Element in der ArrayList 'contractList', welche alle
+		 * aktiven Mietverträge beeinhaltet, wir zeurst das Objekt in der
+		 * ArrayList gesucht, welche der eben ausgewählten Vertrags-ID
 		 * entspricht. Es werden neue Variablen angelegt, welche die einzelnen
 		 * Werte des Objekts beeinhalten.
 		 */
@@ -120,7 +124,7 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 
 				aktuellesMietende = contract.getMietende();
 				neuesMietende = aktuellesMietende;
-				
+
 				aktuellerStatus = contract.getStatus();
 				neuerStatus = aktuellerStatus;
 
@@ -139,7 +143,7 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 
 				längenAnpassnung_mitarbeiterID = "" + aktuelleMitarbeiterID;
 				längenAnpassnung_mitarbeiterID = länge_anpassen(längenAnpassnung_mitarbeiterID);
-				
+
 				längenAnpassung_status = aktuellerStatus;
 				längenAnpassung_status = länge_anpassen(längenAnpassung_status);
 
@@ -154,91 +158,112 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		 * Attributs ausgegeben. Es wird pro Durchlauf immer 1 Attribut
 		 * ausgewählt, welches man draufhin verändern kann.
 		 */
-			while (bearbeitungsVorgang == true) {
-				System.out.println(
-						"............................... Wählen Sie die zu bearbeitende Eigenschaft aus! ...............................");
-				System.out.println("1. Mietvertrag-ID:       " + längenAnpassung_mietvertragID
-						+ "neue Mietvertrag-ID:       " + neueMietvertragsID);
-				System.out.println("2. Wohnungs-ID:          " + längenAnpassung_wohnungsID
-						+ "neue Wohnungs-ID:          " + neueWohnungsID);
-				System.out.println("3. Kunden-ID:            " + längenAnpassung_kundenID
-						+ "neue Kunden-ID:            " + neueKundenID);
-				System.out.println("4. Mitarbeiter-ID:       " + längenAnpassnung_mitarbeiterID
-						+ "neue Mitarbeiter-ID:       " + neueMitarbeiterID);
-				System.out.println("5. Mietbeginn:           " + aktuellerMietbeginn + MB_Leerzeichen
-						+ "neuer Mietbeginn:          " + neuerMietbeginn);
-				System.out.println("6. Mietende:             " + aktuellesMietende + ME_Leerzeichen
-						+ "neues Mietende:            " + neuesMietende);
-				System.out.println("7. Status:               " + längenAnpassung_status 
-						+ "neuer Status:              " + neuerStatus);
-				System.out.println("8. Bestätigen");
-				System.out.println("0. Abbruch");
-				System.out.println("");
+		while (bearbeitungsVorgang == true) {
+			System.out.println(
+					"............................... Wählen Sie die zu bearbeitende Eigenschaft aus! ...............................");
+			System.out.println("1. Mietvertrag-ID:       " + längenAnpassung_mietvertragID
+					+ "neue Mietvertrag-ID:       " + neueMietvertragsID);
+			System.out.println("2. Wohnungs-ID:          " + längenAnpassung_wohnungsID + "neue Wohnungs-ID:          "
+					+ neueWohnungsID);
+			System.out.println("3. Kunden-ID:            " + längenAnpassung_kundenID + "neue Kunden-ID:            "
+					+ neueKundenID);
+			System.out.println("4. Mitarbeiter-ID:       " + längenAnpassnung_mitarbeiterID
+					+ "neue Mitarbeiter-ID:       " + neueMitarbeiterID);
+			System.out.println("5. Mietbeginn:           " + aktuellerMietbeginn + MB_Leerzeichen
+					+ "neuer Mietbeginn:          " + neuerMietbeginn);
+			System.out.println("6. Mietende:             " + aktuellesMietende + ME_Leerzeichen
+					+ "neues Mietende:            " + neuesMietende);
+			System.out.println(
+					"7. Status:               " + längenAnpassung_status + "neuer Status:              " + neuerStatus);
+			System.out.println("8. Bestätigen");
+			System.out.println("0. Abbruch");
+			System.out.println("");
 
-				Scanner t = new Scanner(System.in);
+			Scanner t = new Scanner(System.in);
 
-				try {
-					änderung = t.nextInt();
+			/*
+			 * Die try-catch Klammer existiert für nicht erwünschte Eingaben wie
+			 * Zeichen, wo Zahlen erwartet werden.
+			 */
+			try {
+				änderung = t.nextInt();
 
-					if (änderung == 0) {
-						bearbeitungsVorgang = false;
+				// Abbruch
+				if (änderung == 0) {
+					System.out.println(
+							"-------------------------------Bearbeitungsvorgang wurde abgebrochen!-------------------------------\n");
+					bearbeitungsVorgang = false;
+				}
+
+				// Mietvertrag-ID
+				if (änderung == 1) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+					} else {
+						neueMietvertragsID = eingabe;
 					}
-					if (änderung == 1) {
-						String eingabe = einlesen_Wort(kategorie, änderung);
-						if (eingabe.equals("" + 0)) {
-							neueMietvertragsID = aktuelleMietvertragsID;
-						} else {
-							neueMietvertragsID = eingabe;
-						}
-					}
-					if (änderung == 2) {
-						auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
-						neueWohnungsID = such_WohnungsID;
+				}
 
-					}
-					if (änderung == 3) {
+				// Wohnungsnummer
+				if (änderung == 2) {
+					auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+					neueWohnungsID = JFrame_wohnungsnummer_auswahl;
+				}
 
-						auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
-						neueKundenID = such_MieterID;
-					}
-					if (änderung == 4) {
+				// Mieter-ID
+				if (änderung == 3) {
+					auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+					neueKundenID = JFRame_mieterID_auswahl;
+				}
 
-						auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
-						neueMitarbeiterID = such_Mitarbeiter;
-					}
-					if (änderung == 5) {
-						String[] auswahl = { "Tag", "Monat", "Jahr" };
-						int zähler = 1;
-						int tag = einlesen_Zahl(auswahl, zähler);
-						zähler = 2;
-						int monat = einlesen_Zahl(auswahl, zähler);
-						zähler = 3;
-						int jahr = einlesen_Zahl(auswahl, zähler);
+				// Mitarbeiter-ID
+				if (änderung == 4) {
+					auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+					neueMitarbeiterID = JFrame_mitarbeiterID_auswahl;
+				}
 
-						if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
-							neuerMietbeginn = aktuellerMietbeginn;
-						} else {
-							neuerMietbeginn = new Datum(tag, monat, jahr);
-						}
-					}
-					if (änderung == 6) {
-						String[] auswahl = { "Tag", "Monat", "Jahr" };
-						int zähler = 1;
-						int tag = einlesen_Zahl(auswahl, zähler);
-						zähler = 2;
-						int monat = einlesen_Zahl(auswahl, zähler);
-						zähler = 3;
-						int jahr = einlesen_Zahl(auswahl, zähler);
+				// Mietbeginn
+				if (änderung == 5) {
+					neuerMietbeginn = Datum_Eingabe(neuerMietbeginn);
+				}
 
-						if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
-							neuesMietende = aktuellesMietende;
-						} else {
-							neuesMietende = new Datum(tag, monat, jahr);
-						}
-					}
-					if (änderung == 7) {
-						bearbeitungsVorgang = false;
+				// Mietende
+				if (änderung == 6) {
+					neuesMietende = Datum_Eingabe(neuesMietende);
+				}
 
+				// Status
+				if (änderung == 7) {
+					System.out.println(
+							"Geben Sie die Zahl vom gewünschten Status aus: '1' = aktiv, '2' = ausgelaufen, '0' = Abbruch!");
+					int eingabe = einlesen_Zahl(kategorie, änderung);
+
+					if (eingabe == 1) {
+						neuerStatus = "aktiv";
+					}
+					if (eingabe == 2) {
+						neuerStatus = "ausgelaufen";
+					}
+					if (eingabe == 0) {
+					}
+
+					// Jede andere Eingabe führt zu einer Fehlermeldung.
+					if (eingabe > 2) {
+						System.out.println(
+								"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
+					}
+				}
+
+				// Bearbeitung abschließen
+				if (änderung == 8) {
+					bearbeitungsVorgang = false;
+
+					if (neuerStatus.equals("aktiv")) {
+						/*
+						 * Es werden nach dem Herausfinden, welcher Mietvertrag
+						 * so eben bearbeitet wurde, die einzelnen veränderten
+						 * Attribute nun geändert.
+						 */
 						for (Mietvertrag contract : contractList) {
 							if (zu_bearbeitenden_mietvertrag.equals(contract.getMietvertragID())) {
 								contract.setMietvertragID(neueMietvertragsID);
@@ -247,26 +272,161 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 								contract.setMitarbeiterID(neueMitarbeiterID);
 								contract.setMietbeginn(neuerMietbeginn);
 								contract.setMietende(neuesMietende);
+								contract.setStatus(neuerStatus);
 							}
 						}
-
-						FileOutputStream fosMietvertrag = new FileOutputStream("mietverträge.ser");
-						ObjectOutputStream oosMietvertrag = new ObjectOutputStream(fosMietvertrag);
-						oosMietvertrag.writeObject(contractList);
 					}
-				} catch (InputMismatchException e) {
-					System.out.println(
-							"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+					if (neuerStatus.equals("ausgelaufen")) {
+						
+						
+						/*
+						 * Es wird überprüft, ob eine Wohnung besetzt ist und
+						 * daraufhin der Status auf 'vermietet' gesetzt, wenn das
+						 * der Fall ist und sonst auf 'frei'
+						 */
+						for (Wohnung flat : flatList) {
+							int belegt = 0;
+							for (Mietvertrag contract : contractList) {
+								if (contract.getWohnungsID() == flat.getWohnungsID() && flat.getWohnungsID() != -100
+										&& contract.getWohnungsID() != -100) {
+									belegt = 1;
+								}
+							}
+							if (belegt == 1) {
+								flat.setStatus("vermietet");
+							} else {
+								flat.setStatus("frei");
+							}
+						}
+						
+						//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						
+						
+						/*
+						 * Da der Vertrag ausgelaufen ist, wird er der Liste der
+						 * beendeten Verträge hinzugefügt.
+						 */
+						beendeteMietverträge.add(new Mietvertrag(neueMietvertragsID, neueWohnungsID, neueKundenID,
+								neueMitarbeiterID, neuerMietbeginn, neuesMietende, neuerStatus));
+
+						/*
+						 * Auderdem wird der Handwerkerautrag aus der Liste der
+						 * aktiven Aufträge entfernt
+						 */
+						Iterator<Mietvertrag> iter = contractList.iterator();
+
+						while (iter.hasNext()) {
+							Mietvertrag str = iter.next();
+
+							if (str.getMietvertragID().equals(zu_bearbeitenden_mietvertrag)) {
+								iter.remove();
+
+							}
+						}
+					}
+
 				}
-			
-		} else {
-			System.out.println(
-					"------------------------------- Fehler! ------------------------------- \nIhre Eingabe war nicht erfolgreich, weil die ID nicht existiert!\n");
+
+				// Eingabe > 8
+				if(änderung > 8) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
+				}
+			} catch (InputMismatchException e) {
+				System.out.println(
+						"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+			}
 		}
+
+	}
+	
+	/**
+	 * Methode zur Eingabe des Datums
+	 * 
+	 * @param aktuellesDatum,
+	 *            was der Handwerkerauftrag zu dem Zeitpunkt noch benutzt
+	 * @return das neue Datum, welches weiterverwendet werden soll
+	 */
+	public Datum Datum_Eingabe(Datum aktuellesDatum) {
+
+		System.out
+				.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+		String[] auswahl = { "Jahr", "Monat", "Tag" };
+
+		Datum neuesDatum = null;
+		boolean datumsEingabeErfolgreich = false;
+
+		int zähler = 1;
+		int jahr = einlesen_Zahl(auswahl, zähler);
+
+		zähler = 2;
+		int monat = 0;
+		do {
+			monat = einlesen_Zahl(auswahl, zähler);
+			if (monat > 12) {
+				System.out.println(
+						"\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+			}
+		} while (monat > 12);
+
+		zähler = 3;
+		int tag = 0;
+		do {
+			tag = einlesen_Zahl(auswahl, zähler);
+			if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
+				if (tag > 31) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+				} else {
+					datumsEingabeErfolgreich = true;
+				}
+			}
+
+			if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
+				if (tag > 30) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+				} else {
+					datumsEingabeErfolgreich = true;
+				}
+			}
+
+			if (monat == 2) {
+				if (tag > 29) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+				} else {
+					datumsEingabeErfolgreich = true;
+				}
+			}
+		} while (datumsEingabeErfolgreich == false);
+
+		/*
+		 * Wenn einer der Werte versucht wird zu überspringen/ auszulassen, dann
+		 * bleibt es beim unveränderten Datum.
+		 */
+		if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
+			neuesDatum = aktuellesDatum;
+		} else {
+			neuesDatum = new Datum(tag, monat, jahr);
+		}
+		return neuesDatum;
 	}
 
+	/**
+	 * Methode zur Auswahl eines bereits existierend Attributs durch Vorschlag
+	 * jedes einzelnen Elements in einer ArrayList
+	 * 
+	 * @param änderung
+	 *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt
+	 *            (ob eine Wohnung, etc. bearbeitet wird)
+	 */
 	private void auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(int änderung) {
-		close = false;
+		window = false;
+		bearbeitungsAuswahl_MietvertragID = "";
+		JFrame_wohnungsnummer_auswahl = -100;
+		JFRame_mieterID_auswahl = -100;
+		JFrame_mitarbeiterID_auswahl = -100;
 
 		JFrame meinRahmen = new JFrame();
 		meinRahmen.setSize(250, 250);
@@ -274,13 +434,11 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		meinRahmen.setLocationRelativeTo(null);
 
 		JComboBox combo2 = new JComboBox();
-		combo2.addItem("" + 0);
 
 		if (änderung == -99) {
 			meinRahmen.setTitle("Mietvertrag ID");
 			JLabel frage = new JLabel("Welcher Mietvertrag wird bearbeitet?");
 			meinPanel.add(frage);
-			such_MietvertragID = "";
 			for (Mietvertrag contract : contractList) {
 				combo2.addItem(contract.getMietvertragID());
 			}
@@ -290,7 +448,7 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 			meinRahmen.setTitle("Wohngungs ID");
 			JLabel frage = new JLabel("Welche Wohnung soll ausgewählt werden?");
 			meinPanel.add(frage);
-			such_WohnungsID = 0;
+
 			for (Wohnung flat : flatList) {
 				combo2.addItem(flat.getWohnungsID());
 			}
@@ -300,7 +458,6 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 			meinRahmen.setTitle("Mieter ID");
 			JLabel frage = new JLabel("Welcher Mieter soll ausgewählt werden?");
 			meinPanel.add(frage);
-			such_MieterID = 0;
 			for (Mieter owner : ownerList) {
 				combo2.addItem(owner.getKundenID());
 			}
@@ -310,7 +467,6 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 			meinRahmen.setTitle("Mitarbeiter ID");
 			JLabel frage = new JLabel("Welcher Mitarbeiter soll ausgewählt werden?");
 			meinPanel.add(frage);
-			such_Mitarbeiter = 0;
 			for (Mitarbeiter worker : workerList) {
 				combo2.addItem(worker.getMitarbeiterID());
 			}
@@ -318,24 +474,24 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 
 		meinRahmen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				close = true;
+				window = true;
 			}
 		});
 
 		ActionListener cbActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (änderung == -100) {
-					such_MietvertragID = (String) combo2.getSelectedItem();
+				if (änderung == -99) {
+					bearbeitungsAuswahl_MietvertragID = (String) combo2.getSelectedItem();
 				}
 				if (änderung == 2) {
-					such_WohnungsID = (int) combo2.getSelectedItem();
+					JFrame_wohnungsnummer_auswahl = (int) combo2.getSelectedItem();
 				}
 				if (änderung == 3) {
-					such_MieterID = (int) combo2.getSelectedItem();
+					JFRame_mieterID_auswahl = (int) combo2.getSelectedItem();
 				}
 				if (änderung == 4) {
-					such_Mitarbeiter = (int) combo2.getSelectedItem();
+					JFrame_mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
 				}
 			}
 		};
@@ -343,26 +499,57 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		meinRahmen.add(meinPanel, BorderLayout.SOUTH);
 		meinRahmen.pack();
 		meinRahmen.setVisible(true);
-		while (close == false) {
+		while (window == false) {
 			combo2.addActionListener(cbActionListener);
 		}
 
 	}
 
+	/**
+	 * Methode zum Einlesen einer Zahl vom Nutzer
+	 * 
+	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param zähler  = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return die eingelesene Zahl
+	 */
 	private int einlesen_Zahl(String[] auswahl, int zähler) {
-		System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
 		Scanner s = new Scanner(System.in);
-		int wort = s.nextInt();
-		return wort;
+		int zahl = -100;
+		try {
+
+			do {
+				System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+				zahl = s.nextInt();
+				if (zahl < 0) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+				}
+			} while (zahl < 0);
+		} catch (InputMismatchException e) {
+			System.out.println(
+					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+		}
+		return zahl;
 	}
 
+	/**
+	 * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+	 * 
+	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param zähler = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return das eingelesene Wort
+	 */
 	private String einlesen_Wort(String[] auswahl, int zähler) {
-		System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+		System.out.println("Erstellen: " + auswahl[zähler - 1]);
 		Scanner s = new Scanner(System.in);
-		String wort = s.next();
+		String wort = s.nextLine();
 		return wort;
 	}
 
+	/**
+	 * Methode zum Anpassen der Länge des Datums bei der Ausgabe auf der Konsole.
+	 * 
+	 */
 	private String länge_anpassen_Datum(Datum a_GD) {
 
 		int abzug = 0;
@@ -393,6 +580,13 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		return leerzeichen;
 	}
 
+	/**
+	 * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der Ausgabe auf der Konsole.
+	 * 
+	 * @param wort = mitgegebenes Attribut
+	 * 
+	 * @return das Attribut mit den anschließenden Leerzeichen
+	 */
 	private String länge_anpassen(String wort) {
 
 		int abzug = wort.length();

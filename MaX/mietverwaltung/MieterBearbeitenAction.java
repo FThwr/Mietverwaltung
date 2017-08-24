@@ -18,9 +18,7 @@ import javax.swing.JPanel;
 public class MieterBearbeitenAction extends MenueManager implements Action, Serializable {
 
 	static int bearbeitungsAuswahl_mieterID;
-	static int neue_mieterID;
-	static int such_wohnung;
-	static int such_mitarbeiterID;
+	static int neue_wohnung;
 	static boolean window = false;
 
 	@Override
@@ -513,7 +511,7 @@ public class MieterBearbeitenAction extends MenueManager implements Action, Seri
 	private void auswahl_AuftragsID_Wohnung_MitarbeiterID(int änderung) {
 		window = false;
 		bearbeitungsAuswahl_mieterID = 0;
-		such_wohnung = 0;
+		neue_wohnung = 0;
 		JFrame meinRahmen = new JFrame();
 
 		meinRahmen.setSize(250, 250);
@@ -521,7 +519,6 @@ public class MieterBearbeitenAction extends MenueManager implements Action, Seri
 		meinRahmen.setLocationRelativeTo(null);
 
 		JComboBox combo2 = new JComboBox();
-		combo2.addItem("" + 0);
 
 		if (änderung == -99) {
 			meinRahmen.setTitle("Mieter ID");
@@ -541,15 +538,6 @@ public class MieterBearbeitenAction extends MenueManager implements Action, Seri
 			}
 		}
 
-		if (änderung == 3) {
-			meinRahmen.setTitle("Mitarbeiter-ID");
-			JLabel frage = new JLabel("Welchen Mitarbeiter (ID) möchten Sie auswählen?");
-			meinPanel.add(frage);
-			for (Mitarbeiter worker : workerList) {
-				combo2.addItem(worker.getMitarbeiterID());
-			}
-		}
-
 		meinRahmen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				window = true;
@@ -563,12 +551,8 @@ public class MieterBearbeitenAction extends MenueManager implements Action, Seri
 					bearbeitungsAuswahl_mieterID = (int) combo2.getSelectedItem();
 				}
 				if (änderung == 2) {
-					such_wohnung = (int) combo2.getSelectedItem();
+					neue_wohnung = (int) combo2.getSelectedItem();
 				}
-				if (änderung == 3) {
-					such_mitarbeiterID = (int) combo2.getSelectedItem();
-				}
-
 			}
 		};
 		meinPanel.add(combo2);

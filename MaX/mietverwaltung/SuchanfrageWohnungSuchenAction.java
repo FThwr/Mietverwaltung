@@ -273,7 +273,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 					int rela = 1;
 					int wahl = 0;
 					Scanner q = new Scanner(System.in);
-					System.out.println("Wäheln Sie, ob ein Balkon vorhanden sein soll: '1' nein, '2' ja");
+					System.out.println("Wäheln Sie, ob eine Fußbodenheizung vorhanden sein soll: '1' nein, '2' ja");
 
 					try {
 						String ausWahl = q.next();
@@ -370,6 +370,10 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 
 					}
 
+				}
+				if (eingabe > 8) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
 				}
 			}
 

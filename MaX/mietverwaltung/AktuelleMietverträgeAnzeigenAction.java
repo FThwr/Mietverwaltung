@@ -36,6 +36,7 @@ public class AktuelleMietverträgeAnzeigenAction extends MenueManager implements 
 			} else {
 				System.out.println("Mietende:                     " + "-");
 			}
+			System.out.println("Status:                       " + contract.getStatus());
 
 			System.out.println("");
 		}

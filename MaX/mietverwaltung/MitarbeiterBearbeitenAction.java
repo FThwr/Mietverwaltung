@@ -1,259 +1,418 @@
 package mietverwaltung;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class MitarbeiterBearbeitenAction extends MenueManager implements Action , Serializable{
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class MitarbeiterBearbeitenAction extends MenueManager implements Action, Serializable {
+
+	static boolean window = false;
+	static int bearbeitungsAuswahl_MitarbeiterID;
 
 	@Override
 	public void action() {
-		
-		System.out.println("________________________________________ Mitarbeiter bearbeiten ________________________________________");
 
-		Scanner s = new Scanner(System.in);
-		System.out.println("\nWählen Sie den Mitarbeiter (ID) aus, den Sie bearbeiten möchten!\n");
+		System.out.println(
+				"________________________________________ Mitarbeiter bearbeiten ________________________________________");
 
+		/*
+		 * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
+		 * bearbeitenden Attributs.
+		 */
+		int änderung = -99;
+
+		// Ausgabe aller Mitarbeiter-IDs zur einfacheren Auswahl
+		auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+
+		// Variable enthält die ID des zu bearbeitenden Mitarbeiters
+		int zu_bearbeitenden_mitarbeiter = bearbeitungsAuswahl_MitarbeiterID;
+
+		boolean bearbeitungsVorgang = true;
+
+		/*
+		 * Array beeinhaltet alle Attribute, die verändert werden können und
+		 * dient zur Ausgabe durch Zugriff auf deren Index
+		 */
+		String[] kategorie = { "Mitarbeiter ID", "Name", "Vorname", "Passwort" };
+
+		/*
+		 * diese Variablen dienen später für eine tabellarische Ausgabe auf der
+		 * Konsole
+		 */
+		String längenAnpassung_mitarbeiterID = "";
+		String längenAnpassung_Name = "";
+		String längenAnpassung_Vorname = "";
+		String längenAnpassnung_benutzername = "";
+		String längenAnpassung_passwort = "";
+
+		/*
+		 * allgemeine Variablen alte = aktuelle Werte, neue = neue/veränderte
+		 * Werte
+		 */
+		int aktuelleMitarbeiterID = -100;
+		int neueMitarbeiterID = -100;
+
+		String aktuellerName = "";
+		String neuerName = "";
+
+		String aktuellerVorname = "";
+		String neuerVorname = "";
+
+		String aktuellerBenutzername = "";
+		String neuerBenutzername = "";
+
+		String aktuellesPasswort = "";
+		String neuesPasswort = "";
+
+		/*
+		 * Für jedes Element in der ArrayList 'workerList', welche alle aktiven
+		 * Mitarbeiter beeinhaltet, wir zeurst das Objekt in der ArrayList
+		 * gesucht, welche der eben ausgewählten Mitarbeiter-ID entspricht. Es
+		 * werden neue Variablen angelegt, welche die einzelnen Werte des
+		 * Objekts beeinhalten.
+		 */
 		for (Mitarbeiter worker : workerList) {
-			System.out.println(worker.getName() + "; " + worker.getVorname() + "  ID: " + worker.getMitarbeiterID() );
+			if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
+
+				aktuelleMitarbeiterID = worker.getMitarbeiterID();
+				neueMitarbeiterID = aktuelleMitarbeiterID;
+
+				aktuellerName = worker.getName();
+				neuerName = aktuellerName;
+
+				aktuellerVorname = worker.getVorname();
+				neuerVorname = aktuellerVorname;
+
+				aktuellerBenutzername = worker.getBenutzername();
+				neuerBenutzername = neuerVorname.trim().substring(0, 1) + "." + neuerName;
+
+				aktuellesPasswort = worker.getPasswort();
+				neuesPasswort = aktuellesPasswort;
+
+				/*
+				 * Initialisierung der tabellarischen Variablen + Ausfüllung mit
+				 * Leerzeichen (Umwandlung in die Tabelle)
+				 */
+				längenAnpassung_mitarbeiterID = "" + aktuelleMitarbeiterID;
+				längenAnpassung_mitarbeiterID = länge_anpassen(längenAnpassung_mitarbeiterID);
+
+				längenAnpassung_Name = aktuellerName;
+				längenAnpassung_Name = länge_anpassen(längenAnpassung_Name);
+
+				längenAnpassung_Vorname = aktuellerName;
+				längenAnpassung_Vorname = länge_anpassen(längenAnpassung_Vorname);
+
+				längenAnpassnung_benutzername = aktuellerBenutzername;
+				längenAnpassnung_benutzername = länge_anpassen(längenAnpassnung_benutzername);
+
+				längenAnpassung_passwort = aktuellesPasswort;
+				längenAnpassung_passwort = länge_anpassen(längenAnpassung_passwort);
+			}
 		}
 
-		try {
-			int zu_bearbeitenden_mitarbeiter = s.nextInt();
+		/*
+		 * Solange der Bearbeitungsvorgang nicht beendet ist, wird immer eine
+		 * Übersicht über den alten Wert und den neuen Wert des jeweiligen
+		 * Attributs ausgegeben. Es wird pro Durchlauf immer 1 Attribut
+		 * ausgewählt, welches man draufhin verändern kann.
+		 */
+		while (bearbeitungsVorgang == true) {
 
-			boolean bearbeitungsVorgang = true;
-			boolean mitarbeiterEingabe_erfolgreich = false;
-			String [] kategorie = {"Mitarbeiter ID", "Name", "Vorname", "Passwort"};
+			System.out.println("1. Mitarbeiter ID: " + längenAnpassung_mitarbeiterID + "neue Mitarbeiter ID: "
+					+ neueMitarbeiterID);
+			System.out.println("2. Name:           " + längenAnpassung_Name + "neuer Name:          " + neuerName);
+			System.out
+					.println("3. Vorname:        " + längenAnpassung_Vorname + "neuer Vorame:        " + neuerVorname);
+			System.out.println("   Benutzername:   " + längenAnpassnung_benutzername + "neuer benutzername:  "
+					+ neuerBenutzername);
+			System.out.println(
+					"4. Passwort:       " + längenAnpassung_passwort + "neues Passwort:      " + neuesPasswort);
+			System.out.println("5. Mitarbeiter löschen");
+			System.out.println("6. Bearbeitung abschließen");
+			System.out.println("0. Abbruch");
+			System.out.println("");
 
-			String längenAnpassung_mitarbeiterID = "";
-			String längenAnpassung_Name = "";
-			String längenAnpassung_Vorname = "";
-			String längenAnpassnung_benutzername = "";
-			String längenAnpassung_passwort = "";
+			Scanner t = new Scanner(System.in);
 
-			int aktuelleMitarbeiterID = -100;
-			int neueMitarbeiterID = -100;
+			/*
+			 * Die try-catch Klammer existiert für nicht erwünschte Eingaben wie
+			 * Zeichen, wo Zahlen erwartet werden.
+			 */
+			try {
+				änderung = t.nextInt();
 
-			String aktuellerName = "";
-			String neuerName = "";		
-
-			String aktuellerVorname = "";
-			String neuerVorname = "";
-
-			String aktuellerrBenutzername = "";
-			String neuerBenutzername = "";
-			
-			String aktuellesPasswort = "";
-			String neuesPasswort = "";
-			
-			for (Mitarbeiter worker : workerList) {
-				if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
-
-					mitarbeiterEingabe_erfolgreich = true;
-
-					aktuelleMitarbeiterID = worker.getMitarbeiterID();
-					neueMitarbeiterID = aktuelleMitarbeiterID;
-
-					aktuellerName = worker.getName();
-					neuerName = aktuellerName;
-
-					aktuellerVorname = worker.getVorname();
-					neuerVorname = aktuellerVorname;
-
-					aktuellerrBenutzername = worker.getBenutzername();
-					neuerBenutzername = aktuellerrBenutzername;
-					
-					aktuellesPasswort = worker.getPasswort();
-					neuesPasswort = aktuellesPasswort;
-
-					// Variablen zur verschönerten Ausgabe
-					längenAnpassung_mitarbeiterID = "" + aktuelleMitarbeiterID;
-					längenAnpassung_mitarbeiterID = länge_anpassen(längenAnpassung_mitarbeiterID);
-
-					längenAnpassung_Name = aktuellerName;
-					längenAnpassung_Name = länge_anpassen(längenAnpassung_Name);
-
-					längenAnpassung_Vorname = aktuellerName;
-					längenAnpassung_Vorname = länge_anpassen(längenAnpassung_Vorname);
-
-					längenAnpassnung_benutzername = aktuellerrBenutzername;
-					längenAnpassnung_benutzername = länge_anpassen(längenAnpassnung_benutzername);
-
-					längenAnpassung_passwort = aktuellesPasswort;
-					längenAnpassung_passwort = länge_anpassen(längenAnpassung_passwort);
-				}
-			}
-
-			if (mitarbeiterEingabe_erfolgreich == true) {
-				while (bearbeitungsVorgang == true) {
-
-					System.out.println("Mitarbeiter ID: " + längenAnpassung_mitarbeiterID  + "neue Mitarbeiter ID: " + neueMitarbeiterID);
-					System.out.println("Name:           " + längenAnpassung_Name           + "neuer Name:          " + neuerName);
-					System.out.println("Vorname:        " + längenAnpassung_Vorname        + "neuer Vorame:        " + neuerVorname);
-					System.out.println("Benutzername:   " + längenAnpassnung_benutzername  + "neuer Benutzername:  " + neuerBenutzername);
-					System.out.println("Passwort:       " + längenAnpassung_passwort       + "neues Passwort:      " + neuesPasswort);
-					System.out.println("");
-
-					Scanner t = new Scanner(System.in);
+				// Abbruch
+				if (änderung == 0) {
 					System.out.println(
-							"............................... Wählen Sie die zu bearbeitende Eigenschaft aus! ..............................."
-									+ "\n Drücke '1'  für Mitarbeiter ID  "
-									+ "\n Drücke '2'  für Name  " 
-									+ "\n Drücke '3'  für Vorname  "
-									+ "\n Drücke '4'  für Passwort  "
-									+ "\n Drücke '5'  für bestätigen  "
-									+ "\n Drücke '0'  für abbruch der Suche!\n");
+							"-------------------------------Bearbeitungsvorgang wurde abgebrochen!-------------------------------\n");
+					bearbeitungsVorgang = false;
+				}
 
-					try {
-						int änderung = t.nextInt();
+				// Mitarbeiter-ID
+				if (änderung == 1) {
+					int eingabe = einlesen_Zahl(kategorie, änderung);
+					if (eingabe == 0) {
+					} else {
+						int Vorhanden = 0;
 
-						if (änderung == 0) {
-							bearbeitungsVorgang = false;
-						}
-						if (änderung == 1) {
-							int eingabe = einlesen_Zahl(kategorie, änderung);
-							if (eingabe == 0) {
-								neueMitarbeiterID = aktuelleMitarbeiterID;
-							} else {
-								neueMitarbeiterID = eingabe;
+						/*
+						 * In der Liste aller aktiven Mitarbeiter wird
+						 * überprüft, ob es einen Mitarbeiter mit der
+						 * gewünschten ID bereits gibt.
+						 */
+						for (Mitarbeiter worker : workerList) {
+							if (eingabe == worker.getMitarbeiterID()) {
+								Vorhanden = 1;
 							}
 						}
-						if (änderung == 2) {
-							String neu = einlesen_Wort(kategorie, änderung);
-							if (neu.equals("" + 0)) {
-								neu = aktuellerName;
-							} else {
-								neuerName = neu;
-							}
-						}
-						if (änderung == 3) {
-							
-							String neu = einlesen_Wort(kategorie, änderung);
-							if (neu.equals("" + 0)) {
-								neu = aktuellerVorname;
-							} else {
-								neuerVorname = neu;
-							}
-						}
-						if (änderung == 4) {
-							
-							String neu = einlesen_Wort(kategorie, änderung);
-							if (neu.equals("" + 0)) {
-								neu = aktuellesPasswort;
-							} else {
-								neuesPasswort = neu;
-							}
-						}
-						
-						if (änderung == 5) {
-							bearbeitungsVorgang = false;
 
-								for (Mitarbeiter worker : workerList) {
-									if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
-										neuerBenutzername = neuerVorname.trim().substring(0, 1) + "." + neuerName;
-										worker.setMitarbeiterID(neueMitarbeiterID);
-										worker.setName(neuerName);
-										worker.setVorname(neuerVorname);
-										worker.setBenutzername(neuerBenutzername);
-										worker.setPasswort(neuesPasswort);
-									}
-								}
-								for (Wohnung flat : flatList) {
-									if (aktuellerName.equals(flat.getZugeordneterMitarbeiter().getName())) {
-										flat.getZugeordneterMitarbeiter().setName(neuerName);;
-									}
-								}
+						/*
+						 * In der Liste aller ehemaligen Mitarbeiter wird
+						 * überprüft, ob es einen Mitarbeiter mit der
+						 * gewünschten ID bereits gibt.
+						 */
+						for (Mitarbeiter ehemaligerMitarbeiter : ehemaligeMitarbeiter) {
+							if (eingabe == ehemaligerMitarbeiter.getMitarbeiterID()) {
+								Vorhanden = 1;
+							}
 						}
-						
-					} catch (InputMismatchException e) {
-						System.out.println(
-								"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+
+						// ID bereits vorhanden
+						if (Vorhanden == 1) {
+							System.out.println(
+									"\n------------------------------- Fehler! ------------------------------- \nMitarbeiter ID bereits vergeben!\n");
+						}
+
+						// ID nicht vorhanden
+						else {
+							neueMitarbeiterID = eingabe;
+						}
 					}
 				}
-			} 
-			else {
-				System.out.println("------------------------------- Fehler! ------------------------------- \nIhre Eingabe war nicht erfolgreich, weil die ID nicht existiert!\n");
+
+				// Name
+				if (änderung == 2) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+					} else {
+						neuerName = eingabe;
+					}
+				}
+
+				// Vorname
+				if (änderung == 3) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+					} else {
+						neuerVorname = eingabe;
+					}
+				}
+
+				// Passwort
+				if (änderung == 4) {
+					String eingabe = einlesen_Wort(kategorie, änderung);
+					if (eingabe.equals("" + 0)) {
+					} else {
+						neuesPasswort = eingabe;
+					}
+				}
+
+				// Löschen
+				if (änderung == 5) {
+					
+					bearbeitungsVorgang = false;
+					
+					/*
+					 * Da der Mitarbeiter gelöscht wird, wird er der Liste der
+					 * ehemaligen Mitarbeiter hinzugefügt.
+					 */
+					ehemaligeMitarbeiter.add(new Mitarbeiter(aktuelleMitarbeiterID, aktuellerName, aktuellerVorname,
+							aktuellerBenutzername, aktuellesPasswort));
+					
+					/*
+					 * Gleichzeitig wird auch der Name des Mitarbeiters in der
+					 * ihm zugewiesenen Wohnung auf leer gesetzt.
+					 */
+					for (Wohnung flat : flatList) {
+						if (aktuellerName.equals(flat.getZugeordneterMitarbeiter().getName())) {
+							flat.getZugeordneterMitarbeiter().setName("-");
+							;
+						}
+					}
+					
+					Iterator<Mitarbeiter> iter = workerList.iterator();
+
+					while (iter.hasNext()) {
+						Mitarbeiter str = iter.next();
+
+						if (str.getMitarbeiterID() == zu_bearbeitenden_mitarbeiter) {
+							iter.remove();
+						}
+					}
+				}
+
+				// Bearbeitung abschließen
+				if (änderung == 6) {
+					bearbeitungsVorgang = false;
+
+					/*
+					 * Es werden nach dem Herausfinden, welcher Mietvertrag so
+					 * eben bearbeitet wurde, die einzelnen veränderten
+					 * Attribute nun geändert.
+					 */
+					for (Mitarbeiter worker : workerList) {
+						if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
+							worker.setMitarbeiterID(neueMitarbeiterID);
+							worker.setName(neuerName);
+							worker.setVorname(neuerVorname);
+							worker.setBenutzername(neuerBenutzername);
+							worker.setPasswort(neuesPasswort);
+						}
+					}
+
+					/*
+					 * Gleichzeitig wird auch der Name des Mitarbeiters in der
+					 * ihm zugewiesenen Wohnung geändert.
+					 */
+					for (Wohnung flat : flatList) {
+						if (aktuellerName.equals(flat.getZugeordneterMitarbeiter().getName())) {
+							flat.getZugeordneterMitarbeiter().setName(null);
+							
+						}
+					}
+				}
+				
+				// Eingabe > 6
+				if(änderung > 6) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.println(
+						"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
 			}
+		}
+	}
+
+	/**
+	 * Methode zur Auswahl eines bereits existierend Attributs durch Vorschlag
+	 * jedes einzelnen Elements in einer ArrayList
+	 * 
+	 * @param änderung
+	 *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt
+	 *            (ob eine Wohnung, etc. bearbeitet wird)
+	 */
+	private void auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(int änderung) {
+		window = false;
+		bearbeitungsAuswahl_MitarbeiterID = -100;
+
+		JFrame meinRahmen = new JFrame();
+		meinRahmen.setSize(250, 250);
+		JPanel meinPanel = new JPanel();
+		meinRahmen.setLocationRelativeTo(null);
+
+		JComboBox combo2 = new JComboBox();
+
+		if (änderung == -99) {
+			meinRahmen.setTitle("Mitarbeiter ID");
+			JLabel frage = new JLabel("Welcher Mitarbeiter wird bearbeitet?");
+			meinPanel.add(frage);
+			for (Mitarbeiter worker : workerList) {
+				combo2.addItem(worker.getMitarbeiterID());
+			}
+		}
+
+		meinRahmen.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				window = true;
+			}
+		});
+
+		ActionListener cbActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (änderung == -99) {
+					bearbeitungsAuswahl_MitarbeiterID = (int) combo2.getSelectedItem();
+				}
+			}
+		};
+		meinPanel.add(combo2);
+		meinRahmen.add(meinPanel, BorderLayout.SOUTH);
+		meinRahmen.pack();
+		meinRahmen.setVisible(true);
+		while (window == false) {
+			combo2.addActionListener(cbActionListener);
+		}
+
+	}
+
+	/**
+	 * Methode zum Einlesen einer Zahl vom Nutzer
+	 * 
+	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param zähler  = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return die eingelesene Zahl
+	 */
+	private int einlesen_Zahl(String[] auswahl, int zähler) {
+		Scanner s = new Scanner(System.in);
+		int zahl = -100;
+		try {
+
+			do {
+				System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+				zahl = s.nextInt();
+				if (zahl < 0) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+				}
+			} while (zahl < 0);
 		} catch (InputMismatchException e) {
 			System.out.println(
 					"\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
 		}
+		return zahl;
 	}
 
-	private int einlesen_Zahl(String [] auswahl, int zähler) {
-		System.out.println("Geben Sie ein: " + auswahl[zähler-1]);
+	/**
+	 * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+	 * 
+	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+	 * @param zähler = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @return das eingelesene Wort
+	 */
+	private String einlesen_Wort(String[] auswahl, int zähler) {
+		System.out.println("Erstellen: " + auswahl[zähler - 1]);
 		Scanner s = new Scanner(System.in);
-		int wort = s.nextInt();
+		String wort = s.nextLine();
 		return wort;
 	}
-	
-	private String einlesen_Wort(String [] auswahl, int zähler) {
-		System.out.println("Geben Sie ein: " + auswahl[zähler-1]);
-		Scanner s = new Scanner(System.in);
-		String wort = s.next();
-		return wort;
-	}
 
-	private String länge_anpassen_Datum(Datum a_GD) {
-
-		String leerzeichen = "";
-
-		String jahr = "" + a_GD.getJahr();
-		int l_J = jahr.length();
-
-		String monat = "" + a_GD.getMonat();
-		int l_M = monat.length();
-
-		String tag = "" + a_GD.getTag();
-		int l_T = tag.length();
-
-		int abzug = l_J + l_M + l_T + 2; // +2 für die Punkte zwischen den
-											// Komponenten
-		if (abzug < 50) {
-			while (abzug < 50) {
-				leerzeichen = leerzeichen + " ";
-				abzug += 1;
-			}
-		}
-		return leerzeichen;
-	}
-
+	/**
+	 * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der Ausgabe auf der Konsole.
+	 * 
+	 * @param wort = mitgegebenes Attribut
+	 * 
+	 * @return das Attribut mit den anschließenden Leerzeichen
+	 */
 	private String länge_anpassen(String wort) {
 
-		int abzug = wort.length();
 		if (wort.length() < 50) {
 			while (wort.length() < 50) {
 				wort = wort + " ";
 			}
 		}
 		return wort;
-	}
-
-	private String länge_anpassen_Adresse(Adresse a_A) {
-
-		String leerzeichen = "";
-
-		String hausnummer = "" + a_A.getHausnummer();
-		int l_HN = hausnummer.length();
-
-		String platz = "" + a_A.getPlz();
-		int l_P = platz.length();
-
-		String stadt = a_A.getStadt();
-		int l_ST = stadt.length();
-
-		String straße = a_A.getStrasse();
-		int l_SR = straße.length();
-
-		int abzug = l_HN + l_P + l_SR + l_ST + 3; // +3 für die Leerzeichen
-													// zwischen den Komponenten
-		if (abzug < 50) {
-			while (abzug < 50) {
-				leerzeichen = leerzeichen + " ";
-				abzug += 1;
-			}
-		}
-		return leerzeichen;
 	}
 }
