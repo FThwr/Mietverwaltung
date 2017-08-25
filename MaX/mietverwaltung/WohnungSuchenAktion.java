@@ -61,6 +61,7 @@ public class WohnungSuchenAktion extends MenueManager implements Action, Seriali
 		String such_name = name;
 
 		String check = "";
+		String[] savecheck = new String[14];
 
 		/*
 		 * Array beeinhaltet alle Attribute, die ver‰ndert werden kˆnnen und
@@ -122,31 +123,53 @@ public class WohnungSuchenAktion extends MenueManager implements Action, Seriali
 
 				// Wohnungsnummer
 				if (eingabe == 1) {
-					such_wohnungsnummer = einlesen_Zahl(suche, eingabe);
-					if (such_wohnungsnummer == 0) {
+					int einlese = einlesen_Zahl(suche, eingabe);
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_wohnungsnummer = wohnungsnummer;
-					} else {
-						check = check + "a";
+					} 
+					
+					else if (einlese == 0) {
+					}
+					else {
+						
+						such_wohnungsnummer = einlese;
+						savecheck[eingabe - 1] = "a";
 					}
 				}
 
 				// Zimmeranzahl
 				if (eingabe == 2) {
-					such_zimmeranzahl = einlesen_Zahl(suche, eingabe);
-					if (such_zimmeranzahl == 0) {
+					int einlese = einlesen_Zahl(suche, eingabe);
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_zimmeranzahl = zimmeranzahl;
-					} else {
-						check = check + "b";
+					}
+					
+					else if (einlese == 0) {
+					}
+					
+					else {
+						
+						such_zimmeranzahl = einlese;
+						savecheck[eingabe - 1] = "b";
 					}
 				}
 
 				// Etage
 				if (eingabe == 3) {
-					such_etage = einlesen_Zahl(suche, eingabe);
-					if (such_etage == 0) {
+					int einlese = einlesen_Zahl(suche, eingabe);
+					if (einlese == 0) {
 						such_etage = etage;
-					} else {
-						check = check + "e";
+					} 
+					
+					if (einlese == 0) {
+					}
+					
+					else {
+						
+						such_etage = einlese;
+						savecheck[eingabe - 1] = "e";
 					}
 				}
 
@@ -159,11 +182,11 @@ public class WohnungSuchenAktion extends MenueManager implements Action, Seriali
 
 					if (wahl == 1) {
 						such_balkon = true;
-						check = check + "f";
+						savecheck[eingabe - 1] = "f";
 					}
 					if (wahl == 2) {
 						such_balkon = false;
-						check = check + "f";
+						savecheck[eingabe - 1] = "f";
 					}
 					if (wahl == 0) {
 						such_balkon = balkon;
@@ -182,11 +205,11 @@ public class WohnungSuchenAktion extends MenueManager implements Action, Seriali
 
 					if (wahl == 1) {
 						such_fuﬂbodenheizung = true;
-						check = check + "g";
+						savecheck[eingabe - 1] = "g";
 					}
 					if (wahl == 2) {
 						such_fuﬂbodenheizung = false;
-						check = check + "g";
+						savecheck[eingabe - 1] = "g";
 					}
 					if (wahl == 0) {
 						such_fuﬂbodenheizung = fuﬂbodenheizung;
@@ -205,19 +228,19 @@ public class WohnungSuchenAktion extends MenueManager implements Action, Seriali
 
 					if (wahl == 1) {
 						such_aussicht = "Park";
-						check = check + "h";
+						savecheck[eingabe - 1] = "h";
 					}
 					if (wahl == 2) {
 						such_aussicht = "Spree";
-						check = check + "h";
+						savecheck[eingabe - 1] = "h";
 					}
 					if (wahl == 3) {
 						such_aussicht = "Schienen";
-						check = check + "h";
+						savecheck[eingabe - 1] = "h";
 					}
 					if (wahl == 4) {
 						such_aussicht = "Straﬂe";
-						check = check + "h";
+						savecheck[eingabe - 1] = "h";
 					}
 					if (wahl == 0) {
 						such_aussicht = aussicht;

@@ -287,7 +287,7 @@ public class MitarbeiterBearbeitenAction extends MenueManager implements Action,
 					 */
 					for (Wohnung flat : flatList) {
 						if (aktuellerName.equals(flat.getZugeordneterMitarbeiter().getName())) {
-							flat.getZugeordneterMitarbeiter().setName(null);
+							flat.getZugeordneterMitarbeiter().setName(neuerName);
 							
 						}
 					}

@@ -130,20 +130,21 @@ public class MenueManager {
 //		System.out.println("Datei existiert nicht oder ist leer.");
 //	}
 		
-//		String anmeldung = " ";
-//		boolean passwort‹bereinstimmung = false;
-//
-//		while (passwort‹bereinstimmung == false) {
-//			anmeldung = anmelden();
-//			boolean passwort = passwortExistens(anmeldung);
-//
-//			if (passwort == false) {
-//				System.out.println("Anmeldung nicht erfolgreich!\n");
-//			} else {
-//				passwort‹bereinstimmung = true;
-//			}
-//		}
-//		personHerausfinden(anmeldung);
+		String anmeldung = " ";
+		boolean passwort‹bereinstimmung = false;
+
+		while (passwort‹bereinstimmung == false) {
+			anmeldung = anmelden();
+			boolean passwort = passwortExistens(anmeldung);
+
+			if (passwort == false) {
+				System.out.println("\nAnmeldung nicht erfolgreich! Programm wird beendet\n");
+				System.exit(0);
+			} else {
+				passwort‹bereinstimmung = true;
+			}
+		}
+		personHerausfinden(anmeldung);
 
 		System.out.println(
 				"\nBei Eingabe von \"0\" kehren Sie zum vorherigen Men¸ zur¸ck. \nBei \"-1\" wird das Programm beendet.");
@@ -169,6 +170,11 @@ public class MenueManager {
 	private String anmelden() {
 		System.out.println("Anmeldungsvorgang");
 		String anmeldung = JOptionPane.showInputDialog(null, "Bitte Passwort eingeben!");
+		if (anmeldung == null) {
+			System.out.println("\nProgramm wird beendet!\n");
+			System.exit(0);
+		}
+		
 		return anmeldung;
 	}
 

@@ -30,6 +30,8 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 		System.out.println(
 				"________________________________________ Suchanfrage: Wohnung suchen ________________________________________");
 
+		such_kundenID = 0;
+		
 		boolean suchVorgang = true;
 
 		double such_zimmeranzahl = -100;
@@ -59,9 +61,13 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 
 		String auswahl = " ";
 		
-		jFrameErstellen_Mitarbeiter();
+		int änderung = -99;
 		
-		jFrameErstellen_Interessent();
+		auswahl_InteressentenID_MitarbeiterID(änderung);
+		
+		änderung = -98;
+		
+		auswahl_InteressentenID_MitarbeiterID(änderung);
 
 		while (suchVorgang == true) {
 
@@ -380,71 +386,60 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 			}
 		}
 	}
+	
+	/**
+	 * Methode zur Auswahl eines bereits existierend Attributs durch Vorschlag
+	 * jedes einzelnen Elements in einer ArrayList
+	 * 
+	 * @param änderung
+	 *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt
+	 *            (ob eine Wohnung, etc. bearbeitet wird)
+	 */
+	private void auswahl_InteressentenID_MitarbeiterID(int änderung) {
+		window = false;
+		such_mitarbeiterID = 0;
 
-	private void jFrameErstellen_Interessent() {
-		such_kundenID = 0;
 		JFrame meinRahmen = new JFrame();
-		meinRahmen.setTitle("Interessenten ID");
+
 		meinRahmen.setSize(250, 250);
 		JPanel meinPanel = new JPanel();
-		JLabel frage = new JLabel("Für welchen Interessenten wird ein Suchauftrag ausgeführt?");
-		meinPanel.add(frage);
 		meinRahmen.setLocationRelativeTo(null);
 
 		JComboBox combo2 = new JComboBox();
-		combo2.addItem("" + 0);
-		for (Interessent interest : interestList) {
-			combo2.addItem(interest.getKundenID());
+
+		if (änderung == -99) {
+			meinRahmen.setTitle("Interessenten ID");
+			JLabel frage = new JLabel("Für welchen Interessenten wird ein Suchauftrag ausgeführt?");
+			meinPanel.add(frage);
+			for (Interessent interest : interestList) {
+				combo2.addItem(interest.getKundenID());
+			}
 		}
-		
+
+		if (änderung == -98) {
+			meinRahmen.setTitle("Mitarbeiter ID");
+			JLabel frage = new JLabel("Von welchem Mitarbeiter wird ein Suchauftrag ausgeführt?");
+			meinPanel.add(frage);
+			for (Mitarbeiter worker : workerList) {
+				combo2.addItem(worker.getMitarbeiterID());
+			}
+		}
+
 		meinRahmen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				fenster = true;
+				window = true;
 			}
 		});
 
 		ActionListener cbActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				such_kundenID = (int) combo2.getSelectedItem();
-			}
-		};
-		meinPanel.add(combo2);
-		meinRahmen.add(meinPanel, BorderLayout.SOUTH);
-		meinRahmen.pack();
-		meinRahmen.setVisible(true);
-		while (fenster == false) {
-			combo2.addActionListener(cbActionListener);
-		}
-		
-	}
-	
-	private void jFrameErstellen_Mitarbeiter() {
-		such_mitarbeiterID = 0;
-		JFrame meinRahmen = new JFrame();
-		meinRahmen.setTitle("Mitarbeiter ID");
-		meinRahmen.setSize(250, 250);
-		JPanel meinPanel = new JPanel();
-		JLabel frage = new JLabel("Von welchem Mitarbeiter wird ein Suchauftrag ausgeführt?");
-		meinPanel.add(frage);
-		meinRahmen.setLocationRelativeTo(null);
-
-		JComboBox combo2 = new JComboBox();
-		combo2.addItem("" + 0);
-		for (Mitarbeiter worker : workerList) {
-			combo2.addItem(worker.getMitarbeiterID());
-		}
-	
-		meinRahmen.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				window = true;
-			}
-		});		
-
-		ActionListener cbActionListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				such_mitarbeiterID = (int) combo2.getSelectedItem();
+				if (änderung == -99) {
+					such_kundenID = (int) combo2.getSelectedItem();
+				}
+				if (änderung == -98) {
+					such_mitarbeiterID = (int) combo2.getSelectedItem();
+				}
 			}
 		};
 		meinPanel.add(combo2);
@@ -454,7 +449,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 		while (window == false) {
 			combo2.addActionListener(cbActionListener);
 		}
-		
+
 	}
 
 	private void löschen(int aktuellesKriterium, ArrayList<Bedingung> listeVonBedingungen) {

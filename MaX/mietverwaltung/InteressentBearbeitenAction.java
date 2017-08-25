@@ -535,24 +535,6 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 			}
 		}
 
-		if (änderung == 2) {
-			meinRahmen.setTitle("Wohnungsnummer");
-			JLabel frage = new JLabel("Welche Wohnung möchten Sie auswählen?");
-			meinPanel.add(frage);
-			for (Wohnung flat : flatList) {
-				combo2.addItem(flat.getWohnungsID());
-			}
-		}
-
-		if (änderung == 3) {
-			meinRahmen.setTitle("Mitarbeiter-ID");
-			JLabel frage = new JLabel("Welchen Mitarbeiter (ID) möchten Sie auswählen?");
-			meinPanel.add(frage);
-			for (Mitarbeiter worker : workerList) {
-				combo2.addItem(worker.getMitarbeiterID());
-			}
-		}
-
 		meinRahmen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				window = true;
@@ -565,13 +547,6 @@ public class InteressentBearbeitenAction extends MenueManager implements Action,
 				if (änderung == -99) {
 					bearbeitungsAuswahl_interessentenID = (int) combo2.getSelectedItem();
 				}
-				if (änderung == 2) {
-					such_wohnung = (int) combo2.getSelectedItem();
-				}
-				if (änderung == 3) {
-					such_mitarbeiterID = (int) combo2.getSelectedItem();
-				}
-
 			}
 		};
 		meinPanel.add(combo2);

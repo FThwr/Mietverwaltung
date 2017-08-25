@@ -11,7 +11,7 @@ public class Test {
 		
 		MenueManager m = new MenueManager();
 		// Anmeldekonten der Mitarbeiter
-//		m.add(new Mitarbeiter (1, "Faustmann", "Gert", "Qualle"));
+		m.add(new Mitarbeiter (1, "Faustmann", "Gert", "Qualle"));
 //		m.add(new Mitarbeiter (2, "Tsakonas", "Felicia", "Boing"));
 //		m.add(new Mitarbeiter (3, "Bebenroth", "Mandy", "Boom"));
 //		m.add(new Mitarbeiter (4, "Ruhkieck", "Sophia", "Zisch"));

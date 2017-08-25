@@ -101,7 +101,7 @@ public class WohnungCreate extends MenueManager implements Action , Serializable
 				erstellVorgang = false;
 			}
 			
-			// Wohnngsnnummrt
+			// Wohnungsnummer
 			if (änderung == 1) {
 					int eingabe = einlesen_Zahl(kategorie, änderung);
 					if (eingabe == 0) {
