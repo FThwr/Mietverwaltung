@@ -13,10 +13,7 @@ public class AlleAbgeschlossenenHandwerkeraufträgeAnzeigenAction extends MenueMa
 				"________________________________________ abgeschlossene Handwerkeraufträge anzeigen ________________________________________");
 
 		/*
-		 * Jedes Element der ArrayList 'abgeschlosseneHandwerkeraufträge' wird
-		 * ausgelesen z.B. die Auftragsnummer, das Eingangsdatum des Auftrags,
-		 * etc. Die ArrayList beeinhaltet alle abgeschlossenen
-		 * Handwerkeraufträge.
+		 * Es wird eine Übersicht über alle abgeschlossene Handwerkeraufträge ausgegeben.
 		 */
 		for (Handwerkerauftrag fertigerAuftrag : abgeschlosseneHandwerkeraufträge) {
 

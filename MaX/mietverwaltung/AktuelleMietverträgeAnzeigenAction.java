@@ -6,7 +6,13 @@ public class AktuelleMietverträgeAnzeigenAction extends MenueManager implements 
 
 	@Override
 	public void action() {
+		
+		System.out.println(
+				"________________________________________ aktive Mietverträge anzeigen ________________________________________");
 
+		/*
+		 * Es wird eine Übersicht über alle aktiven Mietverträge ausgegeben.
+		 */
 		for (Mietvertrag contract : contractList) {
 
 			System.out.println("Mietvertrags-ID:              " + contract.getMietvertragID());
@@ -19,7 +25,7 @@ public class AktuelleMietverträgeAnzeigenAction extends MenueManager implements 
 			if (contract.getKundenID() != -100) {
 				System.out.println("Kunden-ID:                    " + contract.getKundenID());
 			} else {
-				System.out.println("Kunden-ID                     " + contract.getKundenID());
+				System.out.println("Kunden-ID                     " + "-");
 			}
 			if (contract.getMitarbeiterID() != -100) {
 				System.out.println("Mitarbeiter-ID:               " + contract.getMitarbeiterID());
@@ -37,7 +43,6 @@ public class AktuelleMietverträgeAnzeigenAction extends MenueManager implements 
 				System.out.println("Mietende:                     " + "-");
 			}
 			System.out.println("Status:                       " + contract.getStatus());
-
 			System.out.println("");
 		}
 	}

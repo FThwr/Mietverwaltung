@@ -46,6 +46,8 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 		int mitarbeiterID = -100;
 		Datum mietbeginn = null;
 		Datum mietende = null;
+		
+		// Jeder neu erstellte Mietvertrag ist aktiv
 		String status = "aktiv";
 
 		/*
@@ -65,11 +67,36 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 			System.out.println(
 					"Wählen Sie einen zu bearbeitenenden Wert!\nFolgender Mietvertrag wird aktuell erstellt: ");
 			System.out.println("1. Mietvertrag-ID:                        " + mietvertragID);
+			if (wohnungsID != -100) {
 			System.out.println("2. Wohnungs-ID:                           " + wohnungsID);
+			}
+			else {
+				System.out.println("2. Wohnungs-ID:                           " + "-");
+			}
+			if (kundenID != -100) {
 			System.out.println("3. Kunden-ID:                             " + kundenID);
+			} 
+			else {
+				System.out.println("3. Kunden-ID:                             " + "-");
+			}
+			if (mitarbeiterID != -100) {
 			System.out.println("4. Mitarbeiter-ID:                        " + mitarbeiterID);
+			} 
+			else {
+				System.out.println("4. Mitarbeiter-ID:                        " + "-");
+			}
+			if (mietbeginn != null) {
 			System.out.println("5. Mietbeginn:                            " + mietbeginn);
+			} 
+			else {
+				System.out.println("5. Mietbeginn:                            " + "--.--.----");
+			}
+			if (mietende != null) {
 			System.out.println("6. Mietende:                              " + mietende);
+			} 
+			else {
+				System.out.println("6. Mietende:                              " + "--.--.----");
+			}
 			System.out.println("   Status:                                " + status);
 			System.out.println("7. Erstellen abschließen");
 			System.out.println("0. Abbruch");
@@ -87,7 +114,7 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 				// Abbruch
 				if (änderung == 0) {
 					System.out.println(
-							"-------------------------------Erstellvorgang wurde abgebrochen!-------------------------------\n");
+							"\n-------------------------------Erstellvorgang wurde abgebrochen!-------------------------------\n");
 					erstellVorgang = false;
 				}
 
@@ -155,13 +182,11 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 
 				// Mietbeginn
 				if (änderung == 5) {
-
 					mietbeginn = Datum_Eingabe(mietbeginn);
 				}
 
 				// Mietende
 				if (änderung == 6) {
-
 					mietende = Datum_Eingabe(mietende);
 				}
 
@@ -192,11 +217,17 @@ public class MietvertragErstellenAction extends MenueManager implements Action, 
 						}
 					}
 					
+					
+					/*
+					 * Es wird überprüft wer alles einen Mietvertrag besitzt.
+					 * Wenn jemand einen Mietvertrag besitzt, dann wird dem
+					 * Mieter die Wohnungsnummer im Mieterprofil hinzugefügt.
+					 * Wenn er keinen bestizt, dann bekommt er einen Strich in
+					 * sienem Profil an der Stelle der Wohnungsnummer.
+					 */
 					for (Mieter owner : ownerList) {
-						for (Mietvertrag contract: contractList) {
-							if (contract.getKundenID() == owner.getKundenID()) {
-								owner.setWohnungsnummer(wohnungsID);
-							}
+						if (kundenID == owner.getKundenID()) {
+							owner.setWohnungsnummer(wohnungsID);
 						}
 					}
 

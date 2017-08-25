@@ -6,7 +6,13 @@ public class AbgeschlosseneMietverträgeAnzeigenAction extends MenueManager imple
 
 	@Override
 	public void action() {
+		
+		System.out.println(
+				"________________________________________ ehemalige Mietverträge anzeigen ________________________________________");
 
+		/*
+		 * Es wird eine Übersicht über alle ehemaligen Mietverträge ausgegeben.
+		 */
 		for (Mietvertrag abgeschlossenerMietvertrag : beendeteMietverträge) {
 
 			System.out.println("Mietvertrags-ID:              " + abgeschlossenerMietvertrag.getMietvertragID());
@@ -19,7 +25,7 @@ public class AbgeschlosseneMietverträgeAnzeigenAction extends MenueManager imple
 			if (abgeschlossenerMietvertrag.getKundenID() != -100) {
 				System.out.println("Kunden-ID:                    " + abgeschlossenerMietvertrag.getKundenID());
 			} else {
-				System.out.println("Kunden-ID                     " + abgeschlossenerMietvertrag.getKundenID());
+				System.out.println("Kunden-ID                     " + "-");
 			}
 			if (abgeschlossenerMietvertrag.getMitarbeiterID() != -100) {
 				System.out.println("Mitarbeiter-ID:               " + abgeschlossenerMietvertrag.getMitarbeiterID());
@@ -37,7 +43,6 @@ public class AbgeschlosseneMietverträgeAnzeigenAction extends MenueManager imple
 				System.out.println("Mietende:                     " + "-");
 			}
 			System.out.println("Status:                       " + abgeschlossenerMietvertrag.getStatus());
-
 			System.out.println("");
 		}
 	}

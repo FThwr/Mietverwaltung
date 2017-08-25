@@ -17,9 +17,8 @@ public class Suchanfrage implements Serializable {
 	private boolean balkon;
 	private boolean fuﬂbodenheizung;
 	private String aussicht;
-	private Gregorien aktuellesDatum;
 	public Suchanfrage(int mitarbeiterID, int kundenID, char relaZimmeranzahl , double such_zimmeranzahl, char relaFl‰che, double fl‰che, char relaKosten, double kosten, char relaEtage, double such_etage,
-			boolean balkon, boolean fuﬂbodenheizung, String aussicht, Gregorien aktuellesDatum) {
+			boolean balkon, boolean fuﬂbodenheizung, String aussicht) {
 		
 		this.mitarbeiterID = mitarbeiterID;
 		this.kundenID = kundenID;
@@ -34,7 +33,6 @@ public class Suchanfrage implements Serializable {
 		this.balkon = balkon;
 		this.fuﬂbodenheizung = fuﬂbodenheizung;
 		this.aussicht = aussicht;
-		this.aktuellesDatum = aktuellesDatum;
 	}
 	public char getRelaZimmeranzahl() {
 		return relaZimmeranzahl;
@@ -59,12 +57,6 @@ public class Suchanfrage implements Serializable {
 	}
 	public void setRelaEtage(char relaEtage) {
 		this.relaEtage = relaEtage;
-	}
-	public Gregorien getAktuellesDatum() {
-		return aktuellesDatum;
-	}
-	public void setAktuellesDatum(Gregorien aktuellesDatum) {
-		this.aktuellesDatum = aktuellesDatum;
 	}
 	public int getMitarbeiterID() {
 		return mitarbeiterID;

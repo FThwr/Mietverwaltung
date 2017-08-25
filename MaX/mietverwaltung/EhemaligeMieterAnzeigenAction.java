@@ -10,8 +10,7 @@ public class EhemaligeMieterAnzeigenAction extends MenueManager implements Actio
 	public void action() throws FileNotFoundException, IOException, ClassNotFoundException {
 
 		/*
-		 * Jedes Element der ArrayList 'ehemaligeMieter' wird ausgelesen. Die
-		 * ArrayList beeinhaltet alle ehemaligen Mieter.
+		 * Es wird eine Übersicht über alle ehemaligen Mieter ausgegeben.
 		 */
 		for (Mieter ehemaligerMieter : ehemaligeMieter) {
 

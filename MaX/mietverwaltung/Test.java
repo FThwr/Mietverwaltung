@@ -23,7 +23,7 @@ public class Test {
 //
 //		
 //		//Mieter
-//		m.add(new Mieter (90001, "Mustermann", "Max", new Datum(3, 9, 2012), -100, "mustermann@web.de", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "03783476367", "Mieter" ));
+		m.add(new Mieter (90001, "Mustermann", "Max", new Datum(3, 9, 2012), -100, "mustermann@web.de", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "03783476367", "Mieter" ));
 //		m.add(new Mieter (90002, "Musterfrau", "Jana", new Datum(1, 9, 2014), -100, "musterfrau@web.de", new Adresse("Kleeweg", 23, 13357, "Berlin, Wedding"), "03783476367", "Mieter" ));
 //		//		m.add(new Mieter (90002, "Jana", "Musterfrau","4.6.2002", 100, "musterfrau@web.de", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"),"898389439", "Mieter" ));
 ////		m.add(new Mieter (90003, "Harry", "Potter", "12.10.1997", -100, "potter@web.de", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "03089653", "Mieter"));
@@ -49,7 +49,7 @@ public class Test {
 		m.add(new MenueEntry("Suche", new String [] {"Suchanfrage erstellen", "Suchanfragen anzeigen"}));	
 		m.add(new MenueEntry("Handwerkerauftrag", new String [] {"fertige Handwerkeraufträge anzeigen" , "Handwerkerauftrag anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen"}));
 		
-		m.add(new MenueEntry("Mieter", new String [] {"Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen"}));
+		m.add(new MenueEntry("Mieter", new String [] {"Mieter anzeigen", "Mieter bearbeiten", "Mieter suchen"}));
 		m.add(new MenueEntry("Interessent", new String [] {"Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen"}));
 		
 		m.add(new MenueEntry("Wohnung suchen", new WohnungSuchenAktion()));
@@ -60,7 +60,6 @@ public class Test {
 		m.add(new MenueEntry("Wohnung bearbeiten", new WohnungEdit()));
 		m.add(new MenueEntry("Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
 		m.add(new MenueEntry("Mieter bearbeiten", new MieterBearbeitenAction()));
-		m.add(new MenueEntry("neuen Mieter erstellen", new MieterErstellenAction()));
 		m.add(new MenueEntry("Mieter suchen", new MieterSuchenAction()));
 		m.add(new MenueEntry("Interessenten anzeigen", new AktuelleInteressentAnzeigenAction()));
 		m.add(new MenueEntry("Interessent bearbeiten", new InteressentBearbeitenAction()));

@@ -51,8 +51,8 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		 * Array beeinhaltet alle Attribute, die verändert werden können und
 		 * dient zur Ausgabe durch Zugriff auf deren Index
 		 */
-		String[] kategorie = { "Mietvertrag-ID", "Wohnungs-ID", "Kunden-ID", "Mitarbeiter-ID", "Mietbeginn",
-				"Mietende", "Status" };
+		String[] kategorie = { "Mietvertrag-ID", "Wohnungs-ID", "Kunden-ID", "Mitarbeiter-ID", "Mietbeginn", "Mietende",
+				"Status" };
 
 		/*
 		 * diese Variablen dienen später für eine tabellarische Ausgabe auf der
@@ -191,7 +191,7 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 				// Abbruch
 				if (änderung == 0) {
 					System.out.println(
-							"-------------------------------Bearbeitungsvorgang wurde abgebrochen!-------------------------------\n");
+							"\n-------------------------------Bearbeitungsvorgang wurde abgebrochen!-------------------------------\n");
 					bearbeitungsVorgang = false;
 				}
 
@@ -200,7 +200,42 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 					String eingabe = einlesen_Wort(kategorie, änderung);
 					if (eingabe.equals("" + 0)) {
 					} else {
-						neueMietvertragsID = eingabe;
+
+						int vorhanden = 0;
+						/*
+						 * Für jedes Element in der Handwerkerliste der aktiven
+						 * Aufträge wird geguckt, ob die eingegebende ID mit
+						 * einer bereits existierenden übereinstimmt.
+						 */
+						for (Mietvertrag contract : contractList) {
+							if (eingabe.equals(contract.getMietvertragID())) {
+								vorhanden = 1;
+							}
+						}
+
+						/*
+						 * Für jedes Element in der Handwerkerliste der
+						 * abgeschlossenen Aufträge wird geguckt, ob die
+						 * eingegebende ID mit einer bereits existierenden
+						 * übereinstimmt.
+						 */
+						for (Mietvertrag abgeschlossenerMietvertrag : beendeteMietverträge) {
+							if (eingabe.equals(abgeschlossenerMietvertrag.getMietvertragID())) {
+								vorhanden = 1;
+							}
+						}
+
+						/*
+						 * Wenn die Variable 'vorhanden' = 1, dann existierte
+						 * ein Handwerkerauftrag mit dieser ID bereits. Sonst
+						 * wird die eingegebene ID die ID des Auftrags.
+						 */
+						if (vorhanden == 1) {
+							System.out.println(
+									"\n------------------------------- Fehler! ------------------------------- \nMietvertrags-ID bereits vergeben!\n");
+						} else {
+							neueMietvertragsID = eingabe;
+						}
 					}
 				}
 
@@ -277,31 +312,7 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 						}
 					}
 					if (neuerStatus.equals("ausgelaufen")) {
-						
-						
-						/*
-						 * Es wird überprüft, ob eine Wohnung besetzt ist und
-						 * daraufhin der Status auf 'vermietet' gesetzt, wenn das
-						 * der Fall ist und sonst auf 'frei'
-						 */
-						for (Wohnung flat : flatList) {
-							int belegt = 0;
-							for (Mietvertrag contract : contractList) {
-								if (contract.getWohnungsID() == flat.getWohnungsID() && flat.getWohnungsID() != -100
-										&& contract.getWohnungsID() != -100) {
-									belegt = 1;
-								}
-							}
-							if (belegt == 1) {
-								flat.setStatus("vermietet");
-							} else {
-								flat.setStatus("frei");
-							}
-						}
-						
-						//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-						
-						
+
 						/*
 						 * Da der Vertrag ausgelaufen ist, wird er der Liste der
 						 * beendeten Verträge hinzugefügt.
@@ -325,10 +336,43 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 						}
 					}
 
+					/*
+					 * Es wird überprüft, ob eine Wohnung besetzt ist und
+					 * daraufhin der Status auf 'vermietet' gesetzt, wenn das
+					 * der Fall ist und sonst auf 'frei'
+					 */
+					for (Wohnung flat : flatList) {
+						int belegt = 0;
+						for (Mietvertrag contract : contractList) {
+							if (contract.getWohnungsID() == flat.getWohnungsID() && flat.getWohnungsID() != -100
+									&& contract.getWohnungsID() != -100) {
+								belegt = 1;
+							}
+						}
+						if (belegt == 1) {
+							flat.setStatus("vermietet");
+						} else {
+							flat.setStatus("frei");
+						}
+					}
+
+					/*
+					 * Es wird überprüft wer alles einen Mietvertrag besitzt.
+					 * Wenn jemand einen Mietvertrag besitzt, dann wird dem
+					 * Mieter die Wohnungsnummer im Mieterprofil hinzugefügt.
+					 * Wenn er keinen bestizt, dann bekommt er einen Strich in
+					 * sienem Profil an der Stelle der Wohnungsnummer.
+					 */
+					for (Mieter owner : ownerList) {
+						if (owner.getWohnungsnummer() == aktuelleWohnungsID) {
+						
+							owner.setWohnungsnummer(-100);
+						}
+					}
 				}
 
 				// Eingabe > 8
-				if(änderung > 8) {
+				if (änderung > 8) {
 					System.out.println(
 							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
 				}
@@ -339,7 +383,7 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 		}
 
 	}
-	
+
 	/**
 	 * Methode zur Eingabe des Datums
 	 * 
@@ -508,8 +552,12 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 	/**
 	 * Methode zum Einlesen einer Zahl vom Nutzer
 	 * 
-	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
-	 * @param zähler  = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @param auswahl
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des
+	 *            Index des Arrays)
+	 * @param zähler
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des
+	 *            Index des Arrays)
 	 * @return die eingelesene Zahl
 	 */
 	private int einlesen_Zahl(String[] auswahl, int zähler) {
@@ -535,8 +583,12 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 	/**
 	 * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
 	 * 
-	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
-	 * @param zähler = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @param auswahl
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des
+	 *            Index des Arrays)
+	 * @param zähler
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des
+	 *            Index des Arrays)
 	 * @return das eingelesene Wort
 	 */
 	private String einlesen_Wort(String[] auswahl, int zähler) {
@@ -547,7 +599,8 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 	}
 
 	/**
-	 * Methode zum Anpassen der Länge des Datums bei der Ausgabe auf der Konsole.
+	 * Methode zum Anpassen der Länge des Datums bei der Ausgabe auf der
+	 * Konsole.
 	 * 
 	 */
 	private String länge_anpassen_Datum(Datum a_GD) {
@@ -581,9 +634,11 @@ public class MietvertragBearbeitenAction extends MenueManager implements Action,
 	}
 
 	/**
-	 * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der Ausgabe auf der Konsole.
+	 * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der
+	 * Ausgabe auf der Konsole.
 	 * 
-	 * @param wort = mitgegebenes Attribut
+	 * @param wort
+	 *            = mitgegebenes Attribut
 	 * 
 	 * @return das Attribut mit den anschließenden Leerzeichen
 	 */

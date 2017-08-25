@@ -13,8 +13,7 @@ public class EhemaligeInteressentenAnzeigenAction extends MenueManager implement
 				"________________________________________ ehemalige Interessent anzeigen ________________________________________");
 
 		/*
-		 * Für jedes Element in der Liste der ehemaligen Interessenten werden die dazugehörigen
-		 * Daten ausgegeben.
+		 * Es wird eine Übersicht über alle ehemaligen Interessenten ausgegeben.
 		 */
 
 		for (Interessent ehemaligerInteressent : ehemaligeInteressenten) {

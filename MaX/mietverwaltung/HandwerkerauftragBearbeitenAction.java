@@ -145,9 +145,13 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 				längenAnpassung_status = aktuellerStatus;
 				längenAnpassung_status = länge_anpassen(längenAnpassung_status);
 
-				ED_Leerzeichen = länge_anpassen_Datum(aktuellesEingangsdatum);
+				if (aktuellesEingangsdatum != null) {
+					ED_Leerzeichen = länge_anpassen_Datum(aktuellesEingangsdatum);
+				}
 
-				FD_Leerzeichen = länge_anpassen_Datum(aktuellesFertigstellungsdatum);
+				if (aktuellesFertigstellungsdatum != null) {
+					FD_Leerzeichen = länge_anpassen_Datum(aktuellesFertigstellungsdatum);
+				}
 
 			}
 		}
@@ -200,7 +204,7 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 
 				// Auftrags-ID
 				if (änderung == 1) {
-					
+
 					String eingabe = einlesen_Wort(kategorie, änderung);
 					if (eingabe.equals("" + 0)) {
 					} else {
@@ -241,7 +245,7 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 							neueAuftragsID = eingabe;
 						}
 					}
-					
+
 				}
 
 				// Wohnungsnummer
@@ -287,7 +291,7 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 					}
 
 					// Jede andere Eingabe führt zu einer Fehlermeldung.
-					else {
+					if (eingabe > 2) {
 						System.out.println(
 								"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
 					}
@@ -312,10 +316,10 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 					if (neuerStatus.equals("in Bearbeitung")) {
 
 						/*
-						 * Wenn der Status des Handwerkerauftrags 'in Bearbeitung'
-						 * ist, dann wird für jede Wohnung in der ArrayList mit
-						 * den Wohnungen überprüft, welche Wohnung den
-						 * Handwerkerautrag (die Auftrags-ID) erhält.
+						 * Wenn der Status des Handwerkerauftrags 'in
+						 * Bearbeitung' ist, dann wird für jede Wohnung in der
+						 * ArrayList mit den Wohnungen überprüft, welche Wohnung
+						 * den Handwerkerautrag (die Auftrags-ID) erhält.
 						 */
 
 						for (Wohnung flat : flatList) {
@@ -345,16 +349,13 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 
 					if (neuerStatus.equals("beendet")) {
 
-								/*
-								 * Da der Auftrag abgeschlossen ist, wird er der
-								 * Liste der abgeschlossenen Aufträge
-								 * hinzugefügt. 
-								 */
-								abgeschlosseneHandwerkeraufträge.add(new Handwerkerauftrag(neueAuftragsID,
-										neueWohnungsID, neueMitarbeiterID, neueMängelbeschreibung, neuerStatus,
-										neuesEingangsdatum, aktuellesFertigstellungsdatum));	
-							
-						
+						/*
+						 * Da der Auftrag abgeschlossen ist, wird er der Liste
+						 * der abgeschlossenen Aufträge hinzugefügt.
+						 */
+						abgeschlosseneHandwerkeraufträge.add(new Handwerkerauftrag(neueAuftragsID, neueWohnungsID,
+								neueMitarbeiterID, neueMängelbeschreibung, neuerStatus, neuesEingangsdatum,
+								aktuellesFertigstellungsdatum));
 
 						/*
 						 * Auderdem wird der Handwerkerautrag aus der Liste der
@@ -370,10 +371,20 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 
 							}
 						}
+
+						/*
+						 * Der Handwerkerauftrag wir aus ihm zugeordneten
+						 * Wohnung entfernt
+						 */
+						for (Wohnung flat : flatList) {
+							if (aktuelleWohnungsID == flat.getWohnungsID()) {
+								flat.getHandwerkerauftrag().setAuftragsID("");
+							}
+						}
 					}
 				}
 				// Eingabe > 8
-				else {
+				if (änderung > 8) {
 					System.out.println(
 							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
 				}
@@ -492,11 +503,11 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 			meinRahmen.setTitle("Handwerkerauftrag ID");
 			JLabel frage = new JLabel("Welche Handwerkerauftrag möchten Sie auswählen?");
 			meinPanel.add(frage);
-			for (Handwerkerauftrag  repair : repairList) {
+			for (Handwerkerauftrag repair : repairList) {
 				combo2.addItem(repair.getAuftragsID());
 			}
 		}
-		
+
 		if (änderung == 2) {
 			meinRahmen.setTitle("Wohnungsnummer");
 			JLabel frage = new JLabel("Welche Wohnung möchten Sie auswählen?");
@@ -580,6 +591,9 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 	private String länge_anpassen_Datum(Datum a_GD) {
 
 		String leerzeichen = "";
+		int abzug = 0;
+		
+		if (a_GD != null) {
 
 		String jahr = "" + a_GD.getJahr();
 		int l_J = jahr.length();
@@ -590,14 +604,20 @@ public class HandwerkerauftragBearbeitenAction extends MenueManager implements A
 		String tag = "" + a_GD.getTag();
 		int l_T = tag.length();
 
-		int abzug = l_J + l_M + l_T + 2; // +2 für die Punkte zwischen den
-											// Komponenten
+		abzug = l_J + l_M + l_T + 2; // +2 für die Punkte zwischen den
+										// Komponenten
+		}
+		
+		else {
+			abzug = 4;
+		}
 		if (abzug < 50) {
 			while (abzug < 50) {
 				leerzeichen = leerzeichen + " ";
 				abzug += 1;
 			}
 		}
+		
 		return leerzeichen;
 	}
 

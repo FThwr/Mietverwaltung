@@ -59,7 +59,6 @@ public class Mietvertrag implements Serializable {
 	public void setMietvertragID(String mietvertragID) {
 		this.mietvertragID = mietvertragID;
 	}
-	
 	public String getStatus() {
 		return status;
 	}

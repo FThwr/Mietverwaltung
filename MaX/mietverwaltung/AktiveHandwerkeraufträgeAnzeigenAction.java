@@ -8,12 +8,10 @@ public class AktiveHandwerkeraufträgeAnzeigenAction extends MenueManager impleme
 	public void action() {
 
 		System.out.println(
-				"________________________________________ Handwerkerauftrag anzeigen ________________________________________");
+				"________________________________________ aktive Handwerkeraufträge anzeigen ________________________________________");
 
 		/*
-		 * Jedes Element der ArrayList 'repairList' wird ausgelesen z.B. die
-		 * Auftragsnummer, das Eingangsdatum des Auftrags, etc. Die ArrayList
-		 * beeinhaltet alle zurzeit aktiven Handwerkeraufträge.
+		 * Es wird eine Übersicht über alle aktiven Handwerkeraufträge ausgegeben.
 		 */
 		for (Handwerkerauftrag repair : repairList) {
 

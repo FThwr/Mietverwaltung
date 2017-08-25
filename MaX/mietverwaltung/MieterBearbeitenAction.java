@@ -370,7 +370,8 @@ public class MieterBearbeitenAction extends MenueManager implements Action, Seri
 						}
 						if (eingabe == 2) {
 							neueRolle = "Delete";
-						} else {
+						} 
+						if (eingabe > 2){
 							System.out.println(
 									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
 						}
@@ -409,11 +410,17 @@ public class MieterBearbeitenAction extends MenueManager implements Action, Seri
 						while (iter.hasNext()) {
 							Mieter str = iter.next();
 
-							if (str.getKundenID() == neueMieterID) {
+							if (str.getKundenID() == aktuelleMieterID) {
 								iter.remove();
 							}
 						}
 					}
+					
+				}
+				// Eingabe > 10
+				if (änderung > 10) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println(

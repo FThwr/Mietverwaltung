@@ -31,8 +31,8 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 		String such_vorname = vorname;
 		int such_wohnung = wohnung;
 		String such_EMail = EMail;
-		String such_adresse_straße = "-";
-		int such_adresse_plz = -100;
+		String such_adresse_straße = straße;
+		int such_adresse_plz = plz;
 		String such_telefon = telefon;
 
 		String[] kategorie = { "Mieter ID", "Name", "Vorname", "Wohnung", "E-Mail", "Adresse", "Telefonnummer" };
@@ -44,6 +44,7 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 		 * wird anhand dieses Kriteriums die Suche ermöglicht.
 		 */
 		String check = "";
+		String[] savecheck = new String[8];
 
 		/*
 		 * Solange der Suchvorgang nicht beendet ist, wird immer eine Übersicht
@@ -103,52 +104,90 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 				// Mieter-ID
 				if (eingabe == 1) {
 					
-						such_mieterID = einlesen_Zahl(kategorie, eingabe);
-						if (such_mieterID == 0) {
+						int einlese = einlesen_Zahl(kategorie, eingabe);
+						if (einlese == 999) {
+							savecheck[eingabe - 1] = "";
 							such_mieterID = mieterID;
-						} else {
-							check = check + "a";
+						} 
+						
+						else if (einlese == 0) {
+						}
+						
+						else {
+							
+							such_mieterID = einlese;
+							savecheck[eingabe - 1] = "a";
 						}
 				}
 				
 				// Name
 				if (eingabe == 2) {
-					such_name = einlesen_Wort(kategorie, eingabe);
-					if (such_name.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_name = name;
-					} else {
-						check = check + "b";
+					} 
+					
+					else if (einlese.equals("" + 0)) {			
+					}
+					
+					else {
+						
+						such_name = einlese;
+						savecheck[eingabe - 1] = "b";
 					}
 				}
 				
 				// Vorname
 				if (eingabe == 3) {
-					such_name = einlesen_Wort(kategorie, eingabe);
-					if (such_vorname.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_vorname = vorname;
-					} else {
-						check = check + "c";
+					} 
+					
+					else if (einlese.equals("" + 0)) {
+					}
+					
+					else {
+						
+						such_vorname = einlese;
+						savecheck[eingabe - 1] = "c";
 					}
 				}
 				
 				// Wohnungsnummer
 				if (eingabe == 4) {
 
-						such_wohnung = einlesen_Zahl(kategorie, eingabe);
-						if (such_wohnung == 0) {
+						int einlese = einlesen_Zahl(kategorie, eingabe);
+						if (einlese == 999) {
+							savecheck[eingabe - 1] = "";
 							such_wohnung = wohnung;
-						} else {
-							check = check + "d";
+						} 
+						
+						else if (einlese == 0) {
+						}
+						else {
+							
+							such_wohnung = einlese;
+							savecheck[eingabe - 1] = "d";
 						}
 				}
 				
 				// E-Mail
 				if (eingabe == 5) {
-					such_EMail = einlesen_Wort(kategorie, eingabe);
-					if (such_EMail.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_EMail = EMail;
-					} else {
-						check = check + "e";
+					}
+					
+					else if (einlese.equals("" + 999)) {
+					}
+					else {
+						
+						such_EMail = einlese;
+						savecheck[eingabe - 1] = "e";
 					}
 				}
 				
@@ -157,10 +196,14 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 					System.out.println("Spezialisierung der zu suchenden Adresse: ");
 					System.out.println("Drücke '1' für Straße: ");
 					System.out.println("Drücke '2' für Plz: ");
+					System.out.println("Drücke '3' zum Bestätigen");
 					System.out.println("Drücke '0' für Abbruch: ");
 
 					String[] auswahl = { "Straße", "Plz"};
 					boolean adresseingabe = true;
+					
+					String buchstabe_einfügen_straße = "";
+					String buchstabe_einfügen_plz = "";
 
 					while (adresseingabe == true) {
 
@@ -170,29 +213,49 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 						
 						// Straße
 						if (zähler == 1) {
-							such_adresse_straße = einlesen_Wort(auswahl, zähler);
-							if (such_adresse_straße.equals("" + 0)) {
+							String einlese = einlesen_Wort(auswahl, zähler);
+							if (einlese.equals("" + 999)) {
+								savecheck[eingabe - 1] = "";
 								such_adresse_straße = straße;
-							} else {
-								check = check + "y";
+							} 
+							
+							else if (einlese.equals("" + 0)) {
+							}
+							else {
+								
+								such_adresse_straße = einlese;
+								buchstabe_einfügen_straße = buchstabe_einfügen_straße + "y";
 							}
 						}
 
 						// Plz
 						if (zähler == 2) {
-							such_adresse_plz = einlesen_Zahl(auswahl, zähler);
-							if (such_adresse_plz == 0 || such_adresse_plz == -100) {
+							int einlese = einlesen_Zahl(auswahl, zähler);
+							if (einlese == 999) {
+								savecheck[eingabe] = "";
 								such_adresse_plz = plz;
-							} else {
-								check = check + "z";
 							}
+							
+							else if (einlese == 0) {
+							}
+							else {
+								
+								such_adresse_plz = einlese;
+								buchstabe_einfügen_plz = buchstabe_einfügen_plz + "z";
+							}
+						}
+						
+						if (zähler == 3) {
+							adresseingabe = false;
+							savecheck[eingabe - 1] = buchstabe_einfügen_straße;
+							savecheck[eingabe] = buchstabe_einfügen_plz;
 						}
 						
 						// Abbruch
 						if (zähler == 0) {
 							adresseingabe = false;
 						}
-						else {
+						if (zähler > 3) {
 							System.out.println(
 									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 						}
@@ -201,11 +264,18 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 				
 				// Telefonnummer
 				if (eingabe == 7) {
-					such_telefon = einlesen_Wort(kategorie, eingabe);
-					if (such_telefon.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe] = "";
 						such_telefon = telefon;
-					} else {
-						check = check + "f";
+					} 
+					
+					else if (einlese.equals("" + 0)) {
+					}
+					else {
+						
+						such_telefon = einlese;
+						savecheck[eingabe] = "f";
 					}
 				}
 
@@ -227,6 +297,11 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 
 					String vgl_telefon = "-";
 
+					
+					for (int i = 0; i < savecheck.length; i++) {
+						if (savecheck[i] != null)
+							check = check + savecheck[i];
+					}
 					
 					/*
 					 * Wenn 'check' ein Buchstaben enthält war der Nutzer bei
@@ -282,6 +357,12 @@ public class MieterSuchenAction extends MenueManager implements Action , Seriali
 							System.out.println("");
 						}
 					}
+				}
+				
+				// Eingabe > 8
+				if (eingabe > 8) {
+					System.out.println(
+							"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println(

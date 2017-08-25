@@ -2,8 +2,6 @@ package mietverwaltung;
 
 import java.io.Serializable;
 
-import mietverwaltung.Mietvertrag;
-
 public abstract class Kunde implements Serializable {
 
 	protected int kundenID;

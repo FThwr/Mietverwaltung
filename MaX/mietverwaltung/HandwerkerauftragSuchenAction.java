@@ -20,10 +20,8 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 		int mitarbeiterID = -100;
 		String mängelbeschreibung = "-";
 		String status = "-";
-		int eingangsTag = -100;
 		int eingangsMonat = -100;
 		int eingangsJahr = -100;
-		int fertigTag = -100;
 		int fertigMonat = -100;
 		int fertigJahr = -100;
 
@@ -33,10 +31,9 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 		int such_mitarbeiterID = mitarbeiterID;
 		String such_mängelbeschreibung = mängelbeschreibung;
 		String such_status = status;
-		int such_eingangsTag = eingangsTag;
+		
 		int such_eingangsMonat = eingangsMonat;
 		int such_eingangsJahr = eingangsJahr;
-		int such_fertigTag = fertigTag;
 		int such_fertigMonat = fertigMonat;
 		int such_fertigJahr = fertigJahr;
 
@@ -54,6 +51,7 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 		 * wird anhand dieses Kriteriums die Suche ermöglicht.
 		 */
 		String check = "";
+		String[] savecheck = new String[9];
 
 		/*
 		 * Solange der Suchvorgang nicht beendet ist, wird immer eine Übersicht
@@ -83,11 +81,9 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 			System.out.println("5. Status:               " + such_status);
 			System.out.print("6. Eingangsdatum:        ");
 
-			if (such_eingangsTag != -100) {
-				System.out.print(such_eingangsTag);
-			} else {
+			
 				System.out.print("--.");
-			}
+			
 			if (such_eingangsMonat != -100) {
 				System.out.print(such_eingangsMonat);
 			} else {
@@ -100,11 +96,9 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 			}
 
 			System.out.print("7. Fertigstellungsdatum: ");
-			if (such_fertigTag != -100) {
-				System.out.println(such_fertigTag);
-			} else {
+			
 				System.out.print("--.");
-			}
+			
 			if (such_fertigMonat != -100) {
 				System.out.print(such_fertigMonat);
 			} else {
@@ -140,63 +134,112 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 				// Auftrags-ID
 				if (eingabe == 1) {
 
-					such_auftragsID = einlesen_Wort(kategorie, eingabe);
-					if (such_auftragsID.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					
+					/*
+					 * 999 = rückgängig machen des Attributes + löschen des
+					 * Buchstabens
+					 */
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_auftragsID = auftragsID;
-					} else {
+					}
+					
+					// 0 = keine Veränderung, nur Abbruch der Abfrage
+					else if (einlese.equals("" + 0)) {
+					}
+					
+					// Eingabe weder 0 noch 999
+					else {
+						
+						// Die Eingabe wird übernommen
+						such_auftragsID = einlese;
 						/*
 						 * Der Nutzer hat das Attribut Auftrags-ID betreten.
 						 * Somit erhält 'check' ein 'a' um sich zu merken, dass
 						 * es die Abfrage betreten hatte.
 						 */
-						check = check + "a";
+						
+						savecheck[eingabe - 1] = "a";
 					}
 				}
 
 				// Wohnung
 				if (eingabe == 2) {
 
-					such_wohnungsID = einlesen_Zahl(kategorie, eingabe);
-					if (such_wohnungsID == 0) {
+					int einlese = einlesen_Zahl(kategorie, eingabe);
+					
+					/*
+					 * 999 = rückgängig machen des Attributes + löschen des
+					 * Buchstabens
+					 */
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_wohnungsID = wohnungsID;
-					} else {
+					} 
+					
+					// 0 = keine Veränderung, nur Abbruch der Abfrage
+					else if (einlese == 0) {
+					}
+					
+					// Eingabe weder 0 noch 999
+					else {
+						
+						// Die Eingabe wird übernommen
+						such_wohnungsID = einlese;
 						/*
 						 * Der Nutzer hat das Attribut Wohnung betreten. Somit
 						 * erhält 'check' ein 'b' um sich zu merken, dass es die
 						 * Abfrage betreten hatte.
 						 */
-						check = check + "b";
+						savecheck[eingabe - 1] = "b";
 					}
 
 				} // Mitarbeiter
 				if (eingabe == 3) {
 
-					such_mitarbeiterID = einlesen_Zahl(kategorie, eingabe);
-					if (such_mitarbeiterID == 0) {
+					int einlese = einlesen_Zahl(kategorie, eingabe);
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_mitarbeiterID = mitarbeiterID;
-					} else {
+					}
+					
+					else if (einlese == 0) {
+					}
+					else {
+						
+						such_mitarbeiterID = einlese;
 						/*
 						 * Der Nutzer hat das Attribut Mitarbeiter betreten.
 						 * Somit erhält 'check' ein 'c' um sich zu merken, dass
 						 * es die Abfrage betreten hatte.
 						 */
-						check = check + "c";
+						savecheck[eingabe - 1] = "c";
 					}
 				}
 
 				// Mängelbeschreibung
 				if (eingabe == 4) {
 
-					such_mängelbeschreibung = einlesen_Wort(kategorie, eingabe);
-					if (such_mängelbeschreibung.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_mängelbeschreibung = mängelbeschreibung;
-					} else {
+					} 
+					
+					if (einlese.equals("" + 0)) {
+					}
+					
+					
+					else {
+						
+						such_mängelbeschreibung = einlese;
 						/*
 						 * Der Nutzer hat das Attribut Mängelbeschreibung
 						 * betreten. Somit erhält 'check' ein 'd' um sich zu
 						 * merken, dass es die Abfrage betreten hatte.
 						 */
-						check = check + "d";
+						savecheck[eingabe - 1] = "d";
 					}
 				}
 
@@ -207,22 +250,24 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 					int auswahl = einlesen_Zahl(kategorie, eingabe);
 
 					if (auswahl == 1) {
+						savecheck[eingabe - 1] = "";
 						such_status = "in Bearbeitung";
 						/*
 						 * Der Nutzer hat das Attribut Status betreten. Somit
 						 * erhält 'check' ein 'e' um sich zu merken, dass es die
 						 * Abfrage betreten hatte.
 						 */
-						check = check + "e";
+						savecheck[eingabe - 1] = "e";
 					}
 					if (auswahl == 2) {
+						savecheck[eingabe - 1] = "";
 						such_status = "beendet";
 						/*
 						 * Der Nutzer hat das Attribut Status betreten. Somit
 						 * erhält 'check' ein 'e' um sich zu merken, dass es die
 						 * Abfrage betreten hatte.
 						 */
-						check = check + "e";
+						savecheck[eingabe - 1] = "e";
 					}
 
 					if (auswahl == 0) {
@@ -250,7 +295,9 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 					 * weil sonst Buchstaben enthalten wären für
 					 * Attributänderungen, die garnicht existieren.
 					 */
-					String saveCheck = check;
+
+					String buchstabe_einfügen_monat = "";
+					String buchstabe_einfügen_jahr = "";
 
 					while (datumseingabe == true) {
 
@@ -267,54 +314,67 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 						// Monat
 						if (zähler == 1) {
 
-							do {
-								such_eingangsMonat = einlesen_Zahl(auswahl, zähler);
-								if (such_eingangsMonat > 12) {
-									System.out.println(
-											"\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
-								}
+							
+								int einlese = einlesen_Zahl(auswahl, zähler);
+								
 
-							} while (such_eingangsMonat > 12);
-							if (such_eingangsMonat == 0) {
+							
+							if (einlese == 999) {
+								savecheck[eingabe - 1] = "";
 								such_eingangsMonat = eingangsMonat;
-							} else {
+							}
+							else if (einlese == 0) {
+							}
+							else {
+								
+								such_eingangsMonat = einlese;
 								/*
 								 * Der Nutzer hat das Attribut Eingangsmonat
 								 * betreten. Somit erhält 'safecheck' ein 's' um
 								 * sich zu merken, dass es die Abfrage betreten
 								 * hatte.
 								 */
-								saveCheck = saveCheck + "s";
+								buchstabe_einfügen_monat = buchstabe_einfügen_monat + "s";
 							}
 						}
 
 						// Jahr
 						if (zähler == 2) {
 
-							such_eingangsJahr = einlesen_Zahl(auswahl, zähler);
-							if (such_eingangsJahr == 0) {
+							int einlese = einlesen_Zahl(auswahl, zähler);
+							if (einlese == 999) {
+								savecheck[eingabe] = "";
 								such_eingangsJahr = eingangsJahr;
-							} else {
+							}
+							
+							else if (einlese == 0) {
+							}
+							
+							else {
+								
+								such_eingangsJahr = einlese;
 								/*
 								 * Der Nutzer hat das Attribut Eingangsjahr
 								 * betreten. Somit erhält 'safecheck' ein 't' um
 								 * sich zu merken, dass es die Abfrage betreten
 								 * hatte.
 								 */
-								saveCheck = saveCheck + "t";
+								buchstabe_einfügen_jahr = buchstabe_einfügen_jahr + "t";
 							}
 						}
 
 						// 'Eingangsdatum' Sucheingabe abschließen
 						if (zähler == 3) {
 							datumseingabe = false;
-							check = check + saveCheck;
+							savecheck[eingabe - 1] = buchstabe_einfügen_monat;
+							savecheck[eingabe] = buchstabe_einfügen_jahr;
 						}
 
 						// 'Eingangsdatum' Sucheingabe abbrechen
 						if (zähler == 0) {
 							datumseingabe = false;
-						} else {
+						} 
+						if (zähler > 3){
 							System.out.println(
 									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 						}
@@ -334,7 +394,9 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 					 * weil sonst Buchstaben enthalten wären für
 					 * Attributänderungen, die garnicht existieren.
 					 */
-					String saveCheck = check;
+
+					String buchstabe_einfügen_monat = "";
+					String buchstabe_einfügen_jahr = "";
 
 					while (datumseingabe == true) {
 
@@ -352,54 +414,67 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 						// Monat
 						if (zähler == 1) {
 
-							do {
-								such_fertigMonat = einlesen_Zahl(auswahl, zähler);
-								if (such_fertigMonat > 12) {
-									System.out.println(
-											"\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
-								}
-
-							} while (such_fertigMonat > 12);
-							if (such_fertigMonat == 0) {
+						
+								int einlese = einlesen_Zahl(auswahl, zähler);
+								
+							if (einlese == 999) {
+								savecheck[eingabe] = "";
 								such_fertigMonat = fertigMonat;
-							} else {
+							} 
+							
+							else if (einlese == 0) {
+							}
+							
+							else {
+								such_fertigMonat = einlese;
+								
 								/*
 								 * Der Nutzer hat das Attribut
 								 * Fertigstellungsmonat betreten. Somit erhält
 								 * 'safecheck' ein 'y' um sich zu merken, dass
 								 * es die Abfrage betreten hatte.
 								 */
-								saveCheck = saveCheck + "y";
+								buchstabe_einfügen_monat = buchstabe_einfügen_monat + "y";
 							}
 						}
 
 						// Jahr
 						if (zähler == 2) {
 
-							such_fertigJahr = einlesen_Zahl(auswahl, zähler);
-							if (such_fertigJahr == 0) {
+							int einlese = einlesen_Zahl(auswahl, zähler);
+							if (einlese == 999) {
+								savecheck[eingabe+1] = "";
 								such_fertigJahr = fertigJahr;
-							} else {
+							} 
+							else if (einlese == 0) {
+							}
+							
+							else {
+								such_fertigJahr = einlese;
+								
 								/*
 								 * Der Nutzer hat das Attribut
 								 * Fertigstellungsjahr betreten. Somit erhält
 								 * 'safecheck' ein 'z' um sich zu merken, dass
 								 * es die Abfrage betreten hatte.
 								 */
-								saveCheck = saveCheck + "z";
+								buchstabe_einfügen_jahr = buchstabe_einfügen_jahr + "z";
 							}
 						}
 
 						// 'Eingangsdatum' Sucheingabe abschließen
 						if (zähler == 3) {
 							datumseingabe = false;
-							check = check + saveCheck;
+							savecheck[eingabe] = buchstabe_einfügen_monat;
+							savecheck[eingabe + 1] = buchstabe_einfügen_jahr;
 						}
 
 						// 'Eingangsdatum' Sucheingabe abbrechen
 						if (zähler == 4) {
 							datumseingabe = false;
-						} else {
+						} 
+						
+						if (zähler > 4) {
 							System.out.println(
 									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 						}
@@ -420,6 +495,12 @@ public class HandwerkerauftragSuchenAction extends MenueManager implements Actio
 					int vgl_eingangsJahr = -100;
 					int vgl_fertigMonat = -100;
 					int vgl_fertigJahr = -100;
+					
+					
+					for (int i = 0; i < savecheck.length; i++) {
+						if (savecheck[i] != null)
+							check = check + savecheck[i];
+					}
 
 					/*
 					 * Wenn 'check' ein Buchstaben enthält war der Nutzer bei

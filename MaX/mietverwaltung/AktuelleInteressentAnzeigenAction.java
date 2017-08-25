@@ -11,8 +11,7 @@ public class AktuelleInteressentAnzeigenAction extends MenueManager implements A
 				"________________________________________ aktuelle Interessent anzeigen ________________________________________");
 
 		/*
-		 * Für jedes Element in der Interessentenliste werden die dazugehörigen
-		 * Daten ausgegeben.
+		 * Es wird eine Übersicht über alle aktuellen Interessenten ausgegeben.
 		 */
 
 		for (Interessent interest : interestList) {

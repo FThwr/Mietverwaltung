@@ -45,12 +45,13 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 				"Status" };
 
 		/*
-		 * Mit der Variable wird überprüft, welche Attribut-Abfragen der Nutzer
+		 * Mit den Variablen wird überprüft, welche Attribut-Abfragen der Nutzer
 		 * benutzt hatte. Es wird immer ein Buchstabe gespeichert, wodruch die
 		 * Variable weiß, dass er in der Abfrage was ausgewählt hatte. Später
 		 * wird anhand dieses Kriteriums die Suche ermöglicht.
 		 */
 		String check = "";
+		String[] savecheck = new String[9];
 
 		/*
 		 * Solange der Suchvorgang nicht beendet ist, wird immer eine Übersicht
@@ -67,23 +68,23 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 
 			System.out.println("........... Aktuelle Suche nach: ...........");
 
-			System.out.println("1. Mievertrag-ID:                 " + such_mietvertragID);
+			System.out.println("1. Mievertrag-ID:                    " + such_mietvertragID);
 			if (such_wohnungsID != -100) {
-				System.out.println("2. Wohnungs-ID:                  " + such_wohnungsID);
+				System.out.println("2. Wohnungs-ID:                      " + such_wohnungsID);
 			} else {
-				System.out.println("2. Wohnungs-ID:                 " + "-");
+				System.out.println("2. Wohnungs-ID:                      " + "-");
 			}
 			if (such_kundenID != -100) {
-				System.out.println("3. Kunden-ID:                      " + such_kundenID);
+				System.out.println("3. Kunden-ID:                        " + such_kundenID);
 			} else {
-				System.out.println("3. Kunden-ID");
+				System.out.println("3. Kunden-ID:                        " + "-");
 			}
 			if (such_mitarbeiterID != -100) {
 				System.out.println("4. Mitarbeiter-ID:                   " + such_mitarbeiterID);
 			} else {
 				System.out.println("4. Mitarbeiter-ID:                   " + "-");
 			}
-			System.out.print("5. Mietbeginn:        ");
+			System.out.print("5. Mietbeginn:                         ");
 			System.out.print("--.");
 
 			if (such_beginnMonat != -100) {
@@ -97,7 +98,7 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 				System.out.println("----");
 			}
 
-			System.out.print("6. Mietende: ");
+			System.out.print("6. Mietende:                           ");
 			System.out.print("--.");
 
 			if (such_endeMonat != -100) {
@@ -110,9 +111,10 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 			} else {
 				System.out.println("----");
 			}
-			System.out.println("7. Status                         " + such_status);
+			System.out.println("7. Status                             " + such_status);
 			System.out.println("8. Suche bestätigen");
-			System.out.println("0. Abbruch");
+			System.out.println("0. generell Abbruch");
+			System.out.println("999. Rückgängig");
 
 			/*
 			 * Die try-catch Klammer existiert für nicht erwünschte Eingaben wie
@@ -131,88 +133,155 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 				// Mietvertrags-ID
 				if (eingabe == 1) {
 
-					such_mietvertragID = einlesen_Wort(kategorie, eingabe);
-					if (such_mietvertragID.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+
+					/*
+					 * 999 = rückgängig machen des Attributes + löschen des
+					 * Buchstabens
+					 */
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_mietvertragID = mietvertragID;
-					} else {
+					} 
+					
+					// 0 = keine Veränderung, nur Abbruch der Abfrage
+					else if (einlese.equals("" + 0)) {
+					}
+					
+					// Eingabe weder 0 noch 999
+					else {
 						
+						// Die Eingabe wird übernommen
+						such_mietvertragID = einlese;
+
 						/*
-						 * Der Nutzer hat das Attribut Mietvertrag-ID betreten. Somit
-						 * erhält 'check' ein 'a' um sich zu merken, dass es die
-						 * Abfrage betreten hatte.
+						 * Der Nutzer hat das Attribut Mietvertrag-ID betreten.
+						 * Somit erhält 'savecheck' ein 'a' um sich zu merken, dass
+						 * es die Abfrage betreten hatte.
 						 */
-						check = check + "a";
+						savecheck[eingabe - 1] = "a";
 					}
 				}
 
 				// Wohnungsnummer
 				if (eingabe == 2) {
-					such_wohnungsID = einlesen_Zahl(kategorie, eingabe);
-					if (such_wohnungsID == 0) {
+
+					int einlese = einlesen_Zahl(kategorie, eingabe);
+					
+					/*
+					 * 999 = rückgängig machen des Attributes + löschen des
+					 * Buchstabens
+					 */
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_wohnungsID = wohnungsID;
-					} else {
+					}
+					
+					// 0 = keine Veränderung, nur Abbruch der Abfrage
+					else if (einlese == 0) {
+					} 
+					
+					// Eingabe weder 0 noch 999
+					else {
+						
+						// Die Eingabe wird übernommen
+						such_wohnungsID = einlese;
 						
 						/*
-						 * Der Nutzer hat das Attribut Wohnungsnummer betreten. Somit
-						 * erhält 'check' ein 'b' um sich zu merken, dass es die
-						 * Abfrage betreten hatte.
+						 * Der Nutzer hat das Attribut Wohnungsnummer betreten.
+						 * Somit erhält 'savecheck' ein 'b' um sich zu merken, dass
+						 * es die Abfrage betreten hatte.
 						 */
-						check = check + "b";
+						savecheck[eingabe - 1] = "b";
 					}
 				}
 
 				// Mieter-ID
 				if (eingabe == 3) {
-					such_kundenID = einlesen_Zahl(kategorie, eingabe);
-					if (such_kundenID == 0) {
+
+					int einlese = einlesen_Zahl(kategorie, eingabe);
+					
+					/*
+					 * 999 = rückgängig machen des Attributes + löschen des
+					 * Buchstabens
+					 */
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_kundenID = kundenID;
-					} else {
+					}
+					
+					// 0 = keine Veränderung, nur Abbruch der Abfrage
+					else if (einlese == 0) {
+					} 
+					
+					// Eingabe weder 0 noch 999
+					else {
+						
+						// Die Eingabe wird übernommen
+						such_kundenID = einlese;
 						
 						/*
 						 * Der Nutzer hat das Attribut Mieter-ID betreten. Somit
-						 * erhält 'check' ein 'c' um sich zu merken, dass es die
+						 * erhält 'savecheck' ein 'c' um sich zu merken, dass es die
 						 * Abfrage betreten hatte.
 						 */
-						check = check + "c";
+						savecheck[eingabe - 1] = "c";
 					}
 				}
 
 				// Mitarbeiter-ID
 				if (eingabe == 4) {
 
-					such_mitarbeiterID = einlesen_Zahl(kategorie, eingabe);
-					if (such_mitarbeiterID == 0) {
+					int einlese = einlesen_Zahl(kategorie, eingabe);
+					
+					/*
+					 * 999 = rückgängig machen des Attributes + löschen des
+					 * Buchstabens
+					 */
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_mitarbeiterID = mitarbeiterID;
-					} else {
+					}
+					
+					// 0 = keine Veränderung, nur Abbruch der Abfrage
+					else if (einlese == 0) {
+					} 
+					
+					// Eingabe weder 0 noch 999
+					else {
+						
+						// Die Eingabe wird übernommen
+						such_mitarbeiterID = einlese;
 						
 						/*
-						 * Der Nutzer hat das Attribut Mitarbeiter-ID betreten. Somit
-						 * erhält 'check' ein 'd' um sich zu merken, dass es die
-						 * Abfrage betreten hatte.
+						 * Der Nutzer hat das Attribut Mitarbeiter-ID betreten.
+						 * Somit erhält 'savecheck' ein 'd' um sich zu merken, dass
+						 * es die Abfrage betreten hatte.
 						 */
-						check = check + "d";
+						savecheck[eingabe - 1] = "d";
 					}
 				}
 
 				// Mietbeginn
 				if (eingabe == 5) {
-					System.out.println("Spezialisierung des zu suchenden Mietbeginns: ");
-					System.out.println("Drücke '1' für Monat: " + such_beginnMonat);
-					System.out.println("Drücke '2' für Jahr:  " + such_beginnJahr);
+					System.out.println("Spezialisierung des zu suchenden Mietbeginns: --." + such_beginnMonat + "." + such_beginnJahr);
+					System.out.println("Drücke '1' für Monat: ");
+					System.out.println("Drücke '2' für Jahr:  ");
 					System.out.println("Drücke '3' für Bestätigen: ");
 					System.out.println("Drücke '0' für Abbruch: ");
 
 					String[] auswahl = { "Monat", "Jahr" };
 					boolean datumseingabe = true;
-					
+
 					/*
-					 * Variable um zu merken, welche Attributsveränderungen der
-					 * Nutzer betreten hat. Hinzugefügt zum 'check' werden die
+					 * Variablen um zu merken, welche Attributsveränderungen der
+					 * Nutzer betreten hat. Hinzugefügt zum 'savecheck' werden die
 					 * Buchstaben jedoch erst, wenn die Suche abgeschlossen ist,
 					 * weil sonst Buchstaben enthalten wären für
 					 * Attributänderungen, die garnicht existieren.
 					 */
-					String saveCheck = check;
+					String buchstabe_einfügen_monat = "";
+					String buchstabe_einfügen_jahr = "";
 
 					while (datumseingabe == true) {
 
@@ -221,150 +290,238 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 
 						// Monat
 						if (zähler == 1) {
-							such_beginnMonat = einlesen_Zahl(auswahl, zähler);
-							if (such_beginnMonat == 0) {
-								such_beginnMonat = beginnMonat;
-							} else {
-								
-								/*
-								 * Der Nutzer hat das Attribut Mietbeginn-Monat betreten. Somit
-								 * erhält 'savecheck' ein 'e' um sich zu merken, dass es die
-								 * Abfrage betreten hatte.
-								 */
-								saveCheck = saveCheck + "e";
-							}
-						}
-						
-						// Jahr
-						if (zähler == 2) {
-							such_beginnJahr = einlesen_Zahl(auswahl, zähler);
-							if (such_beginnJahr == 0) {
-								such_beginnJahr = beginnJahr;
-							} else {
-								
-								/*
-								 * Der Nutzer hat das Attribut Mietbeginn-Jahr betreten. Somit
-								 * erhält 'savecheck' ein 'f' um sich zu merken, dass es die
-								 * Abfrage betreten hatte.
-								 */
-								saveCheck = saveCheck + "f";
-							}
-						}
-						
-						// Datum bestätigen
-						if (zähler == 3) {
-							datumseingabe = false;
-							check = check + saveCheck;
-						}
-						
-						// Eingabe abbrechen
-						if (zähler == 0) {
-							datumseingabe = false;
-						} 
-						
-						// Eingabe > 3
-						if (zähler > 3) {
-							System.out.println(
-									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
-						}
-					}
-				}
-				
-				// Mietende
-				if (eingabe == 6) {
-					System.out.println("Spezialisierung des zu suchenden Mietendes: ");
-					System.out.println("Drücke '1' für Monat: " + such_endeMonat);
-					System.out.println("Drücke '2' für Jahr:  " + such_endeJahr);
-					System.out.println("Drücke '3' für Bestätigen: ");
-					System.out.println("Drücke '0' für Abbruch: ");
 
-					String[] auswahl = { "Monat", "Jahr" };
-					boolean datumseingabe = true;
-					
-					/*
-					 * Variable um zu merken, welche Attributsveränderungen der
-					 * Nutzer betreten hat. Hinzugefügt zum 'check' werden die
-					 * Buchstaben jedoch erst, wenn die Suche abgeschlossen ist,
-					 * weil sonst Buchstaben enthalten wären für
-					 * Attributänderungen, die garnicht existieren.
-					 */
-					String saveCheck = check;
-
-					while (datumseingabe == true) {
-
-						Scanner q = new Scanner(System.in);
-						int zähler = q.nextInt();
-
-						// Monat
-						if (zähler == 1) {
-							such_beginnMonat = einlesen_Zahl(auswahl, zähler);
-							if (such_endeMonat == 0) {
-								such_endeMonat = endeMonat;
-							} else {
-								
-								/*
-								 * Der Nutzer hat das Attribut Mietende-Monat betreten. Somit
-								 * erhält 'savecheck' ein 'g' um sich zu merken, dass es die
-								 * Abfrage betreten hatte.
-								 */
-								saveCheck = saveCheck + "g";
-							}
-						}
-						
-						// Jahr
-						if (zähler == 2) {
-							such_endeJahr = einlesen_Zahl(auswahl, zähler);
-							if (such_endeJahr == 0) {
-								such_endeJahr = endeJahr;
-							} else {
-								
-								/*
-								 * Der Nutzer hat das Attribut Mietende-Jahr betreten. Somit
-								 * erhält 'savecheck' ein 'h' um sich zu merken, dass es die
-								 * Abfrage betreten hatte.
-								 */
-								saveCheck = saveCheck + "h";
-							}
-						}
-						
-						// Datum bestätigen
-						if (zähler == 3) {
-							datumseingabe = false;
-							check = check + saveCheck;
-						}
-						
-						// Eingabe abbrechen
-						if (zähler == 0) {
-							datumseingabe = false;
-						}
-						
-						// Eingabe > 3
-						if (zähler > 3) {
-							System.out.println(
-									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
-						}
-					}
-				}
-				
-				// Status
-				if (eingabe == 7) {
-					if (eingabe == 1) {
-
-						such_status = einlesen_Wort(kategorie, eingabe);
-						if (such_status.equals("" + 0)) {
-							such_status = status;
-						} else {
+							int einlese = einlesen_Zahl(auswahl, zähler);
 							
 							/*
-							 * Der Nutzer hat das Attribut Status betreten. Somit
-							 * erhält 'check' ein 'i' um sich zu merken, dass es die
-							 * Abfrage betreten hatte.
+							 * 999 = rückgängig machen des Attributes + löschen des
+							 * Buchstabens
 							 */
-							check = check + "i";
+							if (einlese == 999) {
+								savecheck[eingabe - 1] = "";
+								such_beginnMonat = beginnMonat;
+							}
+							
+							// 0 = keine Veränderung, nur Abbruch der Abfrage
+							else if (einlese == 0) {
+							}
+							
+							// Eingabe weder 0 noch 999
+							else {
+								
+								// Die Eingabe wird übernommen
+								such_beginnMonat = einlese;
+								
+								/*
+								 * Der Nutzer hat das Attribut Mietbeginn-Monat
+								 * betreten. Somit würde 'savecheck' ein 'e' erhalten, um
+								 * sich zu merken, dass es die Abfrage betreten
+								 * hatte.
+								 */
+
+								buchstabe_einfügen_monat = buchstabe_einfügen_monat + "e";
+							}
+						}
+
+						// Jahr
+						if (zähler == 2) {
+
+							int einlese = einlesen_Zahl(auswahl, zähler);
+							
+							/*
+							 * 999 = rückgängig machen des Attributes + löschen des
+							 * Buchstabens
+							 */
+							if (einlese == 999) {
+								savecheck[eingabe] = "";
+								such_beginnJahr = beginnJahr;
+							}
+							
+							// 0 = keine Veränderung, nur Abbruch der Abfrage
+							else if (einlese == 0) {
+							} 
+							
+							// Eingabe weder 0 noch 999
+							else {
+								
+								// Die Eingabe wird übernommen
+								such_beginnJahr = einlese;
+								
+								/*
+								 * Der Nutzer hat das Attribut Mietbeginn-Jahr
+								 * betreten. Somit würde 'savecheck' ein 'f' erhalten um
+								 * sich zu merken, dass es die Abfrage betreten
+								 * hatte.
+								 */
+
+								buchstabe_einfügen_jahr = buchstabe_einfügen_jahr + "f";
+							}
+						}
+
+						// Datum bestätigen
+						if (zähler == 3) {
+							datumseingabe = false;
+							savecheck[eingabe - 1] = buchstabe_einfügen_monat;
+							savecheck[eingabe] = buchstabe_einfügen_jahr;
+						}
+
+						// Eingabe abbrechen
+						if (zähler == 0) {
+							datumseingabe = false;
+						}
+
+						// Eingabe > 3
+						if (zähler > 3) {
+							System.out.println(
+									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
 						}
 					}
 				}
+
+				// Mietende
+				if (eingabe == 6) {
+					System.out.println("Spezialisierung des zu suchenden Mietendes: --." + such_endeMonat + "." + such_endeJahr);
+					System.out.println("Drücke '1' für Monat: ");
+					System.out.println("Drücke '2' für Jahr:  ");
+					System.out.println("Drücke '3' für Bestätigen: ");
+					System.out.println("Drücke '0' für Abbruch: ");
+
+					String[] auswahl = { "Monat", "Jahr" };
+					boolean datumseingabe = true;
+
+					/*
+					 * Variablen um zu merken, welche Attributsveränderungen der
+					 * Nutzer betreten hat. Hinzugefügt zum 'savecheck' werden die
+					 * Buchstaben jedoch erst, wenn die Suche abgeschlossen ist,
+					 * weil sonst Buchstaben enthalten wären für
+					 * Attributänderungen, die garnicht existieren.
+					 */
+					String buchstabe_einfügen_monat = "";
+					String buchstabe_einfügen_jahr = "";
+
+					while (datumseingabe == true) {
+
+						Scanner q = new Scanner(System.in);
+						int zähler = q.nextInt();
+
+						// Monat
+						if (zähler == 1) {
+							int einlese = einlesen_Zahl(auswahl, zähler);
+							
+							/*
+							 * 999 = rückgängig machen des Attributes + löschen des
+							 * Buchstabens
+							 */
+							if (einlese == 999) {
+								savecheck[eingabe] = "";
+								such_endeMonat = endeMonat;
+							}
+							
+							// 0 = keine Veränderung, nur Abbruch der Abfrage
+							else if (einlese == 0) {
+							} 
+							
+							// Eingabe weder 0 noch 999
+							else {
+								
+								// Die Eingabe wird übernommen
+								such_endeMonat = einlese;
+								
+								/*
+								 * Der Nutzer hat das Attribut Mietende-Monat
+								 * betreten. Somit würde 'savecheck' ein 'g' erhalten um
+								 * sich zu merken, dass es die Abfrage betreten
+								 * hatte.
+								 */
+								buchstabe_einfügen_monat = buchstabe_einfügen_monat + "g";
+							}
+						}
+
+						// Jahr
+						if (zähler == 2) {
+							int einlese = einlesen_Zahl(auswahl, zähler);
+							
+							/*
+							 * 999 = rückgängig machen des Attributes + löschen des
+							 * Buchstabens
+							 */
+							if (einlese == 999) {
+								savecheck[eingabe + 1] = "";
+								such_endeJahr = endeJahr;
+							}
+							
+							// 0 = keine Veränderung, nur Abbruch der Abfrage
+							else if (einlese == 0) {
+							} 
+							
+							// Eingabe weder 0 noch 999
+							else {
+								
+								// Die Eingabe wird übernommen
+								such_endeJahr = einlese;
+								
+								/*
+								 * Der Nutzer hat das Attribut Mietende-Jahr
+								 * betreten. Somit würde 'savecheck' ein 'h' erhalten um
+								 * sich zu merken, dass es die Abfrage betreten
+								 * hatte.
+								 */
+								buchstabe_einfügen_jahr = buchstabe_einfügen_jahr + "h";
+							}
+						}
+
+						// Datum bestätigen
+						if (zähler == 3) {
+							datumseingabe = false;
+							savecheck[eingabe] = buchstabe_einfügen_monat;
+							savecheck[eingabe + 1] = buchstabe_einfügen_jahr;
+						}
+
+						// Eingabe abbrechen
+						if (zähler == 0) {
+							datumseingabe = false;
+						}
+
+						// Eingabe > 3
+						if (zähler > 3) {
+							System.out.println(
+									"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+						}
+					}
+				}
+
+				// Status
+				if (eingabe == 7) {
+
+					String einlese = einlesen_Wort(kategorie, eingabe);
 					
+					/*
+					 * 999 = rückgängig machen des Attributes + löschen des
+					 * Buchstabens
+					 */
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe + 1] = "";
+						such_status = status;
+					}
+					
+					// 0 = keine Veränderung, nur Abbruch der Abfrage
+					else if (einlese.equals("" + 0)) {
+					} 
+					
+					// Eingabe weder 0 noch 999
+					else {
+						
+						// Die Eingabe wird übernommen
+						such_status = einlese;
+						/*
+						 * Der Nutzer hat das Attribut Status betreten. Somit
+						 * erhält 'savecheck' ein 'i' um sich zu merken, dass es die
+						 * Abfrage betreten hatte.
+						 */
+						savecheck[eingabe + 1] = "i";
+					}
+				}
+
 				// Suche bestätigen
 				if (eingabe == 8) {
 					suchVorgang = false;
@@ -380,7 +537,11 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 					int vgl_endeJahr = -100;
 					String vgl_status = "-";
 
-					
+					for (int i = 0; i < savecheck.length; i++) {
+						if (savecheck[i] != null)
+							check = check + savecheck[i];
+					}
+
 					/*
 					 * Wenn 'check' ein Buchstaben enthält war der Nutzer bei
 					 * einer bestimmten Attributveränderung. Wenn ein Buchstabe
@@ -419,7 +580,7 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 						if (check.contains("h")) {
 							vgl_endeJahr = contract.getMietende().getJahr();
 						}
-						if (check.contains("h")) {
+						if (check.contains("i")) {
 							vgl_status = contract.getStatus();
 						}
 
@@ -430,7 +591,8 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 						if (vgl_mietvertragID.equals(such_mietvertragID) && vgl_wohnungsID == such_wohnungsID
 								&& vgl_kundenID == such_kundenID && vgl_mitarbeiterID == such_mitarbeiterID
 								&& vgl_beginnMonat == such_beginnMonat && vgl_beginnJahr == such_beginnJahr
-								&& vgl_endeMonat == such_endeMonat && vgl_endeJahr == such_endeJahr && vgl_status.equals(such_status)) {
+								&& vgl_endeMonat == such_endeMonat && vgl_endeJahr == such_endeJahr
+								&& vgl_status.equals(such_status)) {
 							System.out.println("Mietvertrag-ID:       " + contract.getMietvertragID());
 							System.out.println("Wohnungs-ID:          " + contract.getWohnungsID());
 							System.out.println("Kunden-ID:            " + contract.getKundenID());
@@ -457,8 +619,12 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 	/**
 	 * Methode zum Einlesen einer Zahl vom Nutzer
 	 * 
-	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
-	 * @param zähler  = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @param auswahl
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des
+	 *            Index des Arrays)
+	 * @param zähler
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des
+	 *            Index des Arrays)
 	 * @return die eingelesene Zahl
 	 */
 	private int einlesen_Zahl(String[] auswahl, int zähler) {
@@ -484,8 +650,12 @@ public class MietvertragSuchenAction extends MenueManager implements Action, Ser
 	/**
 	 * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
 	 * 
-	 * @param auswahl = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
-	 * @param zähler = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+	 * @param auswahl
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des
+	 *            Index des Arrays)
+	 * @param zähler
+	 *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des
+	 *            Index des Arrays)
 	 * @return das eingelesene Wort
 	 */
 	private String einlesen_Wort(String[] auswahl, int zähler) {

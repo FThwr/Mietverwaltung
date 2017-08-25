@@ -43,9 +43,6 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 
 		double such_etage = -100;
 		char etage_rela = ' ';
-		
-		Gregorien aktuellesDatum = new Gregorien();
-		aktuellesDatum.init();
 
 		boolean such_balkon = false;
 		
@@ -345,7 +342,7 @@ public class SuchanfrageWohnungSuchenAction extends MenueManager implements Acti
 
 					erg = xxx(flatList, bedingungList);
 					
-					searchList.add(new Suchanfrage (such_mitarbeiterID , such_kundenID, zimmeranzahl_rela, such_zimmeranzahl, fl‰che_rela, such_fl‰che, kosten_rela, such_kosten, etage_rela, such_etage, such_balkon, such_fuﬂbodenheizung, such_aussicht, aktuellesDatum));
+					searchList.add(new Suchanfrage (such_mitarbeiterID , such_kundenID, zimmeranzahl_rela, such_zimmeranzahl, fl‰che_rela, such_fl‰che, kosten_rela, such_kosten, etage_rela, such_etage, such_balkon, such_fuﬂbodenheizung, such_aussicht));
 
 					for (Wohnung flat : erg) {
 

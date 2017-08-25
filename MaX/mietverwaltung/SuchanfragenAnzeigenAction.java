@@ -19,7 +19,6 @@ public class SuchanfragenAnzeigenAction extends MenueManager implements Action ,
 			System.out.println("Balkon:          " + search.getBalkon());
 			System.out.println("Fuﬂbodenheizung: " + search.getFuﬂbodenheizung());
 			System.out.println("Aussicht:        " + search.getAussicht());
-			System.out.print("Datum:           "); search.getAktuellesDatum().display();
 			System.out.println("");
 		}
 		

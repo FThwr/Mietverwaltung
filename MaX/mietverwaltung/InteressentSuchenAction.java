@@ -42,6 +42,7 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 		 */
 		
 		String check = "";
+		String[] savecheck = new String[7];
 
 		/*
 		 * Solange der Suchvorgang nicht beendet ist, wird immer eine Übersicht
@@ -98,41 +99,65 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 				// Interessenten-ID
 				if (eingabe == 1) {
 
-					such_interessentenID = einlesen_Zahl(kategorie, eingabe);
-					if (such_interessentenID == 0) {
+					int einlese = einlesen_Zahl(kategorie, eingabe);
+					if (einlese == 999) {
+						savecheck[eingabe - 1] = "";
 						such_interessentenID = interessentenID;
-					} else {
-						check = check + "a";
+					} 
+					else if (einlese == 0) {
+					}
+					else {
+						
+						such_interessentenID = einlese;
+						savecheck[eingabe - 1] = "a";
 					}
 				}
 
 				// Name
 				if (eingabe == 2) {
-					such_name = einlesen_Wort(kategorie, eingabe);
-					if (such_name.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_name = name;
-					} else {
-						check = check + "b";
+					} 
+					
+					else if (einlese.equals("" + 0)) {
+					}
+					else {
+						
+						such_name = einlese;
+						savecheck[eingabe - 1] = "b";
 					}
 				}
 
 				// Vorname
 				if (eingabe == 3) {
-					such_vorname = einlesen_Wort(kategorie, eingabe);
-					if (such_vorname.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_vorname = vorname;
-					} else {
-						check = check + "c";
+					} 
+					else if (einlese.equals("" + 0)) {
+					}
+					else {
+						such_vorname = einlese;
+						savecheck[eingabe - 1] = "c";
 					}
 				}
 
 				// E-Mail
 				if (eingabe == 4) {
-					such_EMail = einlesen_Wort(kategorie, eingabe);
-					if (such_EMail.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 999)) {
+						savecheck[eingabe - 1] = "";
 						such_EMail = EMail;
-					} else {
-						check = check + "d";
+					} 
+					else if (einlese.equals("" + 0)) {
+					}
+					else {
+						
+						such_EMail = einlese;
+						savecheck[eingabe - 1] = "d";
 					}
 				}
 
@@ -144,7 +169,8 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 					System.out.println("Drücke '3' zum bestätigen");
 					System.out.println("Drücke '0' für Abbruch: ");
 					
-					String savecheck = "";
+					String buchstabe_einfügen_straße = "";
+					String buchstabe_einfügen_plz = "";
 
 					String[] auswahl = { "Straße", "Platz"};
 					boolean adresseingabe = true;
@@ -155,23 +181,38 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 						int zähler = q.nextInt();
 
 						if (zähler == 1) {
-							such_adresse_straße = einlesen_Wort(auswahl, zähler);
-							if (such_adresse_straße.equals("" + 0)) {
+							String einlese = einlesen_Wort(auswahl, zähler);
+							if (einlese.equals("" + 999)) {
+								savecheck[eingabe - 1] = "";
 								such_adresse_straße = straße;
-							} else {
-								savecheck = savecheck + "y";
+							} 
+							
+							else if (einlese.equals("" + 0)) {
+							}
+							else {
+								
+								such_adresse_straße = einlese;
+								buchstabe_einfügen_straße = buchstabe_einfügen_straße + "y";
 							}
 						}
 						if (zähler == 2) {
-							such_adresse_plz = einlesen_Zahl(auswahl, zähler);
-							if (such_adresse_plz == 0 || such_adresse_plz == -100) {
+							int einlese = einlesen_Zahl(auswahl, zähler);
+							if (einlese == 999) {
+								savecheck[eingabe] = "";
 								such_adresse_plz = plz;
-							} else {
-								savecheck = savecheck + "z";
+							} 
+							else if (einlese == 0) {
+							}
+							else {
+								
+								such_adresse_plz = einlese;
+								buchstabe_einfügen_plz = buchstabe_einfügen_plz + "z";
 							}
 						}
 						if (zähler == 3) {
 							check = check + savecheck;
+							savecheck[eingabe - 1] = buchstabe_einfügen_straße;
+							savecheck[eingabe] = buchstabe_einfügen_plz;
 						}
 						if (zähler == 0) {
 							adresseingabe = false;
@@ -185,11 +226,18 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 
 				// Telefonnummer
 				if (eingabe == 6) {
-					such_telefon = einlesen_Wort(kategorie, eingabe);
-					if (such_telefon.equals("" + 0)) {
+					String einlese = einlesen_Wort(kategorie, eingabe);
+					if (einlese.equals("" + 0)) {
+						savecheck[eingabe] = "";
 						such_telefon = telefon;
-					} else {
-						check = check + "e";
+					} 
+					
+					else if (einlese.equals("" + 0)) {
+					}
+					else {
+						
+						such_telefon = einlese;
+						savecheck[eingabe] = "e";
 					}
 				}
 
@@ -207,6 +255,11 @@ public class InteressentSuchenAction extends MenueManager implements Action, Ser
 
 					String vgl_EMail = "-";
 					String vgl_telefon = "-";
+					
+					for (int i = 0; i < savecheck.length; i++) {
+						if (savecheck[i] != null)
+							check = check + savecheck[i];
+					}
 
 					/*
 					 * Wenn 'check' ein Buchstaben enthält war der Nutzer bei

@@ -10,8 +10,7 @@ public class AktuelleMieterAnzeigenAction extends MenueManager implements Action
 	public void action() throws FileNotFoundException, IOException, ClassNotFoundException {
 
 		/*
-		 * Jedes Element der ArrayList 'ownerList' wird ausgelesen. Die
-		 * ArrayList beeinhaltet alle aktuellen Mieter.
+		 * Es wird eine Übersicht über alle aktuellen Mieter ausgegeben.
 		 */
 		for (Mieter owner : ownerList) {
 

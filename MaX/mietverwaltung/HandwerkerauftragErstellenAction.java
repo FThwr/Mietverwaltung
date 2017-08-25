@@ -38,15 +38,18 @@ public class HandwerkerauftragErstellenAction extends MenueManager implements Ac
 
 		boolean erstellVorgang = true;
 
-		String auftragsID = "";
+		String auftragsID = "-";
 		int wohnungsID = -100;
 		int mitarbeiterID = -100;
-		String mängelbeschreibung = "";
-		String status = "";
+		String mängelbeschreibung = "-";
+		
 		Datum eingangsdatum = null;
 
 		// Fertigstellungsdatum so gewählt, da Datum ungewiss beim Erstellen
 		Datum fertigstellungsDatum = new Datum(0, 0, 0);
+		
+		// Jeder neue Handwerkerauftrag ist in Bearbeitung
+		String status = "in Bearbeitung";
 
 		String[] kategorie = { "Auftrags ID ", "Wohnungs ID", "Mitarbeiter ID", "Mängelbeschreibung", "Status",
 				"Eingangsdatum"};
@@ -60,13 +63,28 @@ public class HandwerkerauftragErstellenAction extends MenueManager implements Ac
 			
 			System.out.println("...............................Wählen Sie die zu erstellende Eigenschaft aus...............................!  ");
 			System.out.println("1. Auftrags ID:          " + auftragsID);
+			if (wohnungsID != -100) {
 			System.out.println("2. Wohnungs ID:          " + wohnungsID);
+			} 
+			else {
+				System.out.println("2. Wohnungs ID:          " + "-");
+			}
+			if (mitarbeiterID != -100) {
 			System.out.println("3. Mitarbeiter ID:       " + mitarbeiterID);
+			} 
+			else {
+				System.out.println("3. Mitarbeiter ID:       " + "-");
+			}
 			System.out.println("4. Mängelbeschreibung:   " + mängelbeschreibung);
-			System.out.println("5. Status:               " + status);
-			System.out.println("6. Eingangsdatum:        " + eingangsdatum);
+			System.out.println("   Status:               " + status);
+			if (eingangsdatum != null) {
+			System.out.println("5. Eingangsdatum:        " + eingangsdatum);
+			} 
+			else {
+				System.out.println("5. Eingangsdatum:        " + "-");
+			}
 			System.out.println("   Fertigstellungsdatum: " + fertigstellungsDatum);
-			System.out.println("7. Erstellen abschließen");
+			System.out.println("6. Erstellen abschließen");
 			System.out.println("0. Abbruch");
 			System.out.println("");
 
@@ -155,43 +173,21 @@ public class HandwerkerauftragErstellenAction extends MenueManager implements Ac
 					}
 				}
 
-				// Status
-				if (änderung == 5) {
-					System.out.println(
-							"Geben Sie die Zahl vom gewünschten Status aus: '1' = in Bearbeitung, '2' = beendet, '0' = Abbruch!");
-					int eingabe = einlesen_Zahl(kategorie, änderung);
-
-					if (eingabe == 1) {
-						status = "in Bearbeitung";
-					}
-					if (eingabe == 2) {
-						status = "beendet";
-					}
-
-					if (eingabe == 0) {
-					}
-
-					// Jede andere Eingabe führt zu einer Fehlermeldung.
-					else {
-						System.out.println(
-								"\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
-					}
-				}
-
 				// Eingangsdatum
-				if (änderung == 6) {
+				if (änderung == 5) {
 
 					eingangsdatum = Datum_Eingabe(eingangsdatum);
 				}
 
 				// Bearbeitung abschließen
-				if (änderung == 7) {
+				if (änderung == 6) {
 					System.out.println("Handwerkerauftrag wurde erfolgreich angelegt!");
 					erstellVorgang = false;
+
 					
 					for (Wohnung flat : flatList) {
 						if (wohnungsID == flat.getWohnungsID()) {
-							flat.setHandwerkerauftrag(new Handwerkerauftrag(auftragsID));
+							flat.getHandwerkerauftrag().setAuftragsID(auftragsID);
 						}
 					}
 
@@ -307,14 +303,21 @@ public class HandwerkerauftragErstellenAction extends MenueManager implements Ac
 		meinRahmen.setLocationRelativeTo(null);
 
 		JComboBox combo2 = new JComboBox();
-		combo2.addItem("" + 0);
 
 		if (änderung == 2) {
 			meinRahmen.setTitle("Wohnungsnummer");
 			JLabel frage = new JLabel("Welche Wohnung möchten Sie auswählen?");
 			meinPanel.add(frage);
 			for (Wohnung flat : flatList) {
+				int auftrag_vorhanden = 0;
+				for (Handwerkerauftrag repair : repairList) {
+					if (repair.getWohnungsID() == flat.getWohnungsID()) {
+						auftrag_vorhanden = 1;
+					}
+				}
+				if (auftrag_vorhanden != 1) {
 				combo2.addItem(flat.getWohnungsID());
+				}
 			}
 		}
 
