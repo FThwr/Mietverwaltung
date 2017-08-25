@@ -5,32 +5,27 @@ import hilfsklassen.Datum;
 
 public class Interessent extends Kunde {
 
-	private String rolle;
-	
-	public Interessent(int kundenID, String name, String vorname, Datum geburtsdatum, Adresse adresse, String email,
-			String telefonnummer) {
-		super(kundenID, name, vorname, geburtsdatum, adresse, email, telefonnummer);
-		this.setRolle("Interessent");
-	}
+    private static final long serialVersionUID = -5060255053168345408L;
 
-	@Override
-	public String toString() {
-		return "Interessent: \nKunden-ID:" + kundenID + "\nName: " + name + "\nVorname: " + vorname + "\nGeburtsdatum: "
-				+ geburtsdatum.toString() + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer + "\nRolle: " + rolle;
-	}
-	
-	@Override
-	public void display() {
-		System.out.println(this.toString());
-	}
-	
-	public String getRolle() {
-		return rolle;
-	}
+    private String rolle;
 
-	public void setRolle(String rolle) {
-		this.rolle = rolle;
-	}
+    public Interessent(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final Adresse adresse, final String email, final String telefonnummer) {
+        super(kundenID, name, vorname, geburtsdatum, adresse, email, telefonnummer);
+        this.setRolle("Interessent");
+    }
 
+    //	@Override
+    //	public String toString() {
+    //		return "Interessent: \nKunden-ID:" + kundenID + "\nName: " + name + "\nVorname: " + vorname + "\nGeburtsdatum: "
+    //				+ geburtsdatum.toString() + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer + "\nRolle: " + rolle;
+    //	}
+
+    public String getRolle() {
+        return this.rolle;
+    }
+
+    public void setRolle(final String rolle) {
+        this.rolle = rolle;
+    }
 
 }

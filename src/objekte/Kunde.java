@@ -1,94 +1,95 @@
 package objekte;
 
-import hilfsklassen.*;
+import java.io.Serializable;
 
-public abstract class Kunde {
+import hilfsklassen.Adresse;
+import hilfsklassen.Datum;
 
-	protected int kundenID;
-	protected String name;
-	protected String vorname;
-	protected Datum geburtsdatum;
-	protected Adresse adresse;
-	protected String email;
-	protected String telefonnummer;
-	
-	public Kunde(int kundenID, String name, String vorname, Datum geburtsdatum, Adresse adresse, String email, String telefonnummer) {
-		this.kundenID = kundenID;
-		this.name = name;
-		this.vorname = vorname;
-		this.geburtsdatum = geburtsdatum;
-		this.adresse = adresse;
-		this.email = email;
-		this.telefonnummer = telefonnummer;
-	}
+public abstract class Kunde implements Serializable {
 
+    private static final long serialVersionUID = -2713291106024567323L;
 
-	@Override
-	public String toString() {
-		return "Kunde: \nKunden-ID:" + kundenID + "\nName: " + name + "\nVorname: " + vorname + "\nGeburtsdatum: "
-				+ geburtsdatum.toString() + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer;
-	}
+    protected int kundenID;
+    protected String name;
+    protected String vorname;
+    protected Datum geburtsdatum;
+    protected Adresse adresse;
+    protected String email;
+    protected String telefonnummer;
 
-	public void display() {
-		System.out.println(this.toString());
-	}
+    public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final Adresse adresse, final String email, final String telefonnummer) {
+        this.kundenID = kundenID;
+        this.name = name;
+        this.vorname = vorname;
+        this.geburtsdatum = geburtsdatum;
+        this.adresse = adresse;
+        this.email = email;
+        this.telefonnummer = telefonnummer;
+    }
 
-	public int getKundenID() {
-		return kundenID;
-	}
+    @Override
+    public String toString() {
+        return "Kunde: \nKunden-ID:" + this.kundenID + "\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nAdresse: " + this.adresse.toString() + "\nE-Mail: " + this.email + "\nTelefonnummer: " + this.telefonnummer;
+    }
 
+    public void display() {
+        System.out.println(this.toString());
+    }
 
-	public void setKundenID(int kundenID) {
-		this.kundenID = kundenID;
-	}
+    public int getKundenID() {
+        return this.kundenID;
+    }
 
+    public void setKundenID(final int kundenID) {
+        this.kundenID = kundenID;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public String getVorname() {
-		return vorname;
-	}
+    public String getVorname() {
+        return this.vorname;
+    }
 
-	public void setVorname(String vorname) {
-		this.vorname = vorname;
-	}
+    public void setVorname(final String vorname) {
+        this.vorname = vorname;
+    }
 
-	public Datum getGeburtsdatum() {
-		return geburtsdatum;
-	}
+    public Datum getGeburtsdatum() {
+        return this.geburtsdatum;
+    }
 
-	public void setGeburtsdatum(Datum geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
-	}
+    public void setGeburtsdatum(final Datum geburtsdatum) {
+        this.geburtsdatum = geburtsdatum;
+    }
 
-	public Adresse getAdresse() {
-		return adresse;
-	}
+    public Adresse getAdresse() {
+        return this.adresse;
+    }
 
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
-	}
+    public void setAdresse(final Adresse adresse) {
+        this.adresse = adresse;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(final String email) {
+        this.email = email;
+    }
 
-	public String getTelefonnummer() {
-		return telefonnummer;
-	}
+    public String getTelefonnummer() {
+        return this.telefonnummer;
+    }
 
-	public void setTelefonnummer(String telefonnummer) {
-		this.telefonnummer = telefonnummer;
-	}
-	
+    public void setTelefonnummer(final String telefonnummer) {
+        this.telefonnummer = telefonnummer;
+    }
+
 }

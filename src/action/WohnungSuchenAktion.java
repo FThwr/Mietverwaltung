@@ -15,10 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import menue.MenueManager;
+import menu.MenuManager;
 import objekte.Wohnung;
 
-public class WohnungSuchenAktion extends MenueManager implements Action {
+public class WohnungSuchenAktion extends MenuManager implements Action {
 
 	JButton button;
 
