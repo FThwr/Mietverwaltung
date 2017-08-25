@@ -1,57 +1,62 @@
 package hilfsklassen;
 
-public class Adresse {
+import java.io.Serializable;
 
-	private String strasse;
-	private int hausnummer;
-	private int plz;
-	private String stadt;
-	
-	public Adresse(String strasse, int hausnummer, int plz, String stadt) {
-		this.setStrasse(strasse);
-		this.setHausnummer(hausnummer);
-		this.setPlz(plz);
-		this.setStadt(stadt);
-	}
-	
-	public String toString() {
-		return (strasse+" "+hausnummer+"\n"+plz+" "+stadt);
-	}
-	
-	public void display() {
-		System.out.println(this.toString());
-	}
+public class Adresse implements Serializable {
 
-	public String getStrasse() {
-		return strasse;
-	}
+    private static final long serialVersionUID = -1212399369829352471L;
 
-	public void setStrasse(String strasse) {
-		this.strasse = strasse;
-	}
+    private String strasse;
+    private int hausnummer;
+    private int plz;
+    private String stadt;
 
-	public int getHausnummer() {
-		return hausnummer;
-	}
+    public Adresse(final String strasse, final int hausnummer, final int plz, final String stadt) {
+        this.setStrasse(strasse);
+        this.setHausnummer(hausnummer);
+        this.setPlz(plz);
+        this.setStadt(stadt);
+    }
 
-	public void setHausnummer(int hausnummer) {
-		this.hausnummer = hausnummer;
-	}
+    @Override
+    public String toString() {
+        return (this.strasse + " " + this.hausnummer + "\n" + this.plz + " " + this.stadt);
+    }
 
-	public int getPlz() {
-		return plz;
-	}
+    public void display() {
+        System.out.println(this.toString());
+    }
 
-	public void setPlz(int plz) {
-		this.plz = plz;
-	}
+    public String getStrasse() {
+        return this.strasse;
+    }
 
-	public String getStadt() {
-		return stadt;
-	}
+    public void setStrasse(final String strasse) {
+        this.strasse = strasse;
+    }
 
-	public void setStadt(String stadt) {
-		this.stadt = stadt;
-	}
-	
+    public int getHausnummer() {
+        return this.hausnummer;
+    }
+
+    public void setHausnummer(final int hausnummer) {
+        this.hausnummer = hausnummer;
+    }
+
+    public int getPlz() {
+        return this.plz;
+    }
+
+    public void setPlz(final int plz) {
+        this.plz = plz;
+    }
+
+    public String getStadt() {
+        return this.stadt;
+    }
+
+    public void setStadt(final String stadt) {
+        this.stadt = stadt;
+    }
+
 }

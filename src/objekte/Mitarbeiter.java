@@ -1,64 +1,54 @@
 package objekte;
 
 public class Mitarbeiter {
-	
-	private int mitarbeiterID;
-	private String name;
-	private String vorname;
-	private String benutzername;
-	private String passwort;
-	
-	
-	public Mitarbeiter (int mitarbeiterID, String name, String vorname, String passwort) {
-		this.mitarbeiterID = mitarbeiterID;
-		this.name = name;
-		this.passwort = passwort;
-		this.benutzername = vorname.trim().substring(0, 1) + "." + name;
-	}
-	
-	public Mitarbeiter (int mitarbeiterID, String name, String vorname) {
-		this.mitarbeiterID = mitarbeiterID;
-		this.name = name;
-		this.vorname = vorname;
-	}
 
-	@Override
-	public String toString() {
-		return "Mitarbeiter: Name: " + name + "\nVorname: " + vorname + "\nBenutzername: " + benutzername + "\nPasswort: "
-				+ passwort;
-	}
+    private int mitarbeiterID;
+    private String name;
+    private String vorname;
+    private String benutzername;
+    private String passwort;
 
-	public String getName() {
-		return name;
-	}
+    public Mitarbeiter(final int mitarbeiterID, final String name, final String vorname, final String passwort) {
+        this.mitarbeiterID = mitarbeiterID;
+        this.name = name;
+        this.passwort = passwort;
+        this.benutzername = vorname.trim().substring(0, 1) + "." + name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getVorname() {
-		return vorname;
-	}
+    public Mitarbeiter(final int mitarbeiterID, final String name, final String vorname) {
+        this(mitarbeiterID, name, vorname, null);
+    }
 
-	public void setVorname(String vorname) {
-		this.vorname = vorname;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public String getBenutzername() {
-		return benutzername;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public void setBenutzername(String benutzername) {
-		this.benutzername = benutzername;
-	}
+    public String getVorname() {
+        return this.vorname;
+    }
 
-	public String getPasswort() {
-		return passwort;
-	}
+    public void setVorname(final String vorname) {
+        this.vorname = vorname;
+    }
 
-	public void setPasswort(String passwort) {
-		this.passwort = passwort;
-	}
+    public String getBenutzername() {
+        return this.benutzername;
+    }
 
-	
+    public void setBenutzername(final String benutzername) {
+        this.benutzername = benutzername;
+    }
+
+    public String getPasswort() {
+        return this.passwort;
+    }
+
+    public void setPasswort(final String passwort) {
+        this.passwort = passwort;
+    }
+
 }

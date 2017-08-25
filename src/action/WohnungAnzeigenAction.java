@@ -14,10 +14,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import menue.MenueManager;
+import menu.MenuManager;
 import objekte.Wohnung;
 
-public class WohnungAnzeigenAction extends MenueManager implements Action, ActionListener {
+public class WohnungAnzeigenAction extends MenuManager implements Action, ActionListener {
 
 	// Damit Objekte der Klasse BeispielListener
 	// zum ActionListener werden kann, muss das Interface

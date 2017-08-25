@@ -3,10 +3,10 @@ package action;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import menue.MenueManager;
+import menu.MenuManager;
 import objekte.Wohnung;
 
-public class WohnungBearbeitenAction extends MenueManager implements Action {
+public class WohnungBearbeitenAction extends MenuManager implements Action {
 
 	@Override
 	public void action() {
