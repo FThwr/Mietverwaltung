@@ -7,25 +7,13 @@ public class Interessent extends Kunde {
 
     private static final long serialVersionUID = -5060255053168345408L;
 
-    private String rolle;
-
-    public Interessent(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final Adresse adresse, final String email, final String telefonnummer) {
-        super(kundenID, name, vorname, geburtsdatum, adresse, email, telefonnummer);
-        this.setRolle("Interessent");
+    public Interessent(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final Adresse adresse, final String email, final String telefonnummer, final String rolle) {
+        super(kundenID, name, vorname, geburtsdatum, email, adresse, telefonnummer, rolle);
     }
 
-    //	@Override
-    //	public String toString() {
-    //		return "Interessent: \nKunden-ID:" + kundenID + "\nName: " + name + "\nVorname: " + vorname + "\nGeburtsdatum: "
-    //				+ geburtsdatum.toString() + "\nAdresse: " + adresse.toString() + "\nE-Mail: " + email + "\nTelefonnummer: " + telefonnummer + "\nRolle: " + rolle;
-    //	}
-
-    public String getRolle() {
-        return this.rolle;
-    }
-
-    public void setRolle(final String rolle) {
-        this.rolle = rolle;
+    @Override
+    public String toString() {
+        return "Interessent: \nKunden-ID:" + this.kundenID + "\nName: " + this.name + "\nVorname: " + this.vorname + "\nGeburtsdatum: " + this.geburtsdatum.toString() + "\nAdresse: " + this.adresse.toString() + "\nE-Mail: " + this.email + "\nTelefonnummer: " + this.telefonnummer + "\nRolle: " + this.rolle;
     }
 
 }

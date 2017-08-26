@@ -8,15 +8,24 @@ public class Mitarbeiter {
     private String benutzername;
     private String passwort;
 
+    public Mitarbeiter(final int mitarbeiterID, final String name, final String vorname, final String benutzername, final String passwort) {
+        this.mitarbeiterID = mitarbeiterID;
+        this.name = name;
+        this.passwort = passwort;
+        this.vorname = vorname;
+        this.benutzername = vorname.trim().substring(0, 1) + "." + name;
+    }
+
     public Mitarbeiter(final int mitarbeiterID, final String name, final String vorname, final String passwort) {
         this.mitarbeiterID = mitarbeiterID;
         this.name = name;
         this.passwort = passwort;
+        this.vorname = vorname;
         this.benutzername = vorname.trim().substring(0, 1) + "." + name;
     }
 
     public Mitarbeiter(final int mitarbeiterID, final String name, final String vorname) {
-        this(mitarbeiterID, name, vorname, null);
+        this(mitarbeiterID, name, vorname, vorname.trim().substring(0, 1) + "." + name, null);
     }
 
     public String getName() {
@@ -49,6 +58,14 @@ public class Mitarbeiter {
 
     public void setPasswort(final String passwort) {
         this.passwort = passwort;
+    }
+
+    public int getMitarbeiterID() {
+        return this.mitarbeiterID;
+    }
+
+    public void setMitarbeiterID(final int mitarbeiterID) {
+        this.mitarbeiterID = mitarbeiterID;
     }
 
 }

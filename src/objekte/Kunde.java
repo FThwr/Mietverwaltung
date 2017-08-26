@@ -13,11 +13,27 @@ public abstract class Kunde implements Serializable {
     protected String name;
     protected String vorname;
     protected Datum geburtsdatum;
+    protected int wohnungsnummer;
     protected Adresse adresse;
     protected String email;
     protected String telefonnummer;
+    protected String rolle;
 
-    public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final Adresse adresse, final String email, final String telefonnummer) {
+    // Konstruktor mit Wohnungsnummer
+    public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final int wohnungsnummer, final String email, final Adresse adresse, final String telefonnummer, final String rolle) {
+        this.kundenID = kundenID;
+        this.name = name;
+        this.vorname = vorname;
+        this.geburtsdatum = geburtsdatum;
+        this.wohnungsnummer = wohnungsnummer;
+        this.adresse = adresse;
+        this.email = email;
+        this.telefonnummer = telefonnummer;
+        this.rolle = rolle;
+    }
+
+    // Konstruktor ohne Wohnungsnummer
+    public Kunde(final int kundenID, final String name, final String vorname, final Datum geburtsdatum, final String email, final Adresse adresse, final String telefonnummer, final String rolle) {
         this.kundenID = kundenID;
         this.name = name;
         this.vorname = vorname;
@@ -25,6 +41,7 @@ public abstract class Kunde implements Serializable {
         this.adresse = adresse;
         this.email = email;
         this.telefonnummer = telefonnummer;
+        this.rolle = rolle;
     }
 
     @Override
@@ -90,6 +107,14 @@ public abstract class Kunde implements Serializable {
 
     public void setTelefonnummer(final String telefonnummer) {
         this.telefonnummer = telefonnummer;
+    }
+
+    public String getRolle() {
+        return this.rolle;
+    }
+
+    public void setRolle(final String rolle) {
+        this.rolle = rolle;
     }
 
 }

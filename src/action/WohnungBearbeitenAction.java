@@ -1,292 +1,790 @@
 package action;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import hilfsklassen.Adresse;
+import hilfsklassen.Datum;
 import menu.MenuManager;
+import objekte.Mieter;
+import objekte.Mitarbeiter;
 import objekte.Wohnung;
 
 public class WohnungBearbeitenAction extends MenuManager implements Action {
 
-	@Override
-	public void action() {
+    static boolean window = false;
+    static int bearbeitungsAuswahl_WohnungsID;
+    static int JFrame_wohnungsnummer_auswahl;
+    static int JFrame_mitarbeiterID_auswahl;
 
-		JOptionPane jop = new JOptionPane();
-		jop.setWantsInput(true);
-		jop.setMessage("Welche Wohnung wollen Sie bearbeiten?");
-		// in der Klammer den Namen des Fensters eingeben
-		JDialog dialog = jop.createDialog("Wohnungsbearbeitung");
-		dialog.setAlwaysOnTop(true);
-		dialog.setVisible(true);
+    @Override
+    public void action() {
 
-		String zu_bearbeitende_wohnung = jop.getInputValue() == JOptionPane.UNINITIALIZED_VALUE ? null
-				: (String) jop.getInputValue();
+        System.out.println("________________________________________ Wohnung bearbeiten ________________________________________");
 
-		for (Wohnung flat : flatList) {
-			if (zu_bearbeitende_wohnung.equals("" + flat.getWohnungsID())) {
-				boolean bearbeitungsVorgang = true;
+        /*
+         * Variable zum ÷ffnen des richtigen JFrames und zur Auswahl des zu
+         * bearbeitenden Attributs.
+         */
+        int ‰nderung = -99;
 
-				int aktuelleID = flat.getWohnungsID();
-				int neueID = aktuelleID;
-				String aID = "" + aktuelleID;
-				aID = l‰nge_anpassen(aID);
-				
-				int aktuelle_zimmeranzahl = flat.getZimmeranzahl();
-				int neue_zimmeranzahl = aktuelle_zimmeranzahl;
-				String a_ZA = "" + aktuelle_zimmeranzahl;
-				a_ZA = l‰nge_anpassen(a_ZA);
+        // Ausgabe aller Mietvertrag-IDs zur einfacheren Auswahl
+        auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(‰nderung);
 
-				double aktuelle_fl‰che = flat.getFl‰che();
-				double neue_fl‰che = aktuelle_fl‰che;
-				String a_FL = "" + aktuelle_fl‰che;
-				a_FL = l‰nge_anpassen(a_FL);
+        // Variable enth‰lt die ID des zu bearbeitenden Mietvertrags
+        int zu_bearbeitende_wohnung = WohnungBearbeitenAction.bearbeitungsAuswahl_WohnungsID;
 
-				double aktuelle_kosten = flat.getKosten();
-				double neue_kosten = aktuelle_kosten;
-				String a_KT = "" + aktuelle_kosten;
-				a_KT = l‰nge_anpassen(a_KT);
+        boolean bearbeitungsVorgang = true;
 
-				int aktuelle_etage = flat.getEtage();
-				int neue_etage = aktuelle_etage;
-				String a_EG = "" + aktuelle_etage;
-				a_EG = l‰nge_anpassen(a_EG);
+        /*
+         * Array beeinhaltet alle Attribute, die ver‰ndert werden kˆnnen und
+         * dient zur Ausgabe durch Zugriff auf deren Index
+         */
+        String[] buttons = { "Wohnungsnummer", "Zimmeranzahl", "Fl‰che", "Kosten", "Etage", "Balkon", "Fuﬂbodenheizung", "Aussicht", "Adresse", "letztes Renovierungsdatum", "Renovierungsanzahl", "letztes Renovierungsdetails", "zugeordneten Mitarbeiter" };
 
-				boolean aktuelle_balkon = flat.getBalkon();
-				boolean neue_balkon = aktuelle_balkon;
-				String a_BK = "" + aktuelle_balkon;
-				a_BK = l‰nge_anpassen(a_BK);
+        /*
+         * diese Variablen dienen sp‰ter f¸r eine tabellarische Ausgabe auf der
+         * Konsole
+         */
+        String l‰ngenAnpassung_ID = "";
+        String l‰ngenAnpassung_ZA = "";
+        String l‰ngenAnpassung_FL = "";
+        String l‰ngenAnpassung_KT = "";
+        String l‰ngenAnpassung_EG = "";
+        String l‰ngenAnpassung_BK = "";
+        String l‰ngenAnpassung_FBH = "";
+        String l‰ngenAnpassung_AS = "";
+        String l‰ngenAnpassung_ST = "";
+        String l‰ngenAnpassung_RA = "";
+        String l‰ngenAnpassung_LRI = "";
 
-				boolean aktuelle_fuﬂbodenheizung = flat.getFuﬂbodenheizung();
-				boolean neue_fuﬂbodenheizung = aktuelle_fuﬂbodenheizung;
-				String a_FBH = "" + aktuelle_fuﬂbodenheizung;
-				a_FBH = l‰nge_anpassen(a_FBH);
+        /*
+         * allgemeine Variablen alte = aktuelle Werte, neue = neue/ver‰nderte
+         * Werte
+         */
+        int aktuelleID = 0;
+        int neueID = 0;
 
-				String aktuelle_aussicht = flat.getAussicht();
-				String neue_aussicht = aktuelle_aussicht;
-				String a_AS = aktuelle_aussicht;
-				a_AS = l‰nge_anpassen(a_AS);
+        int aktuelle_zimmeranzahl = 0;
+        int neue_zimmeranzahl = 0;
 
-				// String adresse = "";
-				String aktuelle_status = flat.getStatus();
-				String neue_status = aktuelle_status;
-				String a_ST = aktuelle_status;
-				a_ST = l‰nge_anpassen(a_ST);
+        double aktuelle_fl‰che = 0.0;
+        double neue_fl‰che = 0.0;
 
-				String aktuelle_letztesRenovierungsdatum = flat.getLetztesRenovierungsdatum();
-				String neue_letzesRenovierungsdatum = aktuelle_letztesRenovierungsdatum;
-				String a_LRDT = aktuelle_letztesRenovierungsdatum;
-				a_LRDT = l‰nge_anpassen(a_LRDT);
+        double aktuelle_kosten = 0.0;
+        double neue_kosten = 0.0;
 
-				int aktuelle_renovierungsanzahl = flat.getRenovierungsanzahl();
-				int neue_renovierungsanzahl = aktuelle_renovierungsanzahl;
-				String a_RA = "" + aktuelle_renovierungsanzahl;
-				a_RA = l‰nge_anpassen(a_RA);
+        int aktuelle_etage = 0;
+        int neue_etage = 0;
 
-				String aktuelle_letzeRenovierung_Details = flat.getLetzeRenovierung_Details();
-				String neue_letzteRenovierung_Details = aktuelle_letzeRenovierung_Details;
-				String a_LRI = aktuelle_letzeRenovierung_Details;
-				a_LRI = l‰nge_anpassen(a_LRI);
+        boolean aktuelle_balkon = false;
+        boolean neue_balkon = false;
 
-				String aktuelle_zugeordneterMitarbeiter = flat.getZugeordneterMitarbeiter().getName();
-				String neue_zugeordneterMitarbeiter = aktuelle_zugeordneterMitarbeiter;
-				String a_ZM = aktuelle_zugeordneterMitarbeiter;
-				a_ZM = l‰nge_anpassen(a_ZM);
-				
-				while (bearbeitungsVorgang == true) {
+        boolean aktuelle_fuﬂbodenheizung = false;
+        boolean neue_fuﬂbodenheizung = false;
 
-					String[] buttons = { "ID", "ZA", "Fl", "KT", "EG", "BK", "FBH", "AS", "ST", "LRDT", "RA", "LRI",
-							"ZM", "‰ndern", "abbruch" };
+        String aktuelle_aussicht = "";
+        String neue_aussicht = "";
 
-					int ok = JOptionPane.showOptionDialog(null,
-							"W‰hlen Sie ein zu bearbeitenden Wert! " 
-									+ "\n\naktuelle ID:                " + aID + "aktuelle ID:                " + neueID
-									+ "\n\naktuelle ZA:               " + a_ZA + "aktuelle ZA:               " + neue_zimmeranzahl
-									+ "\n\naktuelle FL:                " + a_FL + "aktuelle FL:                " + neue_fl‰che
-									+ "\n\naktuelle KT:                " + a_KT + "aktuelle KT:                " + neue_kosten
-									+ "\n\naktuelle EG:                " + a_EG + "aktuelle EG:                " + neue_etage
-									+ "\n\naktuelle BK:                " + a_BK + "aktuelle BK:                " + neue_balkon
-									+ "\n\naktuelle FBH:              " + a_FBH + "aktuelle FBH:              " + neue_fuﬂbodenheizung
-									+ "\n\naktuelle AS:                 " + a_AS + "aktuelle AS:                 " + neue_aussicht
-									+ "\n\naktuelle ST:                 " + a_ST + "aktuelle ST:                 " + neue_status
-									+ "\n\naktuelle LRDT:            " + a_LRDT + "aktuelle LRDT:            " + neue_letzesRenovierungsdatum
-									+ "\n\naktuelle RA:                " + a_RA + "aktuelle RA:                " + neue_renovierungsanzahl
-									+ "\n\naktuelle LRI:                " + a_LRI + "aktuelle LRI:                " + neue_letzteRenovierung_Details
-									+ "\n\naktuelle ZM:                " + a_ZM + "aktuelle ZM:                " + neue_zugeordneterMitarbeiter, 
-							"Wohnungserstellung", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons);
+        Adresse aktuelle_adresse = null;
+        Adresse neue_adresse = null;
 
-					if (ok == 0) {
-						neueID = int_eingabe(buttons, ok);
-						for (Wohnung wohnung : flatList) {
-							if (wohnung.getWohnungsID() == neueID) {
+        String aktuelle_status = "";
+        String neue_status = "";
 
-								String[] knopf = { "Ok" };
+        Datum aktuelle_letztesRenovierungsdatum = null;
+        Datum neue_letzesRenovierungsdatum = null;
 
-								JOptionPane.showOptionDialog(null,
-										"Die Wohnung mit der Nummer: " + "'" + neueID + "'" + " existiert bereits!",
-										"Wohnungserstellung", JOptionPane.WARNING_MESSAGE, 0, null, knopf, knopf);
-								neueID = -100;
-								break;
-							} 							
-						}
-					}
-					if (ok == 1) {
-						neue_zimmeranzahl = int_eingabe(buttons, ok);
-					}
-					if (ok == 2) {
-						neue_fl‰che = double_eingabe(buttons, ok);
-					}
-					if (ok == 3) {
-						neue_kosten = double_eingabe(buttons, ok);
-					}
-					if (ok == 4) {
-						neue_etage = int_eingabe(buttons, ok);
-					}
-					if (ok == 5) {
-						neue_balkon = boolean_eingabe(buttons, ok);
-					}
-					if (ok == 6) {
-						neue_fuﬂbodenheizung = boolean_eingabe(buttons, ok);
-					}
-					if (ok == 7) {
-						neue_aussicht = String_eingabe(buttons, ok);
-					}
-					if (ok == 8) {
-						neue_status = String_eingabe(buttons, ok);
-					}
-					if (ok == 9) {
-						neue_letzesRenovierungsdatum = String_eingabe(buttons, ok);
-					}
-					if (ok == 10) {
-						neue_renovierungsanzahl = int_eingabe(buttons, ok);
-					}
-					if (ok == 11) {
-						neue_letzteRenovierung_Details = String_eingabe(buttons, ok);
-					}
-					if (ok == 12) {
-						neue_zugeordneterMitarbeiter = mitarbeiter_eingabe(buttons, ok);
-					}
-					if (ok == 13) {
-						bearbeitungsVorgang = false;
-						flat.setWohnungsID(neueID);
-						flat.setZimmeranzahl(neue_zimmeranzahl);
-						flat.setFl‰che(neue_fl‰che);
-						flat.setKosten(neue_kosten);
-						flat.setEtage(neue_etage);
-						flat.setBalkon(neue_balkon);
-						flat.setFuﬂbodenheizung(neue_fuﬂbodenheizung);
-						flat.setAussicht(neue_aussicht);
-						flat.setStatus(neue_status);
-						flat.setLetztesRenovierungsdatum(neue_letzesRenovierungsdatum);
-						flat.setRenovierungsanzahl(neue_renovierungsanzahl);
-						flat.setLetzeRenovierung_Details(neue_letzteRenovierung_Details);
-						flat.getZugeordneterMitarbeiter().setName(neue_zugeordneterMitarbeiter);
-					}
-					if (ok == 14) {
-						bearbeitungsVorgang = false;
-					} else {
-						System.out.println("");
-					}
+        int aktuelle_renovierungsanzahl = 0;
+        int neue_renovierungsanzahl = 0;
 
-				}
-			}
+        String aktuelle_letzeRenovierung_Details = "";
+        String neue_letzeRenovierung_Details = "";
 
-		}
-	}
+        Mitarbeiter aktuelle_zugeordneterMitarbeiter = null;
+        Mitarbeiter neue_zugeordneterMitarbeiter = null;
 
-	private String l‰nge_anpassen(String wort) {
-		
-		int abzug = wort.length();
-		if (wort.length() < 90) {
-			while (wort.length() < (90-abzug)) {
-				wort = wort + " "; 
-				
-			}
-		} return wort;
-		
-	}
+        /*
+         * Variablen enthalten die Leerzeichen, die nach den Objekten (Daten)
+         * eingesetzt werden. Die L‰ngen der einzelnen Komponenten der Objekte
+         * werden verwendet. MB = Mietbeginn , ME = Mietende.
+         */
+        String ADR_Leerzeichen = "";
+        String LRDT_Leerzeichen = "";
+        String ZM_Leerzeichen = "";
 
-	public String mitarbeiter_eingabe(String[] buttons, int ok) {
-		
-		JOptionPane jop = new JOptionPane();
-		jop.setWantsInput(true);
-		jop.setMessage("Eingabe vom Feld: " + buttons[ok]);
-		// in der Klammer den Namen des Fensters eingeben
-		JDialog dialog = jop.createDialog("Wohnungserstellung");
-		dialog.setAlwaysOnTop(true);
-		dialog.setVisible(true);
+        /*
+         * F¸r jedes Element in der ArrayList 'flatList', welche alle Wohnungen
+         * beeinhaltet, wir zeurst das Objekt in der ArrayList gesucht, welche
+         * der eben ausgew‰hlten Wohnungs-ID entspricht. Es werden neue
+         * Variablen angelegt, welche die einzelnen Werte des Objekts
+         * beeinhalten.
+         */
+        for (Wohnung flat : MenuManager.flatList) {
+            if (zu_bearbeitende_wohnung == flat.getWohnungsID()) {
 
-		String eingabe = jop.getInputValue() == JOptionPane.UNINITIALIZED_VALUE ? null : (String) jop.getInputValue();
-		String bearbeitungsknopf = eingabe;
-		return bearbeitungsknopf;
+                aktuelleID = flat.getWohnungsID();
+                neueID = aktuelleID;
 
-	}
+                aktuelle_zimmeranzahl = flat.getZimmeranzahl();
+                neue_zimmeranzahl = aktuelle_zimmeranzahl;
 
-	public int int_eingabe(String[] buttons, int ok) {
-		JOptionPane jop = new JOptionPane();
-		jop.setWantsInput(true);
-		jop.setMessage("Eingabe vom Feld: " + buttons[ok]);
-		// in der Klammer den Namen des Fensters eingeben
-		JDialog dialog = jop.createDialog("Wohnungserstellung");
-		dialog.setAlwaysOnTop(true);
-		dialog.setVisible(true);
+                aktuelle_fl‰che = flat.getFl‰che();
+                neue_fl‰che = aktuelle_fl‰che;
 
-		String eingabe = jop.getInputValue() == JOptionPane.UNINITIALIZED_VALUE ? null : (String) jop.getInputValue();
-		int bearbeitungsknopf = Integer.parseInt(eingabe);
-		return bearbeitungsknopf;
-	}
+                aktuelle_kosten = flat.getKosten();
+                neue_kosten = aktuelle_kosten;
 
-	public String String_eingabe(String [] buttons, int ok) {
-		JOptionPane jop = new JOptionPane();
-		jop.setWantsInput(true);
-		jop.setMessage("Eingabe vom Feld: " + buttons[ok]);
-		// in der Klammer den Namen des Fensters eingeben
-		JDialog dialog = jop.createDialog("Wohnungserstellung");
-		dialog.setAlwaysOnTop(true);
-		dialog.setVisible(true);
+                aktuelle_etage = flat.getEtage();
+                neue_etage = aktuelle_etage;
 
-		String eingabe = jop.getInputValue() == JOptionPane.UNINITIALIZED_VALUE ? null : (String) jop.getInputValue();
-		String bearbeitungsknopf = eingabe;
-		return bearbeitungsknopf;
-	}
+                aktuelle_balkon = flat.getBalkon();
+                neue_balkon = aktuelle_balkon;
 
-	public boolean boolean_eingabe(String[] buttons, int ok) {
-		JOptionPane jop = new JOptionPane();
-		jop.setWantsInput(true);
-		jop.setMessage("Eingabe vom Feld: " + buttons[ok]);
-		// in der Klammer den Namen des Fensters eingeben
-		JDialog dialog = jop.createDialog("Wohnungserstellung");
-		dialog.setAlwaysOnTop(true);
-		dialog.setVisible(true);
+                aktuelle_fuﬂbodenheizung = flat.getFuﬂbodenheizung();
+                neue_fuﬂbodenheizung = aktuelle_fuﬂbodenheizung;
 
-		boolean bearbeitungsknopf = false;
-		String eingabe = jop.getInputValue() == JOptionPane.UNINITIALIZED_VALUE ? null : (String) jop.getInputValue();
-		if (eingabe.equals("vorhanden")) {
-			bearbeitungsknopf = true;
-		}
-		if (eingabe.equals("nicht vorhanden")) {
-			bearbeitungsknopf = false;
-		}
-		return bearbeitungsknopf;
-	}
+                aktuelle_aussicht = flat.getAussicht();
+                neue_aussicht = aktuelle_aussicht;
 
-	public double double_eingabe(String [] buttons, int ok) {
+                aktuelle_adresse = flat.getAdresse();
+                neue_adresse = aktuelle_adresse;
 
-		JOptionPane jop = new JOptionPane();
-		jop.setWantsInput(true);
-		jop.setMessage("Eingabe vom Feld: " + buttons[ok]);
-		// in der Klammer den Namen des Fensters eingeben
-		JDialog dialog = jop.createDialog("Wohnungserstellung");
-		dialog.setAlwaysOnTop(true);
-		dialog.setVisible(true);
+                aktuelle_status = flat.getStatus();
+                neue_status = aktuelle_status;
 
-		String eingabe = jop.getInputValue() == JOptionPane.UNINITIALIZED_VALUE ? null : (String) jop.getInputValue();
+                aktuelle_letztesRenovierungsdatum = flat.getLetztesRenovierungsdatum();
+                neue_letzesRenovierungsdatum = aktuelle_letztesRenovierungsdatum;
 
-		double bearbeitungsknopf = Double.parseDouble(eingabe);
-		return bearbeitungsknopf;
-	}
-	
-	public int getlength(int zahl){
-		   String s = String.valueOf(zahl);
-		   return s.length();
-		}
+                aktuelle_renovierungsanzahl = flat.getRenovierungsanzahl();
+                neue_renovierungsanzahl = aktuelle_renovierungsanzahl;
+
+                aktuelle_letzeRenovierung_Details = flat.getLetzeRenovierung_Details();
+                neue_letzeRenovierung_Details = aktuelle_letzeRenovierung_Details;
+
+                aktuelle_zugeordneterMitarbeiter = flat.getZugeordneterMitarbeiter();
+                neue_zugeordneterMitarbeiter = aktuelle_zugeordneterMitarbeiter;
+
+                /*
+                 * Initialisierung der tabellarischen Variablen + Ausf¸llung mit
+                 * Leerzeichen (Umwandlung in die Tabelle)
+                 */
+                l‰ngenAnpassung_ID = "" + aktuelleID;
+                l‰ngenAnpassung_ID = l‰nge_anpassen(l‰ngenAnpassung_ID);
+
+                l‰ngenAnpassung_ZA = "" + aktuelle_zimmeranzahl;
+                l‰ngenAnpassung_ZA = l‰nge_anpassen(l‰ngenAnpassung_ZA);
+
+                l‰ngenAnpassung_FL = "" + aktuelle_fl‰che;
+                l‰ngenAnpassung_FL = l‰nge_anpassen(l‰ngenAnpassung_FL);
+
+                l‰ngenAnpassung_KT = "" + aktuelle_kosten;
+                l‰ngenAnpassung_KT = l‰nge_anpassen(l‰ngenAnpassung_KT);
+
+                l‰ngenAnpassung_EG = "" + aktuelle_etage;
+                l‰ngenAnpassung_EG = l‰nge_anpassen(l‰ngenAnpassung_EG);
+
+                l‰ngenAnpassung_BK = "" + aktuelle_balkon;
+                l‰ngenAnpassung_BK = l‰nge_anpassen(l‰ngenAnpassung_BK);
+
+                l‰ngenAnpassung_FBH = "" + aktuelle_fuﬂbodenheizung;
+                l‰ngenAnpassung_FBH = l‰nge_anpassen(l‰ngenAnpassung_FBH);
+
+                l‰ngenAnpassung_AS = aktuelle_aussicht;
+                l‰ngenAnpassung_AS = l‰nge_anpassen(l‰ngenAnpassung_AS);
+
+                l‰ngenAnpassung_ST = aktuelle_status;
+                l‰ngenAnpassung_ST = l‰nge_anpassen(l‰ngenAnpassung_ST);
+
+                l‰ngenAnpassung_RA = "" + aktuelle_renovierungsanzahl;
+                l‰ngenAnpassung_RA = l‰nge_anpassen(l‰ngenAnpassung_RA);
+
+                l‰ngenAnpassung_LRI = aktuelle_letzeRenovierung_Details;
+                l‰ngenAnpassung_LRI = l‰nge_anpassen(l‰ngenAnpassung_LRI);
+
+                ADR_Leerzeichen = l‰nge_anpassen_Adresse(aktuelle_adresse);
+                LRDT_Leerzeichen = l‰nge_anpassen_Datum(aktuelle_letztesRenovierungsdatum);
+                ZM_Leerzeichen = l‰nge_anpassen_Mitarbeiter(aktuelle_zugeordneterMitarbeiter);
+
+            }
+        }
+
+        /*
+         * Solange der Bearbeitungsvorgang nicht beendet ist, wird immer eine
+         * ‹bersicht ¸ber den alten Wert und den neuen Wert des jeweiligen
+         * Attributs ausgegeben. Es wird pro Durchlauf immer 1 Attribut
+         * ausgew‰hlt, welches man draufhin ver‰ndern kann.
+         */
+        while (bearbeitungsVorgang == true) {
+
+            Scanner t = new Scanner(System.in);
+
+            System.out.println("ƒnderungs¸bersicht:");
+            System.out.println("Dr¸cken Sie die Zahl vor der Zeile, um eine ƒnderung vorzunehmen!");
+            System.out.println("1.  aktuelle Wohnungsnummer:            " + l‰ngenAnpassung_ID + "neue Wohnungsnummer:            " + neueID);
+            System.out.println("2.  aktuelle Zimmeranzahl:              " + l‰ngenAnpassung_ZA + "neue Zimmeranzahl:              " + neue_zimmeranzahl);
+            System.out.println("3.  aktuelle Fl‰che:                    " + l‰ngenAnpassung_FL + "neue Fl‰che:                    " + neue_fl‰che);
+            System.out.println("4.  aktuelle Kosten:                    " + l‰ngenAnpassung_KT + "neue Kosten:                    " + neue_kosten);
+            System.out.println("5.  aktuelle Etage:                     " + l‰ngenAnpassung_EG + "neue Etage:                     " + neue_etage);
+            System.out.println("6.  aktuelle Balkon:                    " + l‰ngenAnpassung_BK + "neue Balkon:                    " + neue_balkon);
+            System.out.println("7.  aktuelle Fuﬂbodenheizung:           " + l‰ngenAnpassung_FBH + "neue Fuﬂbodenheizung:           " + neue_fuﬂbodenheizung);
+            System.out.println("8.  aktuelle Aussicht:                  " + l‰ngenAnpassung_AS + "neue Aussicht:                  " + neue_aussicht);
+            System.out.println("9.  aktuelle Adresse:                   " + aktuelle_adresse + ADR_Leerzeichen + "neue Adresse:                   " + neue_adresse);
+            System.out.println("10. aktueller Status:                   " + l‰ngenAnpassung_ST + "neuer Status:                   " + neue_status);
+            System.out.println("11. letztes Renovierungsdatum:          " + aktuelle_letztesRenovierungsdatum + LRDT_Leerzeichen + "ge‰ndertes Renovierungsdatum:   " + neue_letzesRenovierungsdatum);
+            System.out.println("12. aktuelle Renovierungsanzahl:        " + l‰ngenAnpassung_RA + "neue Renovierungsanzahl:        " + neue_renovierungsanzahl);
+            System.out.println("13. letzte Renvierungsdetails:          " + l‰ngenAnpassung_LRI + "ge‰nderte Renovierungsdetails:  " + neue_letzeRenovierung_Details);
+            System.out.println("14. aktuelle zugeordneten Mitarbeiter:  " + aktuelle_zugeordneterMitarbeiter + ZM_Leerzeichen + "neue zugeordneten Mitarbeiter:  " + neue_zugeordneterMitarbeiter);
+            System.out.println("15. Best‰tigen");
+            System.out.println("0.  Abbruch");
+            System.out.println("");
+
+            /*
+             * Die try-catch Klammer existiert f¸r nicht erw¸nschte Eingaben wie
+             * Zeichen, wo Zahlen erwartet werden.
+             */
+            try {
+                ‰nderung = t.nextInt();
+
+                // Abbruch
+                if (‰nderung == 0) {
+                    System.out.println("-------------------------------Bearbeitungsvorgang wurde abgebrochen!-------------------------------\n");
+                    bearbeitungsVorgang = false;
+                }
+
+                // Wohnungsnummer
+                if (‰nderung == 1) {
+                    auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(‰nderung);
+                    neueID = WohnungBearbeitenAction.JFrame_wohnungsnummer_auswahl;
+                }
+
+                // Zimmeranzahl
+                if (‰nderung == 2) {
+
+                    int eingabe = einlesen_Zahl(buttons, ‰nderung);
+                    if (eingabe == 0) {
+                    } else {
+                        neue_zimmeranzahl = eingabe;
+                    }
+                }
+
+                // Fl‰che
+                if (‰nderung == 3) {
+                    double eingabe = double_eingabe(buttons, ‰nderung);
+                    if (eingabe == 0) {
+                    } else {
+                        neue_fl‰che = eingabe;
+                    }
+                }
+
+                // Kosten
+                if (‰nderung == 4) {
+
+                    double eingabe = double_eingabe(buttons, ‰nderung);
+                    if (eingabe == 0) {
+                    } else {
+                        neue_kosten = eingabe;
+                    }
+                }
+
+                // Etage
+                if (‰nderung == 5) {
+                    int eingabe = einlesen_Zahl(buttons, ‰nderung);
+                    if (eingabe == 0) {
+                    } else {
+                        neue_etage = eingabe;
+                    }
+                }
+
+                // Balkon
+                if (‰nderung == 6) {
+
+                    System.out.println("Balkonauswahl: Geben Sie die Zahl ein: '1' = JA, '2' = NEIN, '0' = Abbruch!");
+                    int eingabe = einlesen_Zahl(buttons, ‰nderung);
+
+                    if (eingabe == 1) {
+                        neue_balkon = true;
+                    }
+                    if (eingabe == 2) {
+                        neue_balkon = false;
+                    }
+
+                    if (eingabe == 0) {
+                    }
+
+                    // Jede andere Eingabe f¸hrt zu einer Fehlermeldung.
+                    if (eingabe > 2) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit nicht vorhanden!\n");
+                    }
+                }
+
+                // Fuﬂbodenheizung
+                if (‰nderung == 7) {
+                    System.out.println("Fuﬂbodenheizungsauswahl: Geben Sie die Zahl ein: '1' = JA, '2' = NEIN, '0' = Abbruch!");
+                    int eingabe = einlesen_Zahl(buttons, ‰nderung);
+
+                    if (eingabe == 1) {
+                        neue_fuﬂbodenheizung = true;
+                    }
+                    if (eingabe == 2) {
+                        neue_fuﬂbodenheizung = false;
+                    }
+
+                    if (eingabe == 0) {
+                    }
+
+                    // Jede andere Eingabe f¸hrt zu einer Fehlermeldung.
+                    if (eingabe > 2) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit nicht vorhanden!\n");
+                    }
+                }
+
+                // Aussicht
+                if (‰nderung == 8) {
+                    Scanner q = new Scanner(System.in);
+                    System.out.println("W‰heln Sie ihre Wunschaussicht: '1' Park, '2' Spree, '3' Schienen, '4' Straﬂe");
+
+                    try {
+                        int eingabe = q.nextInt();
+                        if (eingabe == 0) {
+                        } else {
+
+                            if (eingabe == 1) {
+                                neue_aussicht = "Park";
+                            }
+                            if (eingabe == 2) {
+                                neue_aussicht = "Spree";
+                            }
+                            if (eingabe == 3) {
+                                neue_aussicht = "Schienen";
+                            }
+                            if (eingabe == 4) {
+                                neue_aussicht = "Straﬂe";
+                            }
+                            if (eingabe > 4) {
+                                System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit nicht vorhanden!\n");
+                            }
+
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+                    }
+                }
+
+                // Adresse
+                if (‰nderung == 9) {
+                    String[] auswahl = { "Straﬂe", "Hausnummer", "Platz", "Stadt" };
+                    int z‰hler = 1;
+                    String straﬂe = einlesen_Wort(auswahl, z‰hler);
+                    z‰hler = 2;
+                    int hausnummer = einlesen_Zahl(auswahl, z‰hler);
+                    z‰hler = 3;
+                    int platz = einlesen_Zahl(auswahl, z‰hler);
+                    z‰hler = 4;
+                    String stadt = einlesen_Wort(auswahl, z‰hler);
+
+                    if (straﬂe.equals("" + 0) || hausnummer == 0 || hausnummer == -100 || platz == 0 || platz == -100 || stadt.equals("" + 0)) {
+                    } else {
+                        neue_adresse = new Adresse(straﬂe, hausnummer, platz, stadt);
+                    }
+
+                }
+
+                // Status
+                if (‰nderung == 10) {
+                    Scanner q = new Scanner(System.in);
+                    System.out.println("W‰heln Sie den Status der Wohnung aus: '1' frei, '2' vermietet, '3' in Renovierung, '0' abbruch");
+
+                    try {
+                        int eingabe = q.nextInt();
+                        if (eingabe == 0) {
+                        }
+                        if (eingabe == 1) {
+                            neue_status = "frei";
+                        }
+                        if (eingabe == 2) {
+                            neue_status = "vermietet";
+                        }
+                        if (eingabe == 3) {
+                            neue_status = "in Renovierung";
+                        }
+                        if (eingabe > 3) {
+                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit nicht vorhanden!\n");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+                    }
+
+                }
+
+                // letztes Renovierungsdatum
+                if (‰nderung == 11) {
+
+                    String[] auswahl = { "Tag", "Monat", "Jahr" };
+                    int z‰hler = 1;
+                    int tag = einlesen_Zahl(auswahl, z‰hler);
+                    z‰hler = 2;
+                    int monat = einlesen_Zahl(auswahl, z‰hler);
+                    z‰hler = 3;
+                    int jahr = einlesen_Zahl(auswahl, z‰hler);
+
+                    if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
+                    } else {
+                        neue_letzesRenovierungsdatum = new Datum(tag, monat, jahr);
+                    }
+                }
+
+                // Renovierungsanzahl
+                if (‰nderung == 12) {
+                    int eingabe = einlesen_Zahl(buttons, ‰nderung);
+                    if (eingabe == 0) {
+                    } else {
+                        neue_renovierungsanzahl = eingabe;
+                    }
+                }
+
+                // letztes Renoveriungsdetail
+                if (‰nderung == 13) {
+                    String eingabe = einlesen_Wort(buttons, ‰nderung);
+                    if (eingabe.equals("" + 0)) {
+                    } else {
+                        neue_letzeRenovierung_Details = eingabe;
+                    }
+                }
+
+                // zugeordneter Mitarbeiter
+                if (‰nderung == 14) {
+                    auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(‰nderung);
+                    int mitarbeiterID = WohnungBearbeitenAction.JFrame_mitarbeiterID_auswahl;
+                    String name = "";
+                    String vorname = "";
+
+                    for (Mitarbeiter worker : MenuManager.workerList) {
+                        if (worker.getMitarbeiterID() == mitarbeiterID) {
+                            name = worker.getName();
+                            vorname = worker.getVorname();
+                        }
+                    }
+                    neue_zugeordneterMitarbeiter = new Mitarbeiter(mitarbeiterID, name, vorname);
+                }
+
+                // Bearbeitung abschlieﬂen
+                if (‰nderung == 15) {
+                    bearbeitungsVorgang = false;
+
+                    for (Wohnung flat : MenuManager.flatList) {
+
+                        /*
+                         * wenn beim bearbeiten eine Wohnung ausgew‰hlt wird,
+                         * die jemanden gehˆrt, dann wohnt der Mieter in der
+                         * WOhnung mit der eben angepassten Wohnungsnummer
+                         */
+                        for (Mieter owner : MenuManager.ownerList) {
+                            if (owner.getWohnungsnummer() == aktuelleID && neueID != aktuelleID) {
+                                owner.setWohnungsnummer(neueID);
+                            }
+                        }
+
+                        /*
+                         * Es werden nach dem Herausfinden, welcher Mietvertrag
+                         * so eben bearbeitet wurde, die einzelnen ver‰nderten
+                         * Attribute nun ge‰ndert.
+                         */
+                        if (zu_bearbeitende_wohnung == flat.getWohnungsID()) {
+                            flat.setWohnungsID(neueID);
+                            flat.setZimmeranzahl(neue_zimmeranzahl);
+                            flat.setFl‰che(neue_fl‰che);
+                            flat.setKosten(neue_kosten);
+                            flat.setEtage(neue_etage);
+                            flat.setBalkon(neue_balkon);
+                            flat.setFuﬂbodenheizung(neue_fuﬂbodenheizung);
+                            flat.setAdresse(neue_adresse);
+                            flat.setAussicht(neue_aussicht);
+                            flat.setLetztesRenovierungsdatum(neue_letzesRenovierungsdatum);
+                            flat.setRenovierungsanzahl(neue_renovierungsanzahl);
+                            flat.setLetzeRenovierung_Details(neue_letzeRenovierung_Details);
+                            flat.setZugeordneterMitarbeiter(neue_zugeordneterMitarbeiter);
+
+                        }
+                    }
+                }
+
+                // Eingabe > 15
+                if (‰nderung > 15) {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemˆglichkeit nicht vorhanden!\n");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+            }
+        }
+    }
+
+    /**
+     * Methode zur Auswahl eines bereits existierend Attributs durch Vorschlag jedes einzelnen Elements in einer ArrayList
+     *
+     * @param ‰nderung
+     *            = Z‰hler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
+     */
+    private void auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(final int ‰nderung) {
+        WohnungBearbeitenAction.window = false;
+        WohnungBearbeitenAction.bearbeitungsAuswahl_WohnungsID = -100;
+        WohnungBearbeitenAction.JFrame_wohnungsnummer_auswahl = -100;
+        WohnungBearbeitenAction.JFrame_mitarbeiterID_auswahl = -100;
+
+        JFrame meinRahmen = new JFrame();
+        meinRahmen.setSize(250, 250);
+        JPanel meinPanel = new JPanel();
+        meinRahmen.setLocationRelativeTo(null);
+
+        JComboBox combo2 = new JComboBox();
+
+        if (‰nderung == -99) {
+            meinRahmen.setTitle("Wohnungs-ID");
+            JLabel frage = new JLabel("Welche Wohnung wird bearbeitet?");
+            meinPanel.add(frage);
+            for (Wohnung flat : MenuManager.flatList) {
+                combo2.addItem(flat.getWohnungsID());
+            }
+        }
+
+        if (‰nderung == 1) {
+            meinRahmen.setTitle("Wohngungs ID");
+            JLabel frage = new JLabel("Welche Wohnung soll ausgew‰hlt werden?");
+            meinPanel.add(frage);
+
+            for (Wohnung flat : MenuManager.flatList) {
+                combo2.addItem(flat.getWohnungsID());
+            }
+        }
+
+        if (‰nderung == 14) {
+            meinRahmen.setTitle("Mitarbeiter ID");
+            JLabel frage = new JLabel("Welcher Mitarbeiter soll ausgew‰hlt werden?");
+            meinPanel.add(frage);
+            for (Mitarbeiter worker : MenuManager.workerList) {
+                combo2.addItem(worker.getMitarbeiterID());
+            }
+        }
+
+        meinRahmen.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                WohnungBearbeitenAction.window = true;
+            }
+        });
+
+        ActionListener cbActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                if (‰nderung == -99) {
+                    WohnungBearbeitenAction.bearbeitungsAuswahl_WohnungsID = (int) combo2.getSelectedItem();
+                }
+                if (‰nderung == 1) {
+                    WohnungBearbeitenAction.JFrame_wohnungsnummer_auswahl = (int) combo2.getSelectedItem();
+                }
+                if (‰nderung == 14) {
+                    WohnungBearbeitenAction.JFrame_mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
+                }
+            }
+        };
+        meinPanel.add(combo2);
+        meinRahmen.add(meinPanel, BorderLayout.SOUTH);
+        meinRahmen.pack();
+        meinRahmen.setVisible(true);
+        while (WohnungBearbeitenAction.window == false) {
+            combo2.addActionListener(cbActionListener);
+        }
+
+    }
+
+    /**
+     * Methode zum Einlesen einer Zahl vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "ƒnderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param z‰hler
+     *            = welches "ƒnderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return die eingelesene Zahl
+     */
+    private int einlesen_Zahl(final String[] auswahl, final int z‰hler) {
+        Scanner s = new Scanner(System.in);
+        int zahl = -100;
+        try {
+
+            do {
+                System.out.println("Geben Sie ein: " + auswahl[z‰hler - 1]);
+                zahl = s.nextInt();
+                if (zahl < 0) {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                }
+            } while (zahl < 0);
+        } catch (InputMismatchException e) {
+            System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+        }
+        return zahl;
+    }
+
+    /**
+     * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "ƒnderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param z‰hler
+     *            = welches "ƒnderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return das eingelesene Wort
+     */
+    private String einlesen_Wort(final String[] auswahl, final int z‰hler) {
+        System.out.println("Erstellen: " + auswahl[z‰hler - 1]);
+        Scanner s = new Scanner(System.in);
+        String wort = s.nextLine();
+        return wort;
+    }
+
+    /**
+     * Methode zum Anpassen der L‰nge des Datums bei der Ausgabe auf der Konsole.
+     */
+    private String l‰nge_anpassen_Datum(final Datum a_GD) {
+
+        int abzug = 0;
+
+        String leerzeichen = "";
+
+        if (a_GD != null) {
+
+            String jahr = "" + a_GD.getJahr();
+            int l_J = jahr.length();
+
+            String monat = "" + a_GD.getMonat();
+            int l_M = monat.length();
+
+            String tag = "" + a_GD.getTag();
+            int l_T = tag.length();
+
+            abzug = l_J + l_M + l_T + 2; // +2 f¸r die Punkte zwischen den
+                                         // Komponenten
+        } else {
+            abzug = 4;
+        }
+        if (abzug < 50) {
+            while (abzug < 50) {
+                leerzeichen = leerzeichen + " ";
+                abzug += 1;
+            }
+        }
+        return leerzeichen;
+    }
+
+    /**
+     * Methode zum Anpassen der L‰nge des Attributes (auﬂer Datum) bei der Ausgabe auf der Konsole.
+     *
+     * @param wort
+     *            = mitgegebenes Attribut
+     * @return das Attribut mit den anschlieﬂenden Leerzeichen
+     */
+    private String l‰nge_anpassen(String wort) {
+
+        int abzug = wort.length();
+        if (wort.length() < 50) {
+            while (wort.length() < 50) {
+                wort = wort + " ";
+            }
+        }
+        return wort;
+    }
+
+    public double double_eingabe(final String[] buttons, final int ok) {
+
+        Scanner s = new Scanner(System.in);
+        double zahl = -100.00;
+        try {
+
+            do {
+                System.out.println("Erstellen: " + buttons[ok - 1]);
+                zahl = s.nextDouble();
+                if (zahl < 0) {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                }
+            } while (zahl < 0);
+        } catch (InputMismatchException e) {
+            System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+        }
+        return zahl;
+    }
+
+    private String l‰nge_anpassen_Adresse(final Adresse a_A) {
+
+        int abzug = 0;
+
+        String leerzeichen = "";
+
+        if (a_A != null) {
+
+            String hausnummer = "" + a_A.getHausnummer();
+            int l_HN = hausnummer.length();
+
+            String platz = "" + a_A.getPlz();
+            int l_P = platz.length();
+
+            String stadt = a_A.getStadt();
+            int l_ST = stadt.length();
+
+            String straﬂe = a_A.getStrasse();
+            int l_SR = straﬂe.length();
+
+            abzug = l_HN + l_P + l_SR + l_ST + 3; // +3 f¸r die Leerzeichen
+                                                  // zwischen den Komponenten
+        } else {
+            abzug = 4;
+        }
+        if (abzug < 50) {
+            while (abzug < 50) {
+                leerzeichen = leerzeichen + " ";
+                abzug += 1;
+            }
+        }
+        return leerzeichen;
+    }
+
+    private String l‰nge_anpassen_Mitarbeiter(final Mitarbeiter a_ZM) {
+
+        int abzug = 0;
+
+        String leerzeichen = "";
+
+        if (a_ZM != null) {
+
+            String ID = "" + a_ZM.getMitarbeiterID();
+            int l_ID = ID.length();
+
+            String name = "" + a_ZM.getName();
+            int l_N = name.length();
+
+            String vorname = a_ZM.getVorname();
+            int l_VN = vorname.length();
+
+            abzug = l_ID + l_N + l_VN + 2; // +2 f¸r die Leerzeichen
+                                           // zwischen den Komponenten
+
+        } else {
+            abzug = 4;
+        }
+        if (abzug < 50) {
+            while (abzug < 50) {
+                leerzeichen = leerzeichen + " ";
+                abzug += 1;
+            }
+        }
+        return leerzeichen;
+    }
 }

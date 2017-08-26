@@ -3,6 +3,7 @@ package objekte;
 import java.io.Serializable;
 
 import hilfsklassen.Adresse;
+import hilfsklassen.Datum;
 
 public class Wohnung implements Serializable {
 
@@ -18,13 +19,14 @@ public class Wohnung implements Serializable {
     private String aussicht;
     private Adresse adresse;
     private String status;
-    private String letztesRenovierungsdatum;
+    private Datum letztesRenovierungsdatum;
     private int renovierungsanzahl;
     private String letzeRenovierung_Details;
-    //	private String handwerkerauftrag;
+    private Handwerkerauftrag handwerkerauftrag;
     private Mitarbeiter zugeordneterMitarbeiter;
 
-    public Wohnung(final int wohnungsID, final int zimmeranzahl, final double fl‰che, final double kosten, final int etage, final boolean balkon, final boolean fuﬂbodenheizung, final String aussicht, final Adresse adresse, final String status, final String letztesRenovierungsdatum, final int renovierungsanzahl, final String letzeRenovierung_Details, final Mitarbeiter zugeordneterMitarbeiter) {
+    public Wohnung(final int wohnungsID, final int zimmeranzahl, final double fl‰che, final double kosten, final int etage, final boolean balkon, final boolean fuﬂbodenheizung, final String aussicht, final Adresse adresse, final String status, final Datum letztesRenovierungsdatum, final int renovierungsanzahl, final String letzeRenovierung_Details, final Handwerkerauftrag handwerkerauftrag,
+            final Mitarbeiter zugeordneterMitarbeiter) {
         this.wohnungsID = wohnungsID;
         this.zimmeranzahl = zimmeranzahl;
         this.fl‰che = fl‰che;
@@ -38,6 +40,7 @@ public class Wohnung implements Serializable {
         this.letztesRenovierungsdatum = letztesRenovierungsdatum;
         this.renovierungsanzahl = renovierungsanzahl;
         this.letzeRenovierung_Details = letzeRenovierung_Details;
+        this.handwerkerauftrag = handwerkerauftrag;
         this.zugeordneterMitarbeiter = zugeordneterMitarbeiter;
     }
 
@@ -121,11 +124,11 @@ public class Wohnung implements Serializable {
         this.status = status;
     }
 
-    public String getLetztesRenovierungsdatum() {
+    public Datum getLetztesRenovierungsdatum() {
         return this.letztesRenovierungsdatum;
     }
 
-    public void setLetztesRenovierungsdatum(final String letztesRenovierungsdatum) {
+    public void setLetztesRenovierungsdatum(final Datum letztesRenovierungsdatum) {
         this.letztesRenovierungsdatum = letztesRenovierungsdatum;
     }
 
@@ -151,6 +154,14 @@ public class Wohnung implements Serializable {
 
     public void setZugeordneterMitarbeiter(final Mitarbeiter zugeordneterMitarbeiter) {
         this.zugeordneterMitarbeiter = zugeordneterMitarbeiter;
+    }
+
+    public Handwerkerauftrag getHandwerkerauftrag() {
+        return this.handwerkerauftrag;
+    }
+
+    public void setHandwerkerauftrag(final Handwerkerauftrag handwerkerauftrag) {
+        this.handwerkerauftrag = handwerkerauftrag;
     }
 
 }
