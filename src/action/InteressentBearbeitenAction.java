@@ -31,20 +31,26 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Interessent bearbeiten ________________________________________");
+        System.out.println("________________________________________ Interessent bearbeiten ________________________________________\n");
 
+        InteressentBearbeitenAction.bearbeitungsAuswahl_interessentenID = -100;
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
          * bearbeitenden Attributs.
          */
         int änderung = -99;
 
-        // Ausgabe aller Auftrag-IDs zur einfacheren Auswahl
-        auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
+        // Ausgabe aller Interessenten-IDs zur einfacheren Auswahl
+        JComboBox_optimierte_Auswahl(änderung);
 
+        // Variable enthält die ID des zu bearbeitenden Interessenten
         int zu_bearbeitenden_interessent = InteressentBearbeitenAction.bearbeitungsAuswahl_interessentenID;
 
         boolean bearbeitungsVorgang = true;
+        /*
+        * Array beeinhaltet alle Attribute, die verändert werden können und
+        * dient zur Ausgabe durch Zugriff auf deren Index
+        */
         String[] kategorie = { "Interessenten ID", "Name", "Vorname", "Geburtsdatum", "E-Mail", "Adresse", "Telefonnummer", "Rolle" };
 
         /*
@@ -62,29 +68,29 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
          * allgemeine Variablen alte = aktuelle Werte neue = neue/veränderten
          * Werte
          */
-        int aktuelleInteressentenID = 0;
-        int neueInteressentenID = 0;
+        int aktuelleInteressentenID = -100;
+        int neueInteressentenID = -100;
 
-        String aktuellerName = "";
-        String neuerName = "";
+        String aktuellerName = "-";
+        String neuerName = "-";
 
-        String aktuellerVorname = "";
-        String neuerVorname = "";
+        String aktuellerVorname = "-";
+        String neuerVorname = "-";
 
         Datum aktuellesGeburtsdatum = null;
         Datum neuesGeburtsdatum = null;
 
-        String aktuelleEMail = "";
-        String neueEMail = "";
+        String aktuelleEMail = "-";
+        String neueEMail = "-";
 
         Adresse aktuelleAdresse = null;
         Adresse neueAdresse = null;
 
-        String aktuelleTelefon = "";
-        String neueTelefon = "";
+        String aktuelleTelefon = "-";
+        String neueTelefon = "-";
 
-        String aktuelleRolle = "";
-        String neueRolle = "";
+        String aktuelleRolle = "-";
+        String neueRolle = "-";
 
         /*
          * Variablen enthalten die Leerzeichen, die nach den Objekten (Daten)
@@ -139,13 +145,15 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                 längenAnpassung_Vorname = aktuellerVorname;
                 längenAnpassung_Vorname = länge_anpassen(längenAnpassung_Vorname);
 
-                GD_Leerzeichen = länge_anpassen_Datum(aktuellesGeburtsdatum);
-
+                if (aktuellesGeburtsdatum != null) {
+                    GD_Leerzeichen = länge_anpassen_Datum(aktuellesGeburtsdatum);
+                }
                 längenAnpassung_EMail = aktuelleEMail;
                 längenAnpassung_EMail = länge_anpassen(längenAnpassung_EMail);
 
-                ADR_Leerzeichen = länge_anpassen_Adresse(aktuelleAdresse);
-
+                if (aktuelleAdresse != null) {
+                    ADR_Leerzeichen = länge_anpassen_Adresse(aktuelleAdresse);
+                }
                 längenAnpassung_Telefonnummer = aktuelleTelefon;
                 längenAnpassung_Telefonnummer = länge_anpassen(längenAnpassung_Telefonnummer);
 
@@ -196,7 +204,6 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
 
                     int eingabe = einlesen_Zahl(kategorie, änderung);
                     if (eingabe == 0) {
-
                     } else {
 
                         int vorhanden = 0;
@@ -238,7 +245,6 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                 if (änderung == 2) {
                     String eingabe = einlesen_Wort(kategorie, änderung);
                     if (eingabe.equals("" + 0)) {
-                        neuerName = aktuellerName;
                     } else {
                         neuerName = eingabe;
                     }
@@ -248,7 +254,6 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                 if (änderung == 3) {
                     String eingabe = einlesen_Wort(kategorie, änderung);
                     if (eingabe.equals("" + 0)) {
-                        neuerVorname = aktuellerVorname;
                     } else {
                         neuerVorname = eingabe;
                     }
@@ -265,7 +270,6 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                 if (änderung == 5) {
                     String eingabe = einlesen_Wort(kategorie, änderung);
                     if (eingabe.equals("" + 0)) {
-                        neueEMail = aktuelleEMail;
                     } else {
                         neueEMail = eingabe;
                     }
@@ -288,7 +292,6 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                      * auszulassen, dann bleibt es beim unveränderten Datum.
                      */
                     if (straße.equals("" + 0) || hausnummer == 0 || hausnummer == -100 || platz == 0 || platz == -100 || stadt.equals("" + 0)) {
-                        neueAdresse = aktuelleAdresse;
                     } else {
                         neueAdresse = new Adresse(straße, hausnummer, platz, stadt);
                     }
@@ -298,7 +301,6 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                 if (änderung == 7) {
                     String eingabe = einlesen_Wort(kategorie, änderung);
                     if (eingabe.equals("" + 0)) {
-                        neueTelefon = aktuelleTelefon;
                     } else {
                         neueTelefon = eingabe;
                     }
@@ -326,7 +328,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                             neueRolle = "Delete";
                         }
                         if (eingabe > 3) {
-                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                         }
                     } catch (InputMismatchException e) {
                         System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
@@ -408,7 +410,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                 }
                 // Eingabe > 9
                 if (änderung > 9) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
@@ -425,7 +427,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
      */
     public Datum Datum_Eingabe(final Datum aktuellesDatum) {
 
-        System.out.println("Eingabe des Geburtsdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+        System.out.println("Eingabe des Eingangsdatum: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
         String[] auswahl = { "Jahr", "Monat", "Tag" };
 
         Datum neuesDatum = null;
@@ -439,7 +441,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
         do {
             monat = einlesen_Zahl(auswahl, zähler);
             if (monat > 12) {
-                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!\n");
             }
         } while (monat > 12);
 
@@ -449,7 +451,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
             tag = einlesen_Zahl(auswahl, zähler);
             if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
                 if (tag > 31) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -457,7 +459,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
 
             if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
                 if (tag > 30) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -465,7 +467,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
 
             if (monat == 2) {
                 if (tag > 29) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -490,10 +492,9 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_AuftragsID_Wohnung_MitarbeiterID(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         InteressentBearbeitenAction.window = false;
 
-        InteressentBearbeitenAction.such_wohnung = -100;
         JFrame meinRahmen = new JFrame();
 
         meinRahmen.setSize(250, 250);
@@ -536,6 +537,15 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
 
     }
 
+    /**
+     * Methode zum Einlesen einer Zahl vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return die eingelesene Zahl
+     */
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
         Scanner s = new Scanner(System.in);
         int zahl = -100;
@@ -545,7 +555,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                 System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
                 zahl = s.nextInt();
                 if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {
@@ -554,12 +564,25 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
         return zahl;
     }
 
+    /**
+     * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return das eingelesene Wort
+     */
     private String einlesen_Wort(final String[] auswahl, final int zähler) {
-        System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+        System.out.println("Erstellen: " + auswahl[zähler - 1]);
         Scanner s = new Scanner(System.in);
         String wort = s.nextLine();
         return wort;
     }
+
+    /**
+     * Methode zum Anpassen der Länge des Datums bei der Ausgabe auf der Konsole.
+     */
 
     private String länge_anpassen_Datum(final Datum a_GD) {
 
@@ -585,6 +608,14 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
         return leerzeichen;
     }
 
+    /**
+     * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der Ausgabe auf der Konsole.
+     *
+     * @param wort
+     *            = mitgegebenes Attribut
+     * @return das Attribut mit den anschließenden Leerzeichen
+     */
+
     private String länge_anpassen(String wort) {
 
         int abzug = wort.length();
@@ -595,6 +626,10 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
         }
         return wort;
     }
+
+    /**
+     * Methode zum Anpassen der Länge der Adresse bei der Ausgabe auf der Konsole.
+     */
 
     private String länge_anpassen_Adresse(final Adresse a_A) {
 

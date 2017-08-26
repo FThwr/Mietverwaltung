@@ -21,6 +21,8 @@ public class Test {
 
         // MenuManager m = new MenuManager();
 
+        //    new File("..\\menumanager.dat").delete();
+
         MenuManager m;
         try {
             m = MenuManager.laden();
@@ -55,8 +57,8 @@ public class Test {
         //       //Wohnungen
         m.add(new Wohnung(301, 4, 80.60, 1100.00, 1, true, true, "Park", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22, 1, 2017), 3, "Rohre neu verlegt", new Handwerkerauftrag(""), new Mitarbeiter(6, "Menz", "Max")));
         m.add(new Wohnung(302, 6, 80.60, 1100.00, 4, true, true, "Park", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22, 1, 2017), 3, "Rohre neu verlegt", new Handwerkerauftrag(""), new Mitarbeiter(2, "Tsakonas", "Felicia")));
-        //      m.add(new Wohnung (303, 6, 80.60, 1100.00, 3, true, true, "Spree", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (6, "Menz", "Max")));
-        //      m.add(new Wohnung (304, 3, 80.60, 1100.00, 1, true, true, "Schienen", new Adresse ("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22,1,2017), 3, "Rohre neu verlegt", new Handwerkerauftrag (""), new Mitarbeiter (2, "Tsakonas", "Felicia")));
+        m.add(new Wohnung(303, 6, 80.60, 1100.00, 3, true, true, "Spree", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22, 1, 2017), 3, "Rohre neu verlegt", new Handwerkerauftrag(""), new Mitarbeiter(6, "Menz", "Max")));
+        m.add(new Wohnung(304, 3, 80.60, 1100.00, 1, true, true, "Schienen", new Adresse("Kleeweg", 22, 13357, "Berlin, Wedding"), "frei", new Datum(22, 1, 2017), 3, "Rohre neu verlegt", new Handwerkerauftrag(""), new Mitarbeiter(2, "Tsakonas", "Felicia")));
         //
         //      //
         //      m.add(new Handwerkerauftrag("H-404", 303, 1, "Kaputte Wand", "in Bearbeitung", new Datum (3, 12, 2016), new Datum (0,2,2002)));

@@ -10,7 +10,7 @@ public class AktiveHandwerkeraufträgeAnzeigenAction extends MenuManager implemen
     @Override
     public void action() {
 
-        System.out.println("________________________________________ aktive Handwerkerauftrag anzeigen ________________________________________");
+        System.out.println("________________________________________ aktive Handwerkerauftrag anzeigen ________________________________________\n");
 
         /*
          * Jedes Element der ArrayList 'repairList' wird ausgelesen z.B. die
@@ -20,13 +20,30 @@ public class AktiveHandwerkeraufträgeAnzeigenAction extends MenuManager implemen
          */
         for (Handwerkerauftrag repair : MenuManager.repairList) {
 
-            System.out.println("Auftrags ID: " + repair.getAuftragsID());
-            System.out.println("Wohnungs ID: " + repair.getWohnungsID());
-            System.out.println("Mitarbeiter ID: " + repair.getMitarbeiterID());
+            if (repair.getWohnungsID() != -100) {
+                System.out.println("Auftrags ID: " + repair.getAuftragsID());
+                System.out.println("Wohnungs ID: " + repair.getWohnungsID());
+            } else {
+                System.out.println("Wohnungs ID: " + "-");
+            }
+            if (repair.getMitarbeiterID() != -100) {
+                System.out.println("Mitarbeiter ID: " + repair.getMitarbeiterID());
+            } else {
+                System.out.println("Mitarbeiter ID: " + "-");
+            }
             System.out.println("Mängelbeschreibung: " + repair.getMängelbeschreibung());
+
             System.out.println("Status: " + repair.getStatus());
-            System.out.println("Eingangsdatum: " + repair.getEingangsdatum());
-            System.out.println("Fertigstellungsdatum: " + repair.getFertigstellungsDatum());
+            if (repair.getEingangsdatum() != null) {
+                System.out.println("Eingangsdatum: " + repair.getEingangsdatum());
+            } else {
+                System.out.println("Eingangsdatum: " + "--.--.----");
+            }
+            if (repair.getFertigstellungsDatum() != null) {
+                System.out.println("Fertigstellungsdatum: " + repair.getFertigstellungsDatum());
+            } else {
+                System.out.println("Fertigstellungsdatum: " + "--.--.----");
+            }
             System.out.println("");
         }
 

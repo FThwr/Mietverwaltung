@@ -36,7 +36,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
         int änderung = -99;
 
         // Ausgabe aller Mitarbeiter-IDs zur einfacheren Auswahl
-        auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+        JComboBox_optimierte_Auswahl(änderung);
 
         // Variable enthält die ID des zu bearbeitenden Mitarbeiters
         int zu_bearbeitenden_mitarbeiter = MitarbeiterBearbeitenAction.bearbeitungsAuswahl_MitarbeiterID;
@@ -66,21 +66,20 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
         int aktuelleMitarbeiterID = -100;
         int neueMitarbeiterID = -100;
 
-        String aktuellerName = "";
-        String neuerName = "";
+        String aktuellerName = "-";
+        String neuerName = "-";
 
-        String aktuellerVorname = "";
-        String neuerVorname = "";
+        String aktuellerVorname = "-";
+        String neuerVorname = "-";
 
-        String aktuellerBenutzername = "";
-        String neuerBenutzername = "";
+        String aktuellerBenutzername = "-";
+        String neuerBenutzername = "-";
 
-        String aktuellesPasswort = "";
-        String neuesPasswort = "";
+        String aktuellesPasswort = "-";
+        String neuesPasswort = "-";
 
         /*
-         * Für jedes Element in der ArrayList 'workerList', welche alle aktiven
-         * Mitarbeiter beeinhaltet, wir zeurst das Objekt in der ArrayList
+         * Für jedes Element in der Mitarbeiterliste wird zeurst das Objekt in der ArrayList
          * gesucht, welche der eben ausgewählten Mitarbeiter-ID entspricht. Es
          * werden neue Variablen angelegt, welche die einzelnen Werte des
          * Objekts beeinhalten.
@@ -306,7 +305,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         MitarbeiterBearbeitenAction.window = false;
         MitarbeiterBearbeitenAction.bearbeitungsAuswahl_MitarbeiterID = -100;
 

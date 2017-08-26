@@ -23,15 +23,15 @@ import objekte.Wohnung;
 
 public class MietvertragErstellenAction extends MenuManager implements Action, Serializable {
 
-    static int JFrame_wohnungsnummer_auswahl;
-    static int JFRame_mieterID_auswahl;
-    static int JFrame_mitarbeiterID_auswahl;
+    static int wohnungsnummer_auswahl;
+    static int mieterID_auswahl;
+    static int mitarbeiterID_auswahl;
     static boolean window = false;
 
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Mietvertrag erstellen ________________________________________");
+        System.out.println("________________________________________ Mietvertrag erstellen ________________________________________\n");
 
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
@@ -160,20 +160,20 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
 
                 // Wohnungsnummer
                 if (änderung == 2) {
-                    auswahl_VertragsID_Wohnung_MitarbeiterID(änderung);
-                    wohnungsID = MietvertragErstellenAction.JFrame_wohnungsnummer_auswahl;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    wohnungsID = MietvertragErstellenAction.wohnungsnummer_auswahl;
                 }
 
                 // Mieter-ID
                 if (änderung == 3) {
-                    auswahl_VertragsID_Wohnung_MitarbeiterID(änderung);
-                    kundenID = MietvertragErstellenAction.JFRame_mieterID_auswahl;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    kundenID = MietvertragErstellenAction.mieterID_auswahl;
                 }
 
                 // Mitarbeiter-ID
                 if (änderung == 4) {
-                    auswahl_VertragsID_Wohnung_MitarbeiterID(änderung);
-                    mitarbeiterID = MietvertragErstellenAction.JFrame_mitarbeiterID_auswahl;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    mitarbeiterID = MietvertragErstellenAction.mitarbeiterID_auswahl;
                 }
 
                 // Mietbeginn
@@ -191,6 +191,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
                 // Erstellen abschließen
                 if (änderung == 7) {
                     erstellVorgang = false;
+                    System.out.println("Mietvertrag wurde erfolgreich angelegt!");
 
                     MenuManager.contractList.add(new Mietvertrag(mietvertragID, wohnungsID, kundenID, mitarbeiterID, mietbeginn, mietende, status));
 
@@ -246,11 +247,11 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_VertragsID_Wohnung_MitarbeiterID(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         MietvertragErstellenAction.window = false;
-        MietvertragErstellenAction.JFrame_mitarbeiterID_auswahl = -100;
-        MietvertragErstellenAction.JFRame_mieterID_auswahl = -100;
-        MietvertragErstellenAction.JFrame_wohnungsnummer_auswahl = -100;
+        MietvertragErstellenAction.mitarbeiterID_auswahl = -100;
+        MietvertragErstellenAction.mieterID_auswahl = -100;
+        MietvertragErstellenAction.wohnungsnummer_auswahl = -100;
         JFrame meinRahmen = new JFrame();
 
         meinRahmen.setSize(250, 250);
@@ -302,13 +303,13 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (änderung == 2) {
-                    MietvertragErstellenAction.JFrame_wohnungsnummer_auswahl = (int) combo2.getSelectedItem();
+                    MietvertragErstellenAction.wohnungsnummer_auswahl = (int) combo2.getSelectedItem();
                 }
                 if (änderung == 3) {
-                    MietvertragErstellenAction.JFRame_mieterID_auswahl = (int) combo2.getSelectedItem();
+                    MietvertragErstellenAction.mieterID_auswahl = (int) combo2.getSelectedItem();
                 }
                 if (änderung == 4) {
-                    MietvertragErstellenAction.JFrame_mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
+                    MietvertragErstellenAction.mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
                 }
 
             }
@@ -332,7 +333,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
      */
     public Datum Datum_Eingabe(final Datum aktuellesDatum) {
 
-        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!\n");
         String[] auswahl = { "Jahr", "Monat", "Tag" };
 
         Datum neuesDatum = null;
@@ -346,7 +347,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
         do {
             monat = einlesen_Zahl(auswahl, zähler);
             if (monat > 12) {
-                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!\n");
             }
         } while (monat > 12);
 
@@ -356,7 +357,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
             tag = einlesen_Zahl(auswahl, zähler);
             if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
                 if (tag > 31) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -364,7 +365,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
 
             if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
                 if (tag > 30) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -372,7 +373,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
 
             if (monat == 2) {
                 if (tag > 29) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }

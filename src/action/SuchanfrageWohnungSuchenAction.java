@@ -33,9 +33,10 @@ public class SuchanfrageWohnungSuchenAction extends MenuManager implements Actio
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Suchanfrage: Wohnung suchen ________________________________________");
+        System.out.println("________________________________________ Suchanfrage: Wohnung suchen ________________________________________\n");
 
-        SuchanfrageWohnungSuchenAction.such_kundenID = 0;
+        SuchanfrageWohnungSuchenAction.such_kundenID = -100;
+        SuchanfrageWohnungSuchenAction.such_mitarbeiterID = -100;
 
         boolean suchVorgang = true;
 
@@ -77,12 +78,36 @@ public class SuchanfrageWohnungSuchenAction extends MenuManager implements Actio
             Scanner s = new Scanner(System.in);
             System.out.println("............................... Wählen Sie die zu suchende Eigenschaft aus! ...............................");
             System.out.println("........... Aktuelle Suche nach: ...........");
-            System.out.println("   Mitarbeiter-ID:  " + SuchanfrageWohnungSuchenAction.such_mitarbeiterID);
-            System.out.println("   Kunden-ID:       " + SuchanfrageWohnungSuchenAction.such_kundenID);
-            System.out.println("1. Zimmeranzahl:    " + zimmeranzahl_rela + such_zimmeranzahl);
-            System.out.println("2. Fläche:          " + fläche_rela + such_fläche);
-            System.out.println("3. Kosten:          " + kosten_rela + such_kosten);
-            System.out.println("4. Etage:           " + etage_rela + such_etage);
+            if (SuchanfrageWohnungSuchenAction.such_mitarbeiterID != -100) {
+                System.out.println("   Mitarbeiter-ID:  " + SuchanfrageWohnungSuchenAction.such_mitarbeiterID);
+            } else {
+                System.out.println("   Mitarbeiter-ID:  " + "-");
+            }
+            if (SuchanfrageWohnungSuchenAction.such_kundenID != -100) {
+                System.out.println("   Kunden-ID:       " + SuchanfrageWohnungSuchenAction.such_kundenID);
+            } else {
+                System.out.println("   Kunden-ID:       " + "-");
+            }
+            if (such_zimmeranzahl != -100) {
+                System.out.println("1. Zimmeranzahl:    " + zimmeranzahl_rela + such_zimmeranzahl);
+            } else {
+                System.out.println("1. Zimmeranzahl:    " + "-");
+            }
+            if (such_fläche != -100) {
+                System.out.println("2. Fläche:          " + fläche_rela + such_fläche);
+            } else {
+                System.out.println("2. Fläche:          " + "-");
+            }
+            if (such_kosten != -100) {
+                System.out.println("3. Kosten:          " + kosten_rela + such_kosten);
+            } else {
+                System.out.println("3. Kosten:          " + "-");
+            }
+            if (such_etage != -100) {
+                System.out.println("4. Etage:           " + etage_rela + such_etage);
+            } else {
+                System.out.println("4. Etage:           " + "-");
+            }
             System.out.println("5. Balkon:          " + such_balkon);
             System.out.println("6. Fußbodenheizung: " + such_fußbodenheizung);
             System.out.println("7. Aussicht:        " + such_aussicht);
@@ -343,25 +368,59 @@ public class SuchanfrageWohnungSuchenAction extends MenuManager implements Actio
 
                     for (Wohnung flat : erg) {
 
-                        System.out.println("Wohnungsnummer:                  " + flat.getWohnungsID());
-                        System.out.println("Zimmeranzahl:                    " + flat.getZimmeranzahl());
-                        System.out.println("Fläche:                          " + flat.getFläche());
-                        System.out.println("Kosten:                          " + flat.getKosten());
-                        System.out.println("Etage:                           " + flat.getEtage());
-                        System.out.println("Balkon:                          " + flat.getBalkon());
-                        System.out.println("Fußbodenheizung:                 " + flat.getFußbodenheizung());
-                        System.out.println("Aussicht:                        " + flat.getAussicht());
-                        System.out.println("Adresse:                         " + flat.getAdresse());
-                        System.out.println("Status:                          " + flat.getStatus());
-                        System.out.println("letztes Renovierungsdatum:       " + flat.getLetztesRenovierungsdatum());
-                        System.out.println("Renovierungsanzahl:              " + flat.getRenovierungsanzahl());
-                        System.out.println("letze Renovierungdetails:        " + flat.getLetzeRenovierung_Details());
-                        System.out.println("Handwerkerauftrag:               " + flat.getHandwerkerauftrag().getAuftragsID());
-                        System.out.println("zugeordneter Mitarbeiter:        " + flat.getZugeordneterMitarbeiter().getName());
+                        if (flat.getWohnungsID() != -100) {
+                            System.out.println("Wohnungsnummer: " + flat.getWohnungsID());
+                        } else {
+                            System.out.println("Wohnungsnummer: " + "-");
+                        }
+                        if (flat.getZimmeranzahl() != -100) {
+                            System.out.println("Zimmeranzahl: " + flat.getZimmeranzahl());
+                        } else {
+                            System.out.println("Zimmeranzahl: " + "-");
+                        }
+                        if (flat.getFläche() != -100) {
+                            System.out.println("Fläche: " + flat.getFläche());
+                        } else {
+                            System.out.println("Fläche: " + "-");
+                        }
+                        if (flat.getKosten() != -100) {
+                            System.out.println("Kosten: " + flat.getKosten());
+                        } else {
+                            System.out.println("Kosten: " + "-");
+                        }
+                        if (flat.getEtage() != -100) {
+                            System.out.println("Etage: " + flat.getEtage());
+                        } else {
+                            System.out.println("Etage: " + "-");
+                        }
+                        System.out.println("Balkon: " + flat.getBalkon());
+                        System.out.println("Fußbodenheizung: " + flat.getFußbodenheizung());
+                        System.out.println("Aussicht: " + flat.getAussicht());
+                        if (flat.getAdresse() != null) {
+                            System.out.println("Adresse: " + flat.getAdresse());
+                        } else {
+                            System.out.println("Adresse: " + "-");
+                        }
+                        System.out.println("Status: " + flat.getStatus());
+                        if (flat.getLetztesRenovierungsdatum() != null) {
+                            System.out.println("letztes Renovierungsdatum: " + flat.getLetztesRenovierungsdatum());
+                        } else {
+                            System.out.println("letztes Renovierungsdatum: " + "--.--.----");
+                        }
+                        if (flat.getRenovierungsanzahl() != -100) {
+                            System.out.println("Renovierungsanzahl: " + flat.getRenovierungsanzahl());
+                        } else {
+                            System.out.println("Renovierungsanzahl: " + "-");
+                        }
+                        System.out.println("letze Renovierungdetails: " + flat.getLetzeRenovierung_Details());
+                        System.out.println("Handwerkerauftrag-ID: " + flat.getHandwerkerauftrag().getAuftragsID());
+                        if (flat.getZugeordneterMitarbeiter() != null) {
+                            System.out.println("zugeordneter Mitarbeiter: " + flat.getZugeordneterMitarbeiter().getName());
+                        } else {
+                            System.out.println("zugeordneter Mitarbeiter: " + "-");
+                        }
                         System.out.println("");
-
                     }
-
                 }
                 if (eingabe > 8) {
                     System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");

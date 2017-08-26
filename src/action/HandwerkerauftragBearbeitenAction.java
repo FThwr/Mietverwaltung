@@ -23,15 +23,14 @@ import objekte.Wohnung;
 public class HandwerkerauftragBearbeitenAction extends MenuManager implements Action, Serializable {
 
     static String bearbeitungsAuswahl_handwerkerauftragID;
-    static int such_wohnung;
-    static int such_mitarbeiterID;
-    static String neue_handwerkerauftragID;
+    static int neue_wohnung;
+    static int neue_mitarbeiterID;
     static boolean window = false;
 
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Handwerkerauftrag bearbeiten ________________________________________");
+        System.out.println("________________________________________ Handwerkerauftrag bearbeiten ________________________________________\n");
 
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
@@ -40,13 +39,17 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
         int änderung = -99;
 
         // Ausgabe aller Auftrag-IDs zur einfacheren Auswahl
-        auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
+        JComboBox_optimierte_Auswahl(änderung);
 
         // Variable enthält die ID des zu bearbeitenden Handwerkerauftrags
         String zu_bearbeitenden_handwerkerauftrag = HandwerkerauftragBearbeitenAction.bearbeitungsAuswahl_handwerkerauftragID;
 
         boolean bearbeitungsVorgang = true;
 
+        /*
+         * Array beeinhaltet alle Attribute, die verändert werden können und
+         * dient zur Ausgabe durch Zugriff auf deren Index
+         */
         String[] kategorie = { "Auftrags ID ", "Wohnungs ID", "Mitarbeiter ID", "Mängelbeschreibung", "Status", "Eingangsdatum", "Fertigstellungsdatum" };
 
         /*
@@ -64,20 +67,20 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
          * Werte
          */
 
-        String aktuelleAuftragsID = "";
-        String neueAuftragsID = "";
+        String aktuelleAuftragsID = "-";
+        String neueAuftragsID = "-";
 
-        int aktuelleWohnungsID = 0;
-        int neueWohnungsID = 0;
+        int aktuelleWohnungsID = -100;
+        int neueWohnungsID = -100;
 
-        int aktuelleMitarbeiterID = 0;
-        int neueMitarbeiterID = 0;
+        int aktuelleMitarbeiterID = -100;
+        int neueMitarbeiterID = -100;
 
-        String aktuelleMängelbeschreibung = "";
-        String neueMängelbeschreibung = "";
+        String aktuelleMängelbeschreibung = "-";
+        String neueMängelbeschreibung = "-";
 
-        String aktuellerStatus = "";
-        String neuerStatus = "";
+        String aktuellerStatus = "-";
+        String neuerStatus = "-";
 
         Datum aktuellesEingangsdatum = null;
         Datum neuesEingangsdatum = null;
@@ -95,8 +98,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
         String FD_Leerzeichen = "";
 
         /*
-         * Für jedes Element in der ArrayList 'repairList', welche alle aktiven
-         * Handwerkeraufträge beeinhaltet, wir zeurst das Objekt in der
+         * Für jedes Element in der Handwerkerauftragsliste wird zuerst das Objekt in der
          * ArrayList gesucht, welche der eben ausgewählten Auftrags-ID
          * entspricht. Es werden neue Variablen angelegt, welche die einzelnen
          * Werte des Objekts beeinhalten.
@@ -239,22 +241,21 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
                 // Wohnungsnummer
                 if (änderung == 2) {
 
-                    auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
-                    neueWohnungsID = HandwerkerauftragBearbeitenAction.such_wohnung;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    neueWohnungsID = HandwerkerauftragBearbeitenAction.neue_wohnung;
                 }
 
                 // Mitarbeiter-ID
                 if (änderung == 3) {
 
-                    auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
-                    neueMitarbeiterID = HandwerkerauftragBearbeitenAction.such_mitarbeiterID;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    neueMitarbeiterID = HandwerkerauftragBearbeitenAction.neue_mitarbeiterID;
                 }
 
                 // Mängelbeschreibung
                 if (änderung == 4) {
                     String eingabe = einlesen_Wort(kategorie, änderung);
                     if (eingabe.equals("" + 0)) {
-                        neueMängelbeschreibung = aktuelleMängelbeschreibung;
                     } else {
                         neueMängelbeschreibung = eingabe;
                     }
@@ -274,7 +275,6 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
                     }
 
                     if (eingabe == 0) {
-                        neuerStatus = aktuellerStatus;
                     }
 
                     // Jede andere Eingabe führt zu einer Fehlermeldung.
@@ -382,11 +382,10 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
 
-    private void auswahl_AuftragsID_Wohnung_MitarbeiterID(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         HandwerkerauftragBearbeitenAction.window = false;
-        HandwerkerauftragBearbeitenAction.bearbeitungsAuswahl_handwerkerauftragID = "";
-        HandwerkerauftragBearbeitenAction.neue_handwerkerauftragID = "";
-        HandwerkerauftragBearbeitenAction.such_wohnung = -100;
+        HandwerkerauftragBearbeitenAction.neue_wohnung = -100;
+        HandwerkerauftragBearbeitenAction.neue_mitarbeiterID = -100;
         JFrame meinRahmen = new JFrame();
 
         meinRahmen.setSize(250, 250);
@@ -394,20 +393,10 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
         meinRahmen.setLocationRelativeTo(null);
 
         JComboBox combo2 = new JComboBox();
-        combo2.addItem("" + 0);
 
         if (änderung == -99) {
             meinRahmen.setTitle("Handwerkerauftrag ID");
             JLabel frage = new JLabel("Welchen Handwerkerauftrag möchten Sie bearbeiten?");
-            meinPanel.add(frage);
-            for (Handwerkerauftrag repair : MenuManager.repairList) {
-                combo2.addItem(repair.getAuftragsID());
-            }
-        }
-
-        if (änderung == 1) {
-            meinRahmen.setTitle("Handwerkerauftrag ID");
-            JLabel frage = new JLabel("Welche Handwerkerauftrag möchten Sie auswählen?");
             meinPanel.add(frage);
             for (Handwerkerauftrag repair : MenuManager.repairList) {
                 combo2.addItem(repair.getAuftragsID());
@@ -419,7 +408,9 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
             JLabel frage = new JLabel("Welche Wohnung möchten Sie auswählen?");
             meinPanel.add(frage);
             for (Wohnung flat : MenuManager.flatList) {
-                combo2.addItem(flat.getWohnungsID());
+                if (flat.getHandwerkerauftrag().getAuftragsID().equals("")) {
+                    combo2.addItem(flat.getWohnungsID());
+                }
             }
         }
 
@@ -445,17 +436,15 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
                 if (änderung == -99) {
                     HandwerkerauftragBearbeitenAction.bearbeitungsAuswahl_handwerkerauftragID = (String) combo2.getSelectedItem();
                 }
-                if (änderung == 1) {
-                    HandwerkerauftragBearbeitenAction.neue_handwerkerauftragID = (String) combo2.getSelectedItem();
-                }
                 if (änderung == 2) {
-                    HandwerkerauftragBearbeitenAction.such_wohnung = (int) combo2.getSelectedItem();
+                    HandwerkerauftragBearbeitenAction.neue_wohnung = (int) combo2.getSelectedItem();
                 }
                 if (änderung == 3) {
-                    HandwerkerauftragBearbeitenAction.such_mitarbeiterID = (int) combo2.getSelectedItem();
+                    HandwerkerauftragBearbeitenAction.neue_mitarbeiterID = (int) combo2.getSelectedItem();
                 }
 
             }
+
         };
         meinPanel.add(combo2);
         meinRahmen.add(meinPanel, BorderLayout.SOUTH);
@@ -467,6 +456,13 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
 
     }
 
+    /**
+     * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der Ausgabe auf der Konsole.
+     * 
+     * @param wort
+     *            = mitgegebenes Attribut
+     * @return das Attribut mit den anschließenden Leerzeichen
+     */
     private String länge_anpassen(String wort) {
 
         if (wort.length() < 50) {
@@ -477,13 +473,31 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
         return wort;
     }
 
+    /**
+     * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return das eingelesene Wort
+     */
     private String einlesen_Wort(final String[] auswahl, final int zähler) {
-        System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+        System.out.println("Erstellen: " + auswahl[zähler - 1]);
         Scanner s = new Scanner(System.in);
         String wort = s.nextLine();
         return wort;
     }
 
+    /**
+     * Methode zum Einlesen einer Zahl vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return die eingelesene Zahl
+     */
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
 
         Scanner s = new Scanner(System.in);
@@ -494,7 +508,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
                 System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
                 zahl = s.nextInt();
                 if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {
@@ -571,6 +585,9 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
         return neuesDatum;
     }
 
+    /**
+     * Methode zum Anpassen der Länge des Datums bei der Ausgabe auf der Konsole.
+     */
     private String länge_anpassen_Datum(final Datum a_GD) {
 
         String leerzeichen = "";

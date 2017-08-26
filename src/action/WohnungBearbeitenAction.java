@@ -30,7 +30,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Wohnung bearbeiten ________________________________________");
+        System.out.println("________________________________________ Wohnung bearbeiten ________________________________________\n");
 
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
@@ -38,10 +38,10 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
          */
         int änderung = -99;
 
-        // Ausgabe aller Mietvertrag-IDs zur einfacheren Auswahl
-        auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+        // Ausgabe aller Wohnungsnummern  zur einfacheren Auswahl
+        JComboBox_optimierte_Auswahl(änderung);
 
-        // Variable enthält die ID des zu bearbeitenden Mietvertrags
+        // Variable enthält die ID der zu bearbeitenden Wohnung
         int zu_bearbeitende_wohnung = WohnungBearbeitenAction.bearbeitungsAuswahl_WohnungsID;
 
         boolean bearbeitungsVorgang = true;
@@ -72,20 +72,20 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
          * allgemeine Variablen alte = aktuelle Werte, neue = neue/veränderte
          * Werte
          */
-        int aktuelleID = 0;
-        int neueID = 0;
+        int aktuelleID = -100;
+        int neueID = -100;
 
-        int aktuelle_zimmeranzahl = 0;
-        int neue_zimmeranzahl = 0;
+        int aktuelle_zimmeranzahl = -100;
+        int neue_zimmeranzahl = -100;
 
-        double aktuelle_fläche = 0.0;
-        double neue_fläche = 0.0;
+        double aktuelle_fläche = -100;
+        double neue_fläche = -100;
 
-        double aktuelle_kosten = 0.0;
-        double neue_kosten = 0.0;
+        double aktuelle_kosten = -100;
+        double neue_kosten = -100;
 
-        int aktuelle_etage = 0;
-        int neue_etage = 0;
+        int aktuelle_etage = -100;
+        int neue_etage = -100;
 
         boolean aktuelle_balkon = false;
         boolean neue_balkon = false;
@@ -93,23 +93,23 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
         boolean aktuelle_fußbodenheizung = false;
         boolean neue_fußbodenheizung = false;
 
-        String aktuelle_aussicht = "";
-        String neue_aussicht = "";
+        String aktuelle_aussicht = "-";
+        String neue_aussicht = "-";
 
         Adresse aktuelle_adresse = null;
         Adresse neue_adresse = null;
 
-        String aktuelle_status = "";
-        String neue_status = "";
+        String aktuelle_status = "-";
+        String neue_status = "-";
 
         Datum aktuelle_letztesRenovierungsdatum = null;
         Datum neue_letzesRenovierungsdatum = null;
 
-        int aktuelle_renovierungsanzahl = 0;
-        int neue_renovierungsanzahl = 0;
+        int aktuelle_renovierungsanzahl = -100;
+        int neue_renovierungsanzahl = -100;
 
-        String aktuelle_letzeRenovierung_Details = "";
-        String neue_letzeRenovierung_Details = "";
+        String aktuelle_letzeRenovierung_Details = "-";
+        String neue_letzeRenovierung_Details = "-";
 
         Mitarbeiter aktuelle_zugeordneterMitarbeiter = null;
         Mitarbeiter neue_zugeordneterMitarbeiter = null;
@@ -117,18 +117,18 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
         /*
          * Variablen enthalten die Leerzeichen, die nach den Objekten (Daten)
          * eingesetzt werden. Die Längen der einzelnen Komponenten der Objekte
-         * werden verwendet. MB = Mietbeginn , ME = Mietende.
+         * werden verwendet. ADR = Adresse , LRDT = Letztes Renovierungsdatum,
+         * ZM = zugeordneter Mitarbeiter.
          */
         String ADR_Leerzeichen = "";
         String LRDT_Leerzeichen = "";
         String ZM_Leerzeichen = "";
 
         /*
-         * Für jedes Element in der ArrayList 'flatList', welche alle Wohnungen
-         * beeinhaltet, wir zeurst das Objekt in der ArrayList gesucht, welche
-         * der eben ausgewählten Wohnungs-ID entspricht. Es werden neue
-         * Variablen angelegt, welche die einzelnen Werte des Objekts
-         * beeinhalten.
+         * Für jedes Element in der Wohnungsliste wird zeurst das Objekt in der
+         * ArrayList gesucht, welche der eben ausgewählten Wohnungs-ID
+         * entspricht. Es werden neue Variablen angelegt, welche die einzelnen
+         * Werte des Objekts beeinhalten..
          */
         for (Wohnung flat : MenuManager.flatList) {
             if (zu_bearbeitende_wohnung == flat.getWohnungsID()) {
@@ -212,6 +212,16 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
                 längenAnpassung_LRI = aktuelle_letzeRenovierung_Details;
                 längenAnpassung_LRI = länge_anpassen(längenAnpassung_LRI);
 
+                if (aktuelle_adresse != null) {
+                    ADR_Leerzeichen = länge_anpassen_Adresse(aktuelle_adresse);
+                }
+                if (aktuelle_letztesRenovierungsdatum != null) {
+                    LRDT_Leerzeichen = länge_anpassen_Datum(aktuelle_letztesRenovierungsdatum);
+                }
+                if (aktuelle_zugeordneterMitarbeiter != null) {
+                    ZM_Leerzeichen = länge_anpassen_Mitarbeiter(aktuelle_zugeordneterMitarbeiter);
+                }
+
                 ADR_Leerzeichen = länge_anpassen_Adresse(aktuelle_adresse);
                 LRDT_Leerzeichen = länge_anpassen_Datum(aktuelle_letztesRenovierungsdatum);
                 ZM_Leerzeichen = länge_anpassen_Mitarbeiter(aktuelle_zugeordneterMitarbeiter);
@@ -264,7 +274,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
 
                 // Wohnungsnummer
                 if (änderung == 1) {
-                    auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+                    JComboBox_optimierte_Auswahl(änderung);
                     neueID = WohnungBearbeitenAction.JFrame_wohnungsnummer_auswahl;
                 }
 
@@ -429,19 +439,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
 
                 // letztes Renovierungsdatum
                 if (änderung == 11) {
-
-                    String[] auswahl = { "Tag", "Monat", "Jahr" };
-                    int zähler = 1;
-                    int tag = einlesen_Zahl(auswahl, zähler);
-                    zähler = 2;
-                    int monat = einlesen_Zahl(auswahl, zähler);
-                    zähler = 3;
-                    int jahr = einlesen_Zahl(auswahl, zähler);
-
-                    if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
-                    } else {
-                        neue_letzesRenovierungsdatum = new Datum(tag, monat, jahr);
-                    }
+                    neue_letzesRenovierungsdatum = Datum_Eingabe(aktuelle_letztesRenovierungsdatum);
                 }
 
                 // Renovierungsanzahl
@@ -464,7 +462,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
 
                 // zugeordneter Mitarbeiter
                 if (änderung == 14) {
-                    auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+                    JComboBox_optimierte_Auswahl(änderung);
                     int mitarbeiterID = WohnungBearbeitenAction.JFrame_mitarbeiterID_auswahl;
                     String name = "";
                     String vorname = "";
@@ -487,7 +485,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
                         /*
                          * wenn beim bearbeiten eine Wohnung ausgewählt wird,
                          * die jemanden gehört, dann wohnt der Mieter in der
-                         * WOhnung mit der eben angepassten Wohnungsnummer
+                         * Wohnung mit der eben angepassten Wohnungsnummer
                          */
                         for (Mieter owner : MenuManager.ownerList) {
                             if (owner.getWohnungsnummer() == aktuelleID && neueID != aktuelleID) {
@@ -531,14 +529,81 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
     }
 
     /**
+     * Methode zur Eingabe des Datums
+     *
+     * @param aktuellesDatum,
+     *            was der Handwerkerauftrag zu dem Zeitpunkt noch benutzt
+     * @return das neue Datum, welches weiterverwendet werden soll
+     */
+    public Datum Datum_Eingabe(final Datum aktuellesDatum) {
+
+        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+        String[] auswahl = { "Jahr", "Monat", "Tag" };
+
+        Datum neuesDatum = null;
+        boolean datumsEingabeErfolgreich = false;
+
+        int zähler = 1;
+        int jahr = einlesen_Zahl(auswahl, zähler);
+
+        zähler = 2;
+        int monat = 0;
+        do {
+            monat = einlesen_Zahl(auswahl, zähler);
+            if (monat > 12) {
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!\n");
+            }
+        } while (monat > 12);
+
+        zähler = 3;
+        int tag = 0;
+        do {
+            tag = einlesen_Zahl(auswahl, zähler);
+            if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
+                if (tag > 31) {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!\n");
+                } else {
+                    datumsEingabeErfolgreich = true;
+                }
+            }
+
+            if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
+                if (tag > 30) {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!\n");
+                } else {
+                    datumsEingabeErfolgreich = true;
+                }
+            }
+
+            if (monat == 2) {
+                if (tag > 29) {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!\n");
+                } else {
+                    datumsEingabeErfolgreich = true;
+                }
+            }
+        } while (datumsEingabeErfolgreich == false);
+
+        /*
+        * Wenn einer der Werte versucht wird zu überspringen/ auszulassen, dann
+         * bleibt es beim unveränderten Datum.
+         */
+        if (tag == 0 || tag == -100 || monat == 0 || monat == -100 || jahr == 0 || jahr == -100) {
+            neuesDatum = aktuellesDatum;
+        } else {
+            neuesDatum = new Datum(tag, monat, jahr);
+        }
+        return neuesDatum;
+    }
+
+    /**
      * Methode zur Auswahl eines bereits existierend Attributs durch Vorschlag jedes einzelnen Elements in einer ArrayList
      *
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         WohnungBearbeitenAction.window = false;
-        WohnungBearbeitenAction.bearbeitungsAuswahl_WohnungsID = -100;
         WohnungBearbeitenAction.JFrame_wohnungsnummer_auswahl = -100;
         WohnungBearbeitenAction.JFrame_mitarbeiterID_auswahl = -100;
 
@@ -554,7 +619,9 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
             JLabel frage = new JLabel("Welche Wohnung wird bearbeitet?");
             meinPanel.add(frage);
             for (Wohnung flat : MenuManager.flatList) {
-                combo2.addItem(flat.getWohnungsID());
+                if (flat.getStatus().equals("frei")) {
+                    combo2.addItem(flat.getWohnungsID());
+                }
             }
         }
 

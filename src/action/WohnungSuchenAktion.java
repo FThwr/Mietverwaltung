@@ -10,7 +10,7 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Wohnung suchen ________________________________________");
+        System.out.println("________________________________________ Wohnung suchen ________________________________________\n");
 
         boolean suchVorgang = true;
 
@@ -66,26 +66,62 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
             Scanner s = new Scanner(System.in);
             System.out.println("............................... Wählen Sie die zu suchende Eigenschaft aus! ...............................");
             System.out.println("........... Aktuelle Suche nach: ...........");
-            System.out.println("1.  Wohnungsnummer:               " + such_wohnungsnummer);
-            System.out.println("2.  Zimmeranzahl:                 " + such_zimmeranzahl);
-            System.out.println("3.  Etage:                        " + such_etage);
+            if (such_wohnungsnummer != -100) {
+                System.out.println("1.  Wohnungsnummer:               " + such_wohnungsnummer);
+            } else {
+                System.out.println("1.  Wohnungsnummer:               " + "-");
+            }
+            if (such_zimmeranzahl != -100) {
+                System.out.println("2.  Zimmeranzahl:                 " + such_zimmeranzahl);
+            } else {
+                System.out.println("2.  Zimmeranzahl:                 " + "-");
+            }
+            if (such_etage != -100) {
+                System.out.println("3.  Etage:                        " + such_etage);
+            } else {
+                System.out.println("3.  Etage:                        " + "-");
+            }
             System.out.println("4.  Balkon:                       " + such_balkon);
-            System.out.println("5.  Fußbodenheizung:              " + such_fußbodenheizung);
-            System.out.println("6.  Aussicht:                     " + such_aussicht);
-            System.out.println("7.  Adresse:                      ");
-            System.out.println("    Straße:                       " + such_straße);
-            System.out.println("    Plz:                          " + such_platz);
-            System.out.println("8. Status:                       " + such_status);
-            System.out.print("9. letztes Renovierungsdatum:    ");
-            System.out.print("--.");
-            System.out.print(such_monat);
-            System.out.println(such_jahr);
-            System.out.println("10. Renovierungsanzahl:           " + such_renovierungsanzahl);
-            System.out.println("11. Handwerkerauftrag:            " + such_handwerkerAuftragID);
-            System.out.println("12. zugeordneter Miatrbeiter:     " + such_name);
-            System.out.println("13. Suche abschließen");
-            System.out.println("0.  Abbruch");
 
+            System.out.println("5.  Fußbodenheizung:              " + such_fußbodenheizung);
+
+            System.out.println("6.  Aussicht:                     " + such_aussicht);
+
+            System.out.println("7.  Adresse:                      ");
+
+            System.out.println("    Straße:                       " + such_straße);
+            if (such_platz != -100) {
+                System.out.println("    Plz:                          " + such_platz);
+
+            } else {
+                System.out.println("    Plz:                          " + "-");
+            }
+            System.out.println("8. Status:                        " + such_status);
+            System.out.print("9. letztes Renovierungsdatum:     ");
+            System.out.print("--.");
+            if (such_monat != -100) {
+                System.out.print(such_monat);
+            } else {
+                System.out.print("--.");
+            }
+            if (such_jahr != -100) {
+                System.out.println(such_jahr);
+            } else {
+                System.out.println("----");
+            }
+            if (such_renovierungsanzahl != -100) {
+                System.out.println("10. Renovierungsanzahl:           " + such_renovierungsanzahl);
+            } else {
+                System.out.println("10. Renovierungsanzahl:           " + "-");
+            }
+            System.out.println("11. Handwerkerauftrag:            " + such_handwerkerAuftragID);
+
+            System.out.println("12. zugeordneter Miatrbeiter:     " + such_name);
+
+            System.out.println("13. Suche abschließen");
+            System.out.println("999. um die zu suchende Eigenschaft zurückzusetzen");
+            System.out.println("0.  Abbruch");
+            System.out.println("");
             /*
              * Die try-catch Klammer existiert für nicht erwünschte Eingaben wie
              * Zeichen, wo Zahlen erwartet werden.
@@ -106,14 +142,20 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                 // Wohnungsnummer
                 if (eingabe == 1) {
                     int einlese = einlesen_Zahl(suche, eingabe);
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
                     if (einlese == 999) {
                         savecheck[eingabe - 1] = "";
                         such_wohnungsnummer = wohnungsnummer;
                     }
-
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
                     else if (einlese == 0) {
-                    } else {
-
+                    }
+                    // Eingabe weder 0 noch 999
+                    else {
+                        // Die Eingabe wird übernommen
                         such_wohnungsnummer = einlese;
                         savecheck[eingabe - 1] = "a";
                     }
@@ -123,16 +165,20 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                 if (eingabe == 2) {
 
                     int einlese = einlesen_Zahl(suche, eingabe);
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
                     if (einlese == 999) {
                         savecheck[eingabe - 1] = "";
                         such_zimmeranzahl = zimmeranzahl;
                     }
-
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
                     else if (einlese == 0) {
                     }
-
+                    // Eingabe weder 0 noch 999
                     else {
-
+                        // Die Eingabe wird übernommen
                         such_zimmeranzahl = einlese;
                         savecheck[eingabe - 1] = "b";
                     }
@@ -141,15 +187,20 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                 // Etage
                 if (eingabe == 3) {
                     int einlese = einlesen_Zahl(suche, eingabe);
-                    if (einlese == 0) {
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (einlese == 999) {
+                        savecheck[eingabe - 1] = "";
                         such_etage = etage;
                     }
-
-                    if (einlese == 0) {
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese == 0) {
                     }
-
+                    // Eingabe weder 0 noch 999
                     else {
-
+                        // Die Eingabe wird übernommen
                         such_etage = einlese;
                         savecheck[eingabe - 1] = "e";
                     }
@@ -159,74 +210,101 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                 if (eingabe == 4) {
 
                     Scanner t = new Scanner(System.in);
-                    System.out.println("Balkon vorhanden: '1' Ja, '2' Nein, '0' Abbruch!");
-                    int wahl = t.nextInt();
+                    System.out.println("Balkon vorhanden: '1' Ja, '2' Nein, '0' Abbruch!\n");
+                    int einlese = t.nextInt();
 
-                    if (wahl == 1) {
+                    if (einlese == 1) {
                         such_balkon = true;
                         savecheck[eingabe - 1] = "f";
                     }
-                    if (wahl == 2) {
+                    if (einlese == 2) {
                         such_balkon = false;
                         savecheck[eingabe - 1] = "f";
                     }
-                    if (wahl == 0) {
-                        such_balkon = balkon;
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    if (einlese == 0) {
                     }
-                    if (wahl > 2) {
-                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (einlese == 999) {
+                        such_balkon = balkon;
+                        savecheck[eingabe - 1] = "";
+                    }
+                    if (einlese > 2 && einlese < 999) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                     }
                 }
 
                 // Fußbodenheizung
                 if (eingabe == 5) {
                     Scanner t = new Scanner(System.in);
-                    System.out.println("Fußbodenheizung vorhanden: '1' Ja, '2' Nein, '0' Abbruch!");
-                    int wahl = t.nextInt();
+                    System.out.println("Fußbodenheizung vorhanden: '1' Ja, '2' Nein, '0' Abbruch!\n");
+                    int einlese = t.nextInt();
 
-                    if (wahl == 1) {
+                    if (einlese == 1) {
                         such_fußbodenheizung = true;
                         savecheck[eingabe - 1] = "g";
                     }
-                    if (wahl == 2) {
+                    if (einlese == 2) {
                         such_fußbodenheizung = false;
                         savecheck[eingabe - 1] = "g";
                     }
-                    if (wahl == 0) {
-                        such_fußbodenheizung = fußbodenheizung;
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    if (einlese == 0) {
                     }
-                    if (wahl > 2) {
-                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+
+                    /*
+                     * 999 = rückgängig machen des Attributes + löschen des
+                     * Buchstabens
+                     */
+                    if (einlese == 999) {
+                        such_fußbodenheizung = fußbodenheizung;
+                        savecheck[eingabe - 1] = "";
+                    }
+                    if (einlese > 2 && einlese < 999) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                     }
                 }
 
                 // Aussicht
                 if (eingabe == 6) {
                     Scanner t = new Scanner(System.in);
-                    System.out.println("Aussicht auf: '1' Park, '2' Spree, '3' Schienen, '4' Straße, '0' abbruch!");
-                    int wahl = t.nextInt();
+                    System.out.println("Aussicht auf: '1' Park, '2' Spree, '3' Schienen, '4' Straße, '0' abbruch!\n");
+                    int einlese = t.nextInt();
 
-                    if (wahl == 1) {
+                    if (einlese == 1) {
                         such_aussicht = "Park";
                         savecheck[eingabe - 1] = "h";
                     }
-                    if (wahl == 2) {
+                    if (einlese == 2) {
                         such_aussicht = "Spree";
                         savecheck[eingabe - 1] = "h";
                     }
-                    if (wahl == 3) {
+                    if (einlese == 3) {
                         such_aussicht = "Schienen";
                         savecheck[eingabe - 1] = "h";
                     }
-                    if (wahl == 4) {
+                    if (einlese == 4) {
                         such_aussicht = "Straße";
                         savecheck[eingabe - 1] = "h";
                     }
-                    if (wahl == 0) {
-                        such_aussicht = aussicht;
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    if (einlese == 0) {
                     }
-                    if (wahl > 4) {
-                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                                        */
+                    if (einlese == 999) {
+                        such_aussicht = aussicht;
+                        savecheck[eingabe - 1] = "";
+                    }
+                    if (einlese > 4 && einlese < 999) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                     }
                 }
 
@@ -235,24 +313,49 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
 
                     Scanner t = new Scanner(System.in);
                     System.out.println("Geben Sie eine Straße ein: 0 = abbruch!");
-                    String wahl = t.next();
+                    String einlese = t.next();
 
-                    if (wahl.equals("" + 0)) {
+                    /*
+                    *999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (einlese.equals("" + 999)) {
+                        savecheck[eingabe - 1] = "";
                         such_straße = straße;
-                    } else {
-                        such_straße = wahl;
-                        check = check + "i";
+                    }
+
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese.equals("" + 0)) {
+
+                    }
+
+                    // Eingabe weder 0 noch 999
+                    else {
+
+                        // Die Eingabe wird übernommen
+                        such_straße = einlese;
+                        savecheck[eingabe - 1] = "i";
                     }
 
                     Scanner r = new Scanner(System.in);
                     System.out.println("Geben Sie eine PLZ ein: 0 = abbruch!");
                     int auswahl = r.nextInt();
 
-                    if (auswahl == 0) {
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (auswahl == 999) {
+                        savecheck[eingabe] = "";
                         such_platz = platz;
+                    }
+
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (auswahl == 0) {
                     } else {
+                        // Die Eingabe wird übernommen
                         such_platz = auswahl;
-                        check = check + "j";
+                        savecheck[eingabe] = "j";
                     }
                 }
 
@@ -260,25 +363,34 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                 if (eingabe == 8) {
                     Scanner t = new Scanner(System.in);
                     System.out.println("Status der Wohnung: '1' frei, '2' vermietet, '3' in Renovierung, '0' abbruch!");
-                    int wahl = t.nextInt();
+                    int einlese = t.nextInt();
 
-                    if (wahl == 1) {
+                    if (einlese == 1) {
                         such_status = "frei";
-                        check = check + "k";
+                        savecheck[eingabe] = "k";
                     }
-                    if (wahl == 2) {
+                    if (einlese == 2) {
                         such_status = "vermietet";
-                        check = check + "k";
+                        savecheck[eingabe] = "k";
                     }
-                    if (wahl == 3) {
+                    if (einlese == 3) {
                         such_status = "in Renovierung";
-                        check = check + "k";
+                        savecheck[eingabe] = "k";
                     }
-                    if (wahl == 0) {
+
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    if (einlese == 0) {
+                    }
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (einlese == 999) {
+                        savecheck[eingabe] = "";
                         such_status = status;
                     }
-                    if (wahl > 3) {
-                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                    if (einlese > 3 && einlese < 999) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                     }
                 }
 
@@ -294,7 +406,8 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                      * weil sonst Buchstaben enthalten wären für
                      * Attributänderungen, die garnicht existieren.
                      */
-                    String saveCheck = check;
+                    String buchstabe_einfügen_monat = "";
+                    String buchstabe_einfügen_jahr = "";
 
                     while (datumseingabe == true) {
 
@@ -309,87 +422,148 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
 
                         // Monat
                         if (zähler == 1) {
-
-                            do {
-                                such_monat = einlesen_Zahl(auswahl, zähler);
-                                if (such_monat > 12) {
-                                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
-                                }
-
-                            } while (such_monat > 12);
-                            if (such_monat == 0) {
+                            int einlese = einlesen_Zahl(auswahl, zähler);
+                            /*
+                             * 999 = rückgängig machen des Attributes + löschen des
+                            +                                * Buchstabens
+                             */
+                            if (einlese == 999) {
+                                savecheck[eingabe] = "";
                                 such_monat = monat;
-                            } else {
-                                /*
-                                 * Der Nutzer hat das Attribut
-                                 * Fertigstellungsmonat betreten. Somit erhält
-                                 * 'safecheck' ein 'y' um sich zu merken, dass
-                                 * es die Abfrage betreten hatte.
-                                 */
-                                saveCheck = saveCheck + "l";
+                            }
+
+                            // 0 = keine Veränderung, nur Abbruch der Abfrage
+                            else if (einlese == 0) {
+                            }
+
+                            // Eingabe weder 0 noch 999
+                            else {
+
+                                // Die Eingabe wird übernommen
+                                such_monat = einlese;
+                                buchstabe_einfügen_monat = buchstabe_einfügen_monat + "l";
                             }
                         }
 
                         // Jahr
                         if (zähler == 2) {
+                            int einlese = einlesen_Zahl(auswahl, zähler);
 
-                            such_jahr = einlesen_Zahl(auswahl, zähler);
-                            if (such_jahr == 0) {
+                            /*
+                            * 999 = rückgängig machen des Attributes + löschen des
+                            * Buchstabens
+                            */
+                            if (einlese == 999) {
+                                savecheck[eingabe + 1] = "";
                                 such_jahr = jahr;
-                            } else {
-                                /*
-                                 * Der Nutzer hat das Attribut
-                                 * Fertigstellungsjahr betreten. Somit erhält
-                                 * 'safecheck' ein 'z' um sich zu merken, dass
-                                 * es die Abfrage betreten hatte.
-                                 */
-                                saveCheck = saveCheck + "m";
                             }
-                        }
 
-                        // 'Eingangsdatum' Sucheingabe abschließen
-                        if (zähler == 3) {
-                            datumseingabe = false;
-                            check = check + saveCheck;
-                        }
+                            // 0 = keine Veränderung, nur Abbruch der Abfrage
+                            else if (einlese == 0) {
+                            }
 
-                        // 'Eingangsdatum' Sucheingabe abbrechen
-                        if (zähler == 0) {
-                            datumseingabe = false;
-                        }
-                        if (zähler > 3) {
-                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                            // Eingabe weder 0 noch 999
+                            else {
+
+                                // Die Eingabe wird übernommen
+                                such_jahr = einlese;
+                                buchstabe_einfügen_jahr = buchstabe_einfügen_jahr + "m";
+
+                            }
+
+                            // 'Eingangsdatum' Sucheingabe abschließen
+                            if (zähler == 3) {
+                                datumseingabe = false;
+                                savecheck[eingabe] = buchstabe_einfügen_monat;
+                                savecheck[eingabe + 1] = buchstabe_einfügen_jahr;
+                            }
+
+                            // 'Eingangsdatum' Sucheingabe abbrechen
+                            if (zähler == 0) {
+                                datumseingabe = false;
+                            }
+                            if (zähler > 3) {
+                                System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
+                            }
                         }
                     }
                 }
 
                 // Renovierungsanzahl
                 if (eingabe == 10) {
-                    such_renovierungsanzahl = einlesen_Zahl(suche, eingabe);
-                    if (such_renovierungsanzahl == 0) {
+                    int einlese = einlesen_Zahl(suche, eingabe);
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (einlese == 999) {
+                        savecheck[eingabe + 1] = "";
                         such_renovierungsanzahl = renovierungsanzahl;
-                    } else {
-                        check = check + "n";
+                    }
+
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese == 0) {
+                    }
+
+                    // Eingabe weder 0 noch 999
+                    else {
+
+                        // Die Eingabe wird übernommen
+                        such_renovierungsanzahl = einlese;
+                        savecheck[eingabe + 1] = "n";
                     }
                 }
 
                 // Handwerkerauftrags-ID
                 if (eingabe == 11) {
-                    such_handwerkerAuftragID = einlesen_Wort(suche, eingabe);
-                    if (such_handwerkerAuftragID.equals("" + 0)) {
+                    String einlese = einlesen_Wort(suche, eingabe);
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (einlese.equals("" + 999)) {
+                        savecheck[eingabe + 1] = "";
                         such_handwerkerAuftragID = handwerkerAuftragID;
-                    } else {
-                        check = check + "o";
+                    }
+
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese.equals("" + 0)) {
+                    }
+
+                    // Eingabe weder 0 noch 999
+                    else {
+
+                        // Die Eingabe wird übernommen
+                        such_handwerkerAuftragID = einlese;
+                        savecheck[eingabe + 1] = "o";
                     }
                 }
 
                 // zugeordneter Mitarbeiter
                 if (eingabe == 12) {
-                    such_name = einlesen_Wort(suche, eingabe);
-                    if (such_name.equals("" + 0)) {
+                    String einlese = einlesen_Wort(suche, eingabe);
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                                       */
+                    if (einlese.equals("" + 999)) {
+                        savecheck[eingabe + 1] = "";
                         such_name = name;
-                    } else {
-                        check = check + "p";
+                    }
+
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese.equals("" + 0)) {
+                    }
+
+                    // Eingabe weder 0 noch 999
+                    else {
+
+                        // Die Eingabe wird übernommen
+                        such_name = einlese;
+                        savecheck[eingabe + 1] = "p";
                     }
                 }
 
@@ -412,6 +586,12 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                     int vgl_renovierungsanzahl = -100;
                     String vgl_handwerkerAuftragID = "-";
                     String vgl_name = "-";
+
+                    for (int i = 0; i < savecheck.length; i++) {
+                        if (savecheck[i] != null) {
+                            check = check + savecheck[i];
+                        }
+                    }
 
                     /*
                      * Wenn 'check' ein Buchstaben enthält war der Nutzer bei
@@ -473,33 +653,72 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                         if (vgl_wohnungsnummer == such_wohnungsnummer && vgl_zimmeranzahl == such_zimmeranzahl && vgl_etage == such_etage && vgl_balkon == such_balkon && vgl_fußbodenheizung == such_fußbodenheizung && vgl_aussicht.contains(such_aussicht) && vgl_straße.contains(such_straße) && vgl_platz == such_platz && vgl_status.contains(such_status) && vgl_monat == such_monat
                                 && vgl_jahr == such_jahr && vgl_renovierungsanzahl == such_renovierungsanzahl && vgl_handwerkerAuftragID.equals(such_handwerkerAuftragID) && vgl_name.contains(such_name)) {
 
-                            System.out.println("Wohnungsnummer: " + flat.getWohnungsID());
-                            System.out.println("Zimmeranzahl: " + flat.getZimmeranzahl());
-                            System.out.println("Fläche: " + flat.getFläche());
-                            System.out.println("Kosten: " + flat.getKosten());
-                            System.out.println("Etage: " + flat.getEtage());
+                            if (flat.getWohnungsID() != -100) {
+                                System.out.println("Wohnungsnummer: " + flat.getWohnungsID());
+                            } else {
+                                System.out.println("Wohnungsnummer: " + "-");
+                            }
+                            if (flat.getZimmeranzahl() != -100) {
+                                System.out.println("Zimmeranzahl: " + flat.getZimmeranzahl());
+                            } else {
+                                System.out.println("Zimmeranzahl: " + "-");
+                            }
+                            if (flat.getFläche() != -100) {
+                                System.out.println("Fläche: " + flat.getFläche());
+                            } else {
+                                System.out.println("Fläche: " + "-");
+                            }
+                            if (flat.getKosten() != -100) {
+                                System.out.println("Kosten: " + flat.getKosten());
+                            } else {
+                                System.out.println("Kosten: " + "-");
+                            }
+                            if (flat.getEtage() != -100) {
+                                System.out.println("Etage: " + flat.getEtage());
+                            } else {
+                                System.out.println("Etage: " + "-");
+                            }
                             System.out.println("Balkon: " + flat.getBalkon());
                             System.out.println("Fußbodenheizung: " + flat.getFußbodenheizung());
                             System.out.println("Aussicht: " + flat.getAussicht());
-                            System.out.println("Adresse: " + flat.getAdresse());
+                            if (flat.getAdresse() != null) {
+                                System.out.println("Adresse: " + flat.getAdresse());
+                            } else {
+                                System.out.println("Adresse: " + "-");
+                            }
                             System.out.println("Status: " + flat.getStatus());
-                            System.out.println("letztes Renovierungsdatum: " + flat.getLetztesRenovierungsdatum());
-                            System.out.println("Renovierungsanzahl: " + flat.getRenovierungsanzahl());
+                            if (flat.getLetztesRenovierungsdatum() != null) {
+                                System.out.println("letztes Renovierungsdatum: " + flat.getLetztesRenovierungsdatum());
+                            } else {
+                                System.out.println("letztes Renovierungsdatum: " + "--.--.----");
+                            }
+                            if (flat.getRenovierungsanzahl() != -100) {
+                                System.out.println("Renovierungsanzahl: " + flat.getRenovierungsanzahl());
+                            } else {
+                                System.out.println("Renovierungsanzahl: " + "-");
+                            }
                             System.out.println("letze Renovierungdetails: " + flat.getLetzeRenovierung_Details());
                             System.out.println("Handwerkerauftrag-ID: " + flat.getHandwerkerauftrag().getAuftragsID());
-                            System.out.println("zugeordneter Mitarbeiter: " + flat.getZugeordneterMitarbeiter().getName());
+                            if (flat.getZugeordneterMitarbeiter() != null) {
+                                System.out.println("zugeordneter Mitarbeiter: " + flat.getZugeordneterMitarbeiter().getName());
+                            } else {
+                                System.out.println("zugeordneter Mitarbeiter: " + "-");
+                            }
+                            System.out.println("");
+
                         }
                     }
                 }
-                // Eingabe > 15
+                // Eingabe > 13
                 if (eingabe > 13) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                 }
 
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
             }
         }
+
     }
 
     /**

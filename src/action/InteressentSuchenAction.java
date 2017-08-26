@@ -12,7 +12,7 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Interessent suchen ________________________________________");
+        System.out.println("________________________________________ Interessent suchen ________________________________________\n");
 
         boolean suchVorgang = true;
 
@@ -76,6 +76,7 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
             }
             System.out.println("6. Telefonnummer:             " + such_telefon);
             System.out.println("7. Suche bestätigen");
+            System.out.println("999. um die zu suchende Eigenschaft zurückzusetzen");
             System.out.println("0. Abbruch ");
             System.out.println("");
 
@@ -100,13 +101,21 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                 if (eingabe == 1) {
 
                     int einlese = einlesen_Zahl(kategorie, eingabe);
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
                     if (einlese == 999) {
                         savecheck[eingabe - 1] = "";
                         such_interessentenID = interessentenID;
 
-                    } else if (einlese == 0) {
-                    } else {
-
+                    }
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese == 0) {
+                    }
+                    // Eingabe weder 0 noch 999
+                    else {
+                        // Die Eingabe wird übernommen
                         such_interessentenID = einlese;
                         savecheck[eingabe - 1] = "a";
                     }
@@ -117,13 +126,21 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                     such_name = name;
 
                     String einlese = einlesen_Wort(kategorie, eingabe);
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
                     if (einlese.equals("" + 999)) {
                         savecheck[eingabe - 1] = "";
                     }
-
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
                     else if (einlese.equals("" + 0)) {
-                    } else {
+                    }
+                    // Eingabe weder 0 noch 999
+                    else {
 
+                        // Die Eingabe wird übernommen
                         such_name = einlese;
                         savecheck[eingabe - 1] = "b";
                     }
@@ -133,12 +150,22 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                 if (eingabe == 3) {
 
                     String einlese = einlesen_Wort(kategorie, eingabe);
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
                     if (einlese.equals("" + 999)) {
                         savecheck[eingabe - 1] = "";
                         such_vorname = vorname;
 
-                    } else if (einlese.equals("" + 0)) {
-                    } else {
+                    }
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese.equals("" + 0)) {
+                    }
+                    // Eingabe weder 0 noch 999
+                    else {
+
+                        // Die Eingabe wird übernommen
                         such_vorname = einlese;
                         savecheck[eingabe - 1] = "c";
                     }
@@ -148,13 +175,22 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                 if (eingabe == 4) {
 
                     String einlese = einlesen_Wort(kategorie, eingabe);
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
                     if (einlese.equals("" + 999)) {
                         savecheck[eingabe - 1] = "";
                         such_EMail = EMail;
 
-                    } else if (einlese.equals("" + 0)) {
-                    } else {
-
+                    }
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese.equals("" + 0)) {
+                    }
+                    // Eingabe weder 0 noch 999
+                    else {
+                        // Die Eingabe wird übernommen
                         such_EMail = einlese;
                         savecheck[eingabe - 1] = "d";
                     }
@@ -163,10 +199,10 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                 // Adresse
                 if (eingabe == 5) {
                     System.out.println("Spezialisierung der zu suchenden Adresse: ");
-                    System.out.println("Drücke '1' für Straße: " + such_adresse_straße);
-                    System.out.println("Drücke '2' für Platz: " + such_adresse_plz);
-                    System.out.println("Drücke '3' zum bestätigen");
-                    System.out.println("Drücke '0' für Abbruch: ");
+                    System.out.println("Drücke '1'  für Straße: " + such_adresse_straße);
+                    System.out.println("Drücke '2'  für Platz: " + such_adresse_plz);
+                    System.out.println("Drücke '3'  zum bestätigen");
+                    System.out.println("Drücke '0'  für Abbruch: ");
 
                     String buchstabe_einfügen_straße = "";
                     String buchstabe_einfügen_plz = "";
@@ -182,28 +218,45 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                         if (zähler == 1) {
 
                             String einlese = einlesen_Wort(auswahl, zähler);
+
+                            /*
+                            * 999 = rückgängig machen des Attributes + löschen des
+                            * Buchstabens
+                            */
                             if (einlese.equals("" + 999)) {
                                 savecheck[eingabe - 1] = "";
                                 such_adresse_straße = straße;
                             }
-
+                            // 0 = keine Veränderung, nur Abbruch der Abfrage
                             else if (einlese.equals("" + 0)) {
-                            } else {
+                            }
+                            // Eingabe weder 0 noch 999
+                            else {
 
+                                // Die Eingabe wird übernommen
                                 such_adresse_straße = einlese;
                                 buchstabe_einfügen_straße = buchstabe_einfügen_straße + "y";
 
                             }
                         }
                         if (zähler == 2) {
+
+                            /*
+                            * 999 = rückgängig machen des Attributes + löschen des
+                            * Buchstabens
+                            */
                             int einlese = einlesen_Zahl(auswahl, zähler);
                             if (einlese == 999) {
                                 savecheck[eingabe] = "";
 
                                 such_adresse_plz = plz;
-                            } else if (einlese == 0) {
-                            } else {
-
+                            }
+                            // 0 = keine Veränderung, nur Abbruch der Abfrage
+                            else if (einlese == 0) {
+                            }
+                            // Eingabe weder 0 noch 999
+                            else {
+                                // Die Eingabe wird übernommen
                                 such_adresse_plz = einlese;
                                 buchstabe_einfügen_plz = buchstabe_einfügen_plz + "z";
                             }
@@ -225,14 +278,21 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                 // Telefonnummer
                 if (eingabe == 6) {
                     String einlese = einlesen_Wort(kategorie, eingabe);
-                    if (einlese.equals("" + 0)) {
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (einlese.equals("" + 999)) {
                         savecheck[eingabe] = "";
                         such_telefon = telefon;
                     }
 
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
                     else if (einlese.equals("" + 0)) {
-                    } else {
-
+                    }
+                    // Eingabe weder 0 noch 999
+                    else {
+                        // Die Eingabe wird übernommen
                         such_telefon = einlese;
                         savecheck[eingabe] = "e";
                     }
@@ -303,7 +363,11 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                             System.out.println("Interessenten ID:          " + interest.getKundenID());
                             System.out.println("Name:                      " + interest.getName());
                             System.out.println("Vorname:                   " + interest.getVorname());
-                            System.out.println("Geburtsdatum:              " + interest.getGeburtsdatum());
+                            if (interest.getGeburtsdatum() != null) {
+                                System.out.println("Geburtsdatum:              " + interest.getGeburtsdatum());
+                            } else {
+                                System.out.println("Geburtsdatum:              " + "-");
+                            }
                             System.out.println("E-Mail:                    " + interest.getEmail());
                             System.out.println("Adresse:                   " + interest.getAdresse());
                             System.out.println("Telefonnummer:             " + interest.getTelefonnummer());
@@ -313,7 +377,7 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                 }
                 // Eingabe > 7
                 if (eingabe > 7) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
@@ -321,6 +385,16 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
         }
 
     }
+
+    /**
+     * Methode zum Einlesen einer Zahl vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return die eingelesene Zahl
+     */
 
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
         Scanner s = new Scanner(System.in);
@@ -331,7 +405,7 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
                 System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
                 zahl = s.nextInt();
                 if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {
@@ -340,8 +414,17 @@ public class InteressentSuchenAction extends MenuManager implements Action, Seri
         return zahl;
     }
 
+    /**
+     * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return das eingelesene Wort
+     */
     private String einlesen_Wort(final String[] auswahl, final int zähler) {
-        System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+        System.out.println("Erstellen: " + auswahl[zähler - 1]);
         Scanner s = new Scanner(System.in);
         String wort = s.nextLine();
         return wort;

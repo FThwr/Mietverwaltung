@@ -14,7 +14,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Interessent erstellen ________________________________________");
+        System.out.println("________________________________________ Interessent erstellen ________________________________________\n");
 
         boolean erstellVorgang = true;
 
@@ -36,12 +36,24 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
         while (erstellVorgang == true) {
 
             System.out.println("...............................Wählen Sie die zu erstellende Eigenschaft aus...............................!");
-            System.out.println("1. Interessenten ID:      " + interessentenID);
+            if (interessentenID != -100) {
+                System.out.println("1. Interessenten ID:      " + interessentenID);
+            } else {
+                System.out.println("1. Interessenten ID:      " + "-");
+            }
             System.out.println("2. Name:                  " + name);
             System.out.println("3. Vorname:               " + vorname);
-            System.out.println("4. Geburtsdatum:          " + geburtsdatum);
+            if (geburtsdatum != null) {
+                System.out.println("4. Geburtsdatum:          " + geburtsdatum);
+            } else {
+                System.out.println("4. Geburtsdatum:          " + "-");
+            }
             System.out.println("5. E-Mail:                " + EMail);
-            System.out.println("6. Adresse:               " + adresse);
+            if (adresse != null) {
+                System.out.println("6. Adresse:               " + adresse);
+            } else {
+                System.out.println("6. Adresse:               " + "-");
+            }
             System.out.println("7. Telefon:               " + telefonnummer);
             System.out.println("8. Erstellen abschließen");
             System.out.println("0. Abbruch");
@@ -70,7 +82,6 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
 
                     int neueID = einlesen_Zahl(kategorie, änderung);
                     if (neueID == 0) {
-                        neueID = interessentenID;
                     } else {
 
                         int vorhanden = 0;
@@ -114,7 +125,6 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
                     // wenn eine 0 eingegeben wurde, dann wird der alte Wert
                     // behalten
                     if (neuerName.equals("" + 0)) {
-                        neuerName = name;
                     } else {
                         name = neuerName;
                     }
@@ -126,7 +136,6 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
                     // wenn eine 0 eingegeben wurde, dann wird der alte Wert
                     // behalten
                     if (neuerVorname.equals("" + 0)) {
-                        neuerVorname = vorname;
                     } else {
                         vorname = neuerVorname;
                     }
@@ -145,7 +154,6 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
                     // wenn eine 0 eingegeben wurde, dann wird der alte Wert
                     // behalten
                     if (neueEMail.equals("" + 0)) {
-                        neueEMail = EMail;
                     } else {
                         EMail = neueEMail;
                     }
@@ -178,7 +186,6 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
                     // wenn eine 0 eingegeben wurde, dann wird der alte Wert
                     // behalten
                     if (neueTelefonnummer.equals("" + 0)) {
-                        neueTelefonnummer = telefonnummer;
                     } else {
                         telefonnummer = neueTelefonnummer;
                     }
@@ -208,7 +215,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
      */
     public Datum Datum_Eingabe(final Datum aktuellesDatum) {
 
-        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!\n");
         String[] auswahl = { "Jahr", "Monat", "Tag" };
 
         Datum neuesDatum = null;
@@ -222,7 +229,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
         do {
             monat = einlesen_Zahl(auswahl, zähler);
             if (monat > 12) {
-                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!\n");
             }
         } while (monat > 12);
 
@@ -232,7 +239,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
             tag = einlesen_Zahl(auswahl, zähler);
             if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
                 if (tag > 31) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -240,7 +247,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
 
             if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
                 if (tag > 30) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -248,7 +255,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
 
             if (monat == 2) {
                 if (tag > 29) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -267,6 +274,15 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
         return neuesDatum;
     }
 
+    /**
+     * Methode zum Einlesen einer Zahl vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return die eingelesene Zahl
+     */
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
         Scanner s = new Scanner(System.in);
         int zahl = -100;
@@ -276,7 +292,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
                 System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
                 zahl = s.nextInt();
                 if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {
@@ -284,6 +300,16 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
         }
         return zahl;
     }
+
+    /**
+     * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+     * 
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return das eingelesene Wort
+     */
 
     private String einlesen_Wort(final String[] auswahl, final int zähler) {
         System.out.println("Erstellen: " + auswahl[zähler - 1]);

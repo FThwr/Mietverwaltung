@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class MenueManager {
 
-	protected static ArrayList<MenueEntry> menuList = new ArrayList<MenueEntry>();
+	protected static ArrayList<MenuEntry> menuList = new ArrayList<MenuEntry>();
 	protected static ArrayList<Mitarbeiter> workerList = new ArrayList<Mitarbeiter>();
 	protected static ArrayList<Wohnung> flatList = new ArrayList<Wohnung>();
 	protected static ArrayList<Mieter> ownerList = new ArrayList<Mieter>();
@@ -29,7 +29,7 @@ public class MenueManager {
 	protected static ArrayList<Mietvertrag> beendeteMietverträge = new ArrayList<Mietvertrag>();
 	
 
-	public void add(MenueEntry menueEintrag) {
+	public void add(MenuEntry menueEintrag) {
 		menuList.add(menueEintrag);
 	}
 	
@@ -148,7 +148,7 @@ public class MenueManager {
 
 		System.out.println(
 				"\nBei Eingabe von \"0\" kehren Sie zum vorherigen Menü zurück. \nBei \"-1\" wird das Programm beendet.");
-		MenueEntry meAktuell = ersterEintrag();
+		MenuEntry meAktuell = ersterEintrag();
 		try {
 			meAktuell = aufruf(meAktuell);
 
@@ -187,7 +187,7 @@ public class MenueManager {
 		return false;
 	}
 
-	public MenueEntry aufruf(MenueEntry meAktuell) throws FileNotFoundException, IOException, ClassNotFoundException {
+	public MenuEntry aufruf(MenuEntry meAktuell) throws FileNotFoundException, IOException, ClassNotFoundException {
 		Scanner scanner = new Scanner(System.in);
 		do {
 			if (meAktuell.getName().equals("")) {
@@ -218,7 +218,7 @@ public class MenueManager {
 		return meAktuell;
 	}
 
-	public MenueEntry actionAusfuehren(MenueEntry meAktuell) throws FileNotFoundException, IOException, ClassNotFoundException {
+	public MenuEntry actionAusfuehren(MenuEntry meAktuell) throws FileNotFoundException, IOException, ClassNotFoundException {
 		if (meAktuell.getLocation() == null) {
 			if (meAktuell.getAction() != null) {
 				meAktuell.getAction().action();
@@ -233,7 +233,7 @@ public class MenueManager {
 		return number;
 	}
 
-	public void zaehleMenuePunkteAuf(MenueEntry me) {
+	public void zaehleMenuePunkteAuf(MenuEntry me) {
 		for (int i = 0; i < me.getLocation().length; i++) {
 			String untermenueName = (me.getLocation())[i];
 			System.out.println((i + 1) + ". " + untermenueName);
@@ -242,10 +242,10 @@ public class MenueManager {
 		System.out.println("");
 	}
 
-	public MenueEntry zeigeAufObermenue(MenueEntry meAktuell) {
+	public MenuEntry zeigeAufObermenue(MenuEntry meAktuell) {
 		try {
 			String nameObermenue = meAktuell.getName();
-			for (MenueEntry meSuche : menuList) {
+			for (MenuEntry meSuche : menuList) {
 				String[] array = meSuche.getLocation();
 				for (int i = 0; i < array.length; i++) {
 					if (nameObermenue.equals(array[i])) {
@@ -259,9 +259,9 @@ public class MenueManager {
 		}
 	}
 
-	public MenueEntry zeigeAufUntermenue(MenueEntry me, int nummer) {
+	public MenuEntry zeigeAufUntermenue(MenuEntry me, int nummer) {
 		String nameUntermenue = ((me.getLocation())[nummer - 1]);
-		for (MenueEntry meSuche : menuList) {
+		for (MenuEntry meSuche : menuList) {
 			if ((meSuche.getName()).equals(nameUntermenue)) {
 				return meSuche;
 			}
@@ -269,8 +269,8 @@ public class MenueManager {
 		return null;
 	}
 
-	public MenueEntry ersterEintrag() {
-		for (MenueEntry me : menuList) {
+	public MenuEntry ersterEintrag() {
+		for (MenuEntry me : menuList) {
 			if (me.getName() == "") {
 				return me;
 			}

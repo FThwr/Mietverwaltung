@@ -12,7 +12,7 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Handwerkerauftrag suchen ________________________________________");
+        System.out.println("________________________________________ Handwerkerauftrag suchen ________________________________________\n");
 
         boolean suchVorgang = true;
 
@@ -107,6 +107,7 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                 System.out.println("----");
             }
             System.out.println("8. Suchen abschließen");
+            System.out.println("999. um die zu suchende Eigenschaft zurückzusetzen");
             System.out.println("0. Abbruch");
             System.out.println("");
 
@@ -150,12 +151,6 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
 
                         // Die Eingabe wird übernommen
                         such_auftragsID = einlese;
-                        /*
-                         * Der Nutzer hat das Attribut Auftrags-ID betreten.
-                         * Somit erhält 'check' ein 'a' um sich zu merken, dass
-                         * es die Abfrage betreten hatte.
-                         */
-
                         savecheck[eingabe - 1] = "a";
                     }
                 }
@@ -183,31 +178,28 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
 
                         // Die Eingabe wird übernommen
                         such_wohnungsID = einlese;
-                        /*
-                         * Der Nutzer hat das Attribut Wohnung betreten. Somit
-                         * erhält 'check' ein 'b' um sich zu merken, dass es die
-                         * Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "b";
                     }
 
                 } // Mitarbeiter
                 if (eingabe == 3) {
                     int einlese = einlesen_Zahl(kategorie, eingabe);
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
                     if (einlese == 999) {
                         savecheck[eingabe - 1] = "";
                         such_mitarbeiterID = mitarbeiterID;
                     }
-
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
                     else if (einlese == 0) {
-                    } else {
-
+                        // Eingabe weder 0 noch 999
+                    }
+                    // Eingabe weder 0 noch 999
+                    else {
+                        // Die Eingabe wird übernommen
                         such_mitarbeiterID = einlese;
-                        /*
-                         * Der Nutzer hat das Attribut Mitarbeiter betreten.
-                         * Somit erhält 'check' ein 'c' um sich zu merken, dass
-                         * es die Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "c";
                     }
                 }
@@ -216,57 +208,56 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                 if (eingabe == 4) {
 
                     String einlese = einlesen_Wort(kategorie, eingabe);
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+
                     if (einlese.equals("" + 999)) {
                         such_mängelbeschreibung = mängelbeschreibung;
                         savecheck[eingabe - 1] = "";
                     }
-                    if (einlese.equals("" + 0)) {
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
+                    else if (einlese.equals("" + 0)) {
                     }
-
+                    // Eingabe weder 0 noch 999
                     else {
 
                         such_mängelbeschreibung = einlese;
-                        /*
-                         * Der Nutzer hat das Attribut Mängelbeschreibung
-                         * betreten. Somit erhält 'check' ein 'd' um sich zu
-                         * merken, dass es die Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "d";
                     }
                 }
 
                 // Status
                 if (eingabe == 5) {
-                    System.out.println("Geben Sie die Zahl vom gewünschten Status aus: '1' = in Bearbeitung, '2' = beendet, '0' = Abbruch!");
+                    System.out.println("Geben Sie die Zahl vom gewünschten Status aus: '1' = in Bearbeitung, '2' = beendet, '0' = Abbruch!\n");
                     int auswahl = einlesen_Zahl(kategorie, eingabe);
 
                     if (auswahl == 1) {
                         such_status = "in Bearbeitung";
-                        /*
-                         * Der Nutzer hat das Attribut Status betreten. Somit
-                         * erhält 'check' ein 'e' um sich zu merken, dass es die
-                         * Abfrage betreten hatte.
-                         */
                         check = check + "e";
                     }
                     if (auswahl == 2) {
-                        savecheck[eingabe - 1] = "e";
                         such_status = "beendet";
-                        /*
-                         * Der Nutzer hat das Attribut Status betreten. Somit
-                         * erhält 'check' ein 'e' um sich zu merken, dass es die
-                         * Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "e";
                     }
 
+                    // 0 = keine Veränderung, nur Abbruch der Abfrage
                     if (auswahl == 0) {
+                    }
+
+                    /*
+                    * 999 = rückgängig machen des Attributes + löschen des
+                    * Buchstabens
+                    */
+                    if (auswahl == 999) {
+                        savecheck[eingabe - 1] = "";
                         such_status = status;
                     }
 
                     // Jede andere Eingabe führt zu einer Fehlermeldung.
                     if (auswahl > 2) {
-                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                     }
 
                 }
@@ -290,10 +281,10 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                     while (datumseingabe == true) {
 
                         System.out.println("Spezialisierung des zu suchenden Eingangsdatums: Ihre Auswahl: Monat = " + such_eingangsMonat + ", Jahr = " + such_eingangsJahr);
-                        System.out.println("Drücke '1' für Monat: ");
-                        System.out.println("Drücke '2' für Jahr: ");
-                        System.out.println("Drücke '3' für Bestätigen: ");
-                        System.out.println("Drücke '0' für Abbruch: ");
+                        System.out.println("Drücke '1'  für Monat: ");
+                        System.out.println("Drücke '2'  für Jahr: ");
+                        System.out.println("Drücke '3'  für Bestätigen: ");
+                        System.out.println("Drücke '0'  für Abbruch: \n");
 
                         Scanner q = new Scanner(System.in);
                         int zähler = q.nextInt();
@@ -322,22 +313,24 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                         if (zähler == 2) {
 
                             int einlese = einlesen_Zahl(auswahl, zähler);
+                            /*
+                            * 999 = rückgängig machen des Attributes + löschen des
+                            * Buchstabens
+                            */
+
                             if (einlese == 999) {
                                 savecheck[eingabe] = "";
                                 such_eingangsJahr = eingangsJahr;
                             }
 
+                            // 0 = keine Veränderung, nur Abbruch der Abfrage
                             else if (einlese == 0) {
                             }
-
+                            // Eingabe weder 0 noch 999
                             else {
+
+                                // Die Eingabe wird übernommen
                                 such_eingangsJahr = einlese;
-                                /*
-                                 * Der Nutzer hat das Attribut Eingangsjahr
-                                 * betreten. Somit erhält 'safecheck' ein 't' um
-                                 * sich zu merken, dass es die Abfrage betreten
-                                 * hatte.
-                                 */
                                 buchstabe_einfügen_jahr = buchstabe_einfügen_jahr + "t";
                             }
                         }
@@ -354,7 +347,7 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                             datumseingabe = false;
                         }
                         if (zähler > 3) {
-                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                         }
                     }
                 }
@@ -379,10 +372,10 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                     while (datumseingabe == true) {
 
                         System.out.println("Spezialisierung des zu suchenden Fertigstellungsdatums: Ihre Auswahl: Monat = " + such_fertigMonat + ", Jahr = " + such_fertigJahr);
-                        System.out.println("Drücke '1' für Monat: ");
-                        System.out.println("Drücke '2' für Jahr: ");
-                        System.out.println("Drücke '3' für Bestätigen: ");
-                        System.out.println("Drücke '4' für Abbruch: ");
+                        System.out.println("Drücke '1'  für Monat: ");
+                        System.out.println("Drücke '2'  für Jahr: ");
+                        System.out.println("Drücke '3'  für Bestätigen: ");
+                        System.out.println("Drücke '4'  für Abbruch: ");
 
                         Scanner q = new Scanner(System.in);
                         int zähler = q.nextInt();
@@ -391,22 +384,23 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                         if (zähler == 1) {
 
                             int einlese = einlesen_Zahl(auswahl, zähler);
+                            /*
+                            * 999 = rückgängig machen des Attributes + löschen des
+                            * Buchstabens
+                            */
                             if (einlese == 999) {
                                 savecheck[eingabe] = "";
                                 such_fertigMonat = fertigMonat;
                             }
 
+                            // 0 = keine Veränderung, nur Abbruch der Abfrage
+
                             else if (einlese == 0) {
                             }
-
+                            // Eingabe weder 0 noch 999
                             else {
+                                // Die Eingabe wird übernommen
                                 such_fertigMonat = einlese;
-                                /*
-                                 * Der Nutzer hat das Attribut
-                                 * Fertigstellungsmonat betreten. Somit erhält
-                                 * 'safecheck' ein 'y' um sich zu merken, dass
-                                 * es die Abfrage betreten hatte.
-                                 */
                                 buchstabe_einfügen_monat = buchstabe_einfügen_monat + "y";
                             }
                         }
@@ -415,21 +409,23 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                         if (zähler == 2) {
 
                             int einlese = einlesen_Zahl(auswahl, zähler);
+                            /*
+                            * 999 = rückgängig machen des Attributes + löschen des
+                            * Buchstabens
+                            */
                             if (einlese == 999) {
                                 savecheck[eingabe + 1] = "";
                                 such_fertigJahr = fertigJahr;
 
-                            } else if (einlese == 0) {
+                            }
+                            // 0 = keine Veränderung, nur Abbruch der Abfrage
+                            else if (einlese == 0) {
                             }
 
+                            // Eingabe weder 0 noch 999
                             else {
+                                // Die Eingabe wird übernommen
                                 such_fertigJahr = einlese;
-                                /*
-                                 * Der Nutzer hat das Attribut
-                                 * Fertigstellungsjahr betreten. Somit erhält
-                                 * 'safecheck' ein 'z' um sich zu merken, dass
-                                 * es die Abfrage betreten hatte.
-                                 */
                                 buchstabe_einfügen_jahr = buchstabe_einfügen_jahr + "z";
                             }
                         }
@@ -446,7 +442,7 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                             datumseingabe = false;
                         }
                         if (zähler > 4) {
-                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                         }
                     }
                 }
@@ -521,12 +517,28 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                         if (vgl_auftragsID.equals(such_auftragsID) && vgl_wohnungsID == such_wohnungsID && vgl_mitarbeiterID == such_mitarbeiterID && vgl_mängelbeschreibung.contains(such_mängelbeschreibung) && vgl_status.contains(such_status) && vgl_eingangsMonat == such_eingangsMonat && vgl_eingangsJahr == such_eingangsJahr && vgl_fertigMonat == such_fertigMonat
                                 && vgl_fertigJahr == such_fertigJahr) {
                             System.out.println("Auftrags ID:          " + repair.getAuftragsID());
-                            System.out.println("Wohnungs ID:          " + repair.getWohnungsID());
-                            System.out.println("Mitarbeiter ID:       " + repair.getMitarbeiterID());
+                            if (repair.getWohnungsID() != -100) {
+                                System.out.println("Wohnungs ID:          " + repair.getWohnungsID());
+                            } else {
+                                System.out.println("Wohnungs ID:          " + "-");
+                            }
+                            if (repair.getMitarbeiterID() != -100) {
+                                System.out.println("Mitarbeiter ID:       " + repair.getMitarbeiterID());
+                            } else {
+                                System.out.println("Mitarbeiter ID:       " + "-");
+                            }
                             System.out.println("Mängelbeschreibung:   " + repair.getMängelbeschreibung());
                             System.out.println("Status:               " + repair.getStatus());
-                            System.out.println("Eingangsdatum:        " + repair.getEingangsdatum());
-                            System.out.println("Fertigstellungsdatum: " + repair.getFertigstellungsDatum());
+                            if (repair.getEingangsdatum() != null) {
+                                System.out.println("Eingangsdatum:        " + repair.getEingangsdatum());
+                            } else {
+                                System.out.println("Eingangsdatum:        " + "--.--.----");
+                            }
+                            if (repair.getFertigstellungsDatum() != null) {
+                                System.out.println("Fertigstellungsdatum: " + repair.getFertigstellungsDatum());
+                            } else {
+                                System.out.println("Fertigstellungsdatum: " + "--.--.----");
+                            }
                             System.out.println("");
                         }
                     }
@@ -534,7 +546,7 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
 
                 // Eingabe > 8
                 if (eingabe > 8) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
@@ -560,7 +572,7 @@ public class HandwerkerauftragSuchenAction extends MenuManager implements Action
                 System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
                 zahl = s.nextInt();
                 if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {

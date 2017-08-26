@@ -13,12 +13,16 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import action.AbgeschlosseneHandwerkeraufträgeAnzeigenAction;
+import action.AbgeschlosseneMietverträgeAnzeigenAction;
 import action.AktiveHandwerkeraufträgeAnzeigenAction;
 import action.AktuelleInteressentenAnzeigenAction;
 import action.AktuelleMieterAnzeigenAction;
 import action.AktuelleMietverträgeAnzeigenAction;
 import action.AktuelleMitarbeiterAnzeigenAction;
-import action.AlleAbgeschlossenenHandwerkeraufträgeAnzeigenAction;
+import action.EhemaligeInteressentenAnzeigenAction;
+import action.EhemaligeMieterAnzeigenAction;
+import action.EhemaligeMitarbeiterAnzeigenAction;
 import action.HandwerkerauftragBearbeitenAction;
 import action.HandwerkerauftragErstellenAction;
 import action.HandwerkerauftragSuchenAction;
@@ -55,48 +59,56 @@ public class MenuManager extends Panel implements Serializable {
 
     private static ArrayList<MenuEntry> menuList = new ArrayList<>();
     static {
-        //1. Menueebene
-        MenuManager.menuList.add(new MenuEntry("", new String[] { "Mieter", "Wohnung", "Handwerkerauftrag", "Mietvertrag", "Interessenten", "Suche" }));
-
+        //1. MenuEbene
         MenuManager.menuList.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Suche" }));
-        MenuManager.menuList.add(new MenuEntry("Kunde", new String[] { "Mieter", "Interessent" }));
-        MenuManager.menuList.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Handwerkeraufträge", "Wohnung suchen" }));
-        MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
-        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "Mietvertrag anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Kunde", new String[] { "Interessent", "Mieter" }));
 
+        MenuManager.menuList.add(new MenuEntry("Mieter", new String[] { "ehemalige Mieter anzeigen", "aktuelle Mieter anzeigen", "Mieter bearbeiten", "Mieter suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Interessent", new String[] { "ehemalige Interessenten anzeigen", "aktuelle Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Wohnung suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "ehemalige Mitarbeiter anzeigen", "aktuelle Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene Mietverträge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige Handwerkeraufträge anzeigen", "aktive Handwerkeraufträge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
         MenuManager.menuList.add(new MenuEntry("Suche", new String[] { "Suchanfrage erstellen", "Suchanfragen anzeigen" }));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige Handwerkeraufträge anzeigen", "Handwerkerauftrag anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
 
-        MenuManager.menuList.add(new MenuEntry("Mieter", new String[] { "Mieter anzeigen", "neuen Mieter erstellen", "Mieter bearbeiten", "Mieter suchen" }));
-        MenuManager.menuList.add(new MenuEntry("Interessent", new String[] { "Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
+        MenuManager.menuList.add(new MenuEntry("aktuelle Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("ehemalige Mieter anzeigen", new EhemaligeMieterAnzeigenAction()));
 
-        MenuManager.menuList.add(new MenuEntry("Mieter", new String[] { "Mieter anzeigen", "Mieter bearbeiten", "Mieter suchen" }));
-
-        MenuManager.menuList.add(new MenuEntry("Wohnung suchen", new WohnungSuchenAktion()));
-        MenuManager.menuList.add(new MenuEntry("Suchanfrage erstellen", new SuchanfrageWohnungSuchenAction()));
-        MenuManager.menuList.add(new MenuEntry("Suchanfragen anzeigen", new SuchanfragenAnzeigenAction()));
-        MenuManager.menuList.add(new MenuEntry("Wohnung anzeigen", new WohnungAnzeigenAction()));
-        MenuManager.menuList.add(new MenuEntry("neue Wohnung erstellen", new WohnungErstellenAction()));
-        MenuManager.menuList.add(new MenuEntry("Wohnung bearbeiten", new WohnungBearbeitenAction()));
-        MenuManager.menuList.add(new MenuEntry("Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
         MenuManager.menuList.add(new MenuEntry("Mieter bearbeiten", new MieterBearbeitenAction()));
         MenuManager.menuList.add(new MenuEntry("Mieter suchen", new MieterSuchenAction()));
-        MenuManager.menuList.add(new MenuEntry("Interessenten anzeigen", new AktuelleInteressentenAnzeigenAction()));
+
+        MenuManager.menuList.add(new MenuEntry("aktuelle Interessenten anzeigen", new AktuelleInteressentenAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("ehemalige Interessenten anzeigen", new EhemaligeInteressentenAnzeigenAction()));
+
         MenuManager.menuList.add(new MenuEntry("Interessent bearbeiten", new InteressentBearbeitenAction()));
         MenuManager.menuList.add(new MenuEntry("neuen Interessenten erstellen", new InteressentErstellenAction()));
         MenuManager.menuList.add(new MenuEntry("Interessenten suchen", new InteressentSuchenAction()));
-        MenuManager.menuList.add(new MenuEntry("Mitarbeiter anzeigen", new AktuelleMitarbeiterAnzeigenAction()));
+
+        MenuManager.menuList.add(new MenuEntry("Wohnung anzeigen", new WohnungAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("neue Wohnung erstellen", new WohnungErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Wohnung bearbeiten", new WohnungBearbeitenAction()));
+        MenuManager.menuList.add(new MenuEntry("Wohnung suchen", new WohnungSuchenAktion()));
+
+        MenuManager.menuList.add(new MenuEntry("ehemalige Mitarbeiter anzeigen", new EhemaligeMitarbeiterAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("aktuelle Mitarbeiter anzeigen", new AktuelleMitarbeiterAnzeigenAction()));
         MenuManager.menuList.add(new MenuEntry("neuen Mitarbeiter erstellen", new MitarbeiterErstellenAction()));
         MenuManager.menuList.add(new MenuEntry("Mitarbeiter bearbeiten", new MitarbeiterBearbeitenAction()));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag suchen", new HandwerkerauftragSuchenAction()));
-        MenuManager.menuList.add(new MenuEntry("fertige Handwerkeraufträge anzeigen", new AlleAbgeschlossenenHandwerkeraufträgeAnzeigenAction()));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag anzeigen", new AktiveHandwerkeraufträgeAnzeigenAction()));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag erstellen", new HandwerkerauftragErstellenAction()));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag bearbeiten", new HandwerkerauftragBearbeitenAction()));
+
         MenuManager.menuList.add(new MenuEntry("Mietvertrag suchen", new MietvertragSuchenAction()));
-        MenuManager.menuList.add(new MenuEntry("Mietvertrag anzeigen", new AktuelleMietverträgeAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("abgeschlossene Mietverträge anzeigen", new AbgeschlosseneMietverträgeAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("aktive Mietverträge anzeigen", new AktuelleMietverträgeAnzeigenAction()));
         MenuManager.menuList.add(new MenuEntry("Mietvertrag erstellen", new MietvertragErstellenAction()));
         MenuManager.menuList.add(new MenuEntry("Mietvertrag bearbeiten", new MietvertragBearbeitenAction()));
+
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag suchen", new HandwerkerauftragSuchenAction()));
+        MenuManager.menuList.add(new MenuEntry("fertige Handwerkeraufträge anzeigen", new AbgeschlosseneHandwerkeraufträgeAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("aktive Handwerkeraufträge anzeigen", new AktiveHandwerkeraufträgeAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag erstellen", new HandwerkerauftragErstellenAction()));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag bearbeiten", new HandwerkerauftragBearbeitenAction()));
+
+        MenuManager.menuList.add(new MenuEntry("Suchanfrage erstellen", new SuchanfrageWohnungSuchenAction()));
+        MenuManager.menuList.add(new MenuEntry("Suchanfragen anzeigen", new SuchanfragenAnzeigenAction()));
+
     }
 
     protected static ArrayList<Mieter> ownerList = new ArrayList<>();
@@ -255,9 +267,9 @@ public class MenuManager extends Panel implements Serializable {
     }
 
     private void personHerausfinden(final String anmeldung) {
-        for (Mitarbeiter ma : MenuManager.workerList) {
-            if (anmeldung.equals(ma.getPasswort())) {
-                System.out.println("\nWillkommen bei der Mietverwaltung " + ma.getName() + "\n");
+        for (Mitarbeiter worker : MenuManager.workerList) {
+            if (anmeldung.equals(worker.getPasswort())) {
+                System.out.println("\nWillkommen bei der Mietverwaltung: " + worker.getName() + ", " + worker.getVorname() + "\n");
             }
         }
     }

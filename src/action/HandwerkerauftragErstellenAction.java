@@ -1,18 +1,3 @@
-/*
- * ----------------------------------------------------------------------------
- *     (c) by data experts gmbh
- *            Postfach 1130
- *            Woldegker Str. 12
- *            17001 Neubrandenburg
- * ----------------------------------------------------------------------------
- *     Dieses Dokument und die hierin enthaltenen Informationen unterliegen
- *     dem Urheberrecht und duerfen ohne die schriftliche Genehmigung des
- *     Herausgebers weder als ganzes noch in Teilen dupliziert, reproduziert
- *     oder manipuliert werden.
- * ----------------------------------------------------------------------------
- *
- * ----------------------------------------------------------------------------
- */
 package action;
 
 import java.awt.BorderLayout;
@@ -41,7 +26,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Handwerkerauftrag erstellen ________________________________________");
+        System.out.println("________________________________________ Handwerkerauftrag erstellen ________________________________________\n");
 
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
@@ -159,14 +144,14 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                 // Wohnung
                 if (änderung == 2) {
 
-                    auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
+                    JComboBox_optimierte_Auswahl(änderung);
                     wohnungsID = HandwerkerauftragErstellenAction.such_wohnung;
                 }
 
                 // Mitarbeiter
                 if (änderung == 3) {
 
-                    auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
+                    JComboBox_optimierte_Auswahl(änderung);
                     mitarbeiterID = HandwerkerauftragErstellenAction.such_mitarbeiterID;
                 }
 
@@ -189,6 +174,11 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                 if (änderung == 6) {
                     System.out.println("Handwerkerauftrag wurde erfolgreich angelegt!");
                     erstellVorgang = false;
+
+                    /*
+                    * Es wird der Handwerkerauftrag in der WOhnungsübersicht
+                    * hinzugefügt
+                    */
 
                     for (objekte.Wohnung flat : MenuManager.getFlatList()) {
                         if (wohnungsID == flat.getWohnungsID()) {
@@ -222,7 +212,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
      */
     public Datum Datum_Eingabe(final Datum aktuellesDatum) {
 
-        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!\n");
         String[] auswahl = { "Jahr", "Monat", "Tag" };
 
         Datum neuesDatum = null;
@@ -236,7 +226,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
         do {
             monat = einlesen_Zahl(auswahl, zähler);
             if (monat > 12) {
-                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!\n");
             }
         } while (monat > 12);
 
@@ -246,7 +236,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
             tag = einlesen_Zahl(auswahl, zähler);
             if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
                 if (tag > 31) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -254,7 +244,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
 
             if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
                 if (tag > 30) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -262,7 +252,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
 
             if (monat == 2) {
                 if (tag > 29) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -287,7 +277,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_AuftragsID_Wohnung_MitarbeiterID(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         HandwerkerauftragErstellenAction.window = false;
         HandwerkerauftragErstellenAction.such_mitarbeiterID = -100;
         HandwerkerauftragErstellenAction.such_wohnung = -100;
@@ -354,6 +344,15 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
 
     }
 
+    /**
+     * Methode zum Einlesen einer Zahl vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return die eingelesene Zahl
+     */
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
         Scanner s = new Scanner(System.in);
         int zahl = -100;
@@ -371,6 +370,16 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
         }
         return zahl;
     }
+
+    /**
+     * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+     * 
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return das eingelesene Wort
+     */
 
     private String einlesen_Wort(final String[] auswahl, final int zähler) {
         System.out.println("Erstellen: " + auswahl[zähler - 1]);

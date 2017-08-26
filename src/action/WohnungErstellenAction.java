@@ -23,7 +23,7 @@ import objekte.Wohnung;
 
 public class WohnungErstellenAction extends MenuManager implements Action, Serializable {
 
-    static int JFrame_mitarbeiterID_auswahl;
+    static int mitarbeiterID_auswahl;
     static boolean window = false;
 
     @Override
@@ -67,21 +67,47 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
              * dient zur Ausgabe durch Zugriff auf deren Index
              */
             String[] kategorie = { "Wohnungsnummer", "Zimmeranzahl", "Fläche", "Kosten", "Etage", "Balkon", "Fußbodenheizung", "Aussicht", "Adresse", "zugeordneten Mitarbeiter" };
-
             System.out.println("\nWählen Sie einen zu bearbeitenenden Wert!\nFolgende Wohnung wird aktuell erstellt: \n");
-            System.out.println("Drücke '1' für Wohnungsnummer:                           " + wohnungsnummer);
-            System.out.println("Drücke '2' für Zimmeranzahl:                             " + zimmeranzahl);
-            System.out.println("Drücke '3' für Fläche:                                   " + fläche);
-            System.out.println("Drücke '4' für Kosten:                                   " + kosten);
-            System.out.println("Drücke '5' für Etage:                                    " + etage);
-            System.out.println("Drücke '6' für Balkon:                                   " + balkon);
-            System.out.println("Drücke '7' für Fußbodenheizung:                          " + fußbodenheizung);
-            System.out.println("Drücke '8' für Aussicht:                                 " + aussicht);
-            System.out.println("Drücke '9' für Adresse:                                  " + adresse);
-            System.out.println("Drücke '10' für zugeordneten Mitarbeiter:                " + zugeordneterMitarbeiter);
-            System.out.println("Drücke '11' zum Erstellen");
-            System.out.println("Drücke '0' um abzubrechen");
-
+            if (wohnungsnummer != -100) {
+                System.out.println("1.  Wohnungsnummer:                           " + wohnungsnummer);
+            } else {
+                System.out.println("1.  Wohnungsnummer:                           " + "-");
+            }
+            if (zimmeranzahl != -100) {
+                System.out.println("2.  Zimmeranzahl:                             " + zimmeranzahl);
+            } else {
+                System.out.println("2.  Zimmeranzahl:                             " + "-");
+            }
+            if (fläche != -100) {
+                System.out.println("3.  Fläche:                                   " + fläche);
+            } else {
+                System.out.println("3.  Fläche:                                   " + "-");
+            }
+            if (kosten != -100) {
+                System.out.println("4.  Kosten:                                   " + kosten);
+            } else {
+                System.out.println("4.  Kosten:                                   " + "-");
+            }
+            if (etage != -100) {
+                System.out.println("5.  Etage:                                    " + etage);
+            } else {
+                System.out.println("5.  Etage:                                    " + "-");
+            }
+            System.out.println("6.  Balkon:                                   " + balkon);
+            System.out.println("7.  Fußbodenheizung:                          " + fußbodenheizung);
+            System.out.println("8.  Aussicht:                                 " + aussicht);
+            if (adresse != null) {
+                System.out.println("9.  Adresse:                                  " + adresse);
+            } else {
+                System.out.println("9.  Adresse:                                  " + "-");
+            }
+            if (zugeordneterMitarbeiter != null) {
+                System.out.println("10. zugeordneten Mitarbeiter:                 " + zugeordneterMitarbeiter);
+            } else {
+                System.out.println("10. zugeordneten Mitarbeiter:                 " + "-");
+            }
+            System.out.println("11. Erstellen");
+            System.out.println("0.  abzubrechen");
             Scanner s = new Scanner(System.in);
 
             /*
@@ -102,11 +128,11 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                     int eingabe = einlesen_Zahl(kategorie, änderung);
                     if (eingabe == 0) {
                     } else {
-
                         int vorhanden = 0;
                         /*
-                         * Für jedes Element in der Wohnungsliste wird geguckt, ob die eingegebende ID mit
-                         * einer bereits existierenden übereinstimmt.
+                        * Für jedes Element in der Wohnungsliste wird geguckt,
+                        * ob die eingegebende ID mit einer bereits
+                         * existierenden übereinstimmt.
                          */
                         for (Wohnung flat : MenuManager.flatList) {
                             if (eingabe == flat.getWohnungsID()) {
@@ -116,8 +142,8 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
 
                         /*
                          * Wenn die Variable 'vorhanden' = 1, dann existiert
-                         * eine Wohnung mit dieser ID bereits. Sonst
-                         * wird die eingegebene ID die ID der Wohnung.
+                         * eine Wohnung mit dieser ID bereits. Sonst wird die
+                         * eingegebene ID die ID der Wohnung.
                          */
                         if (vorhanden == 1) {
                             System.out.println("\n------------------------------- Fehler! ------------------------------- \n Wohnungs-ID bereits vergeben!\n");
@@ -126,7 +152,6 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                         }
                     }
                 }
-
                 // Zimmeranzahl
                 if (änderung == 2) {
                     int eingabe = einlesen_Zahl(kategorie, änderung);
@@ -135,7 +160,6 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                         zimmeranzahl = eingabe;
                     }
                 }
-
                 // Fläche
                 if (änderung == 3) {
                     double eingabe = double_eingabe(kategorie, änderung);
@@ -144,7 +168,6 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                         fläche = eingabe;
                     }
                 }
-
                 // Kosten
                 if (änderung == 4) {
                     double eingabe = double_eingabe(kategorie, änderung);
@@ -162,12 +185,10 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                         etage = eingabe;
                     }
                 }
-
                 // Balkon
                 if (änderung == 6) {
                     System.out.println("Balkonauswahl: Geben Sie die Zahl ein: '1' = JA, '2' = NEIN, '0' = Abbruch!");
                     int eingabe = einlesen_Zahl(kategorie, änderung);
-
                     if (eingabe == 1) {
                         balkon = true;
                     }
@@ -195,7 +216,6 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                     if (eingabe == 2) {
                         fußbodenheizung = false;
                     }
-
                     if (eingabe == 0) {
                     }
 
@@ -209,29 +229,27 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                 if (änderung == 8) {
                     Scanner q = new Scanner(System.in);
                     System.out.println("Wäheln Sie ihre Wunschaussicht: '1' Park, '2' Spree, '3' Schienen, '4' Straße");
-
                     try {
                         int eingabe = q.nextInt();
                         if (eingabe == 0) {
-                        } else {
-
-                            if (eingabe == 1) {
-                                aussicht = "Park";
-                            }
-                            if (eingabe == 2) {
-                                aussicht = "Spree";
-                            }
-                            if (eingabe == 3) {
-                                aussicht = "Schienen";
-                            }
-                            if (eingabe == 4) {
-                                aussicht = "Straße";
-                            }
-                            if (eingabe > 4) {
-                                System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
-                            }
-
                         }
+
+                        if (eingabe == 1) {
+                            aussicht = "Park";
+                        }
+                        if (eingabe == 2) {
+                            aussicht = "Spree";
+                        }
+                        if (eingabe == 3) {
+                            aussicht = "Schienen";
+                        }
+                        if (eingabe == 4) {
+                            aussicht = "Straße";
+                        }
+                        if (eingabe > 4) {
+                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit nicht vorhanden!\n");
+                        }
+
                     } catch (InputMismatchException e) {
                         System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
                     }
@@ -261,8 +279,8 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
 
                 // zugeordneter Mitarbeiter
                 if (änderung == 10) {
-                    auswahl_VertragsID_Wohnung_MitarbeiterID(änderung);
-                    int mitarbeiterID = WohnungErstellenAction.JFrame_mitarbeiterID_auswahl;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    int mitarbeiterID = WohnungErstellenAction.mitarbeiterID_auswahl;
                     String name = "";
                     String vorname = "";
 
@@ -292,6 +310,7 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
             }
         }
+
     }
 
     /**
@@ -300,9 +319,9 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_VertragsID_Wohnung_MitarbeiterID(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         WohnungErstellenAction.window = false;
-        WohnungErstellenAction.JFrame_mitarbeiterID_auswahl = -100;
+        WohnungErstellenAction.mitarbeiterID_auswahl = -100;
         JFrame meinRahmen = new JFrame();
 
         meinRahmen.setSize(250, 250);
@@ -331,7 +350,7 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (änderung == 10) {
-                    WohnungErstellenAction.JFrame_mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
+                    WohnungErstellenAction.mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
                 }
 
             }

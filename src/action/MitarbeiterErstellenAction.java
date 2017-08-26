@@ -12,7 +12,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Mitarbeiter erstellen ________________________________________");
+        System.out.println("________________________________________ Mitarbeiter erstellen ________________________________________\n");
 
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
@@ -23,10 +23,10 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
         boolean erstellVorgang = true;
 
         int mitarbeiterID = -100;
-        String name = "";
-        String vorname = "";
-        String benutzername = "";
-        String passwort = "";
+        String name = "-";
+        String vorname = "-";
+        String benutzername = "-";
+        String passwort = "-";
 
         /*
          * Solange der Erstellvorgang nicht beendet ist, wird immer eine
@@ -46,6 +46,14 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
             System.out.println("2. Name:           " + name);
             System.out.println("3. Vorname:        " + vorname);
             System.out.println("4. Passwort:       " + passwort);
+            if (mitarbeiterID != -100) {
+                System.out.println("1. Mitarbeiter ID:          " + mitarbeiterID);
+            } else {
+                System.out.println("1. Mitarbeiter ID:          " + "-");
+            }
+            System.out.println("2. Name:                    " + name);
+            System.out.println("3. Vorname:                 " + vorname);
+            System.out.println("4. Passwort:                " + passwort);
             System.out.println("5. Erstellen abschließen");
             System.out.println("0. Abbruch");
             System.out.println("");
@@ -78,7 +86,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
                          * einen Mitarbeiter mit der gewünschten ID bereits
                          * gibt.
                          */
-                        for (Mitarbeiter worker : workerList) {
+                        for (Mitarbeiter worker : MenuManager.workerList) {
                             if (eingabe == worker.getMitarbeiterID()) {
                                 Vorhanden = 1;
                             }
@@ -89,7 +97,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
                          * einen Mitarbeiter mit der gewünschten ID bereits
                          * gibt.
                          */
-                        for (Mitarbeiter ehemaligerMitarbeiter : ehemaligeMitarbeiter) {
+                        for (Mitarbeiter ehemaligerMitarbeiter : MenuManager.ehemaligeMitarbeiter) {
                             if (eingabe == ehemaligerMitarbeiter.getMitarbeiterID()) {
                                 Vorhanden = 1;
                             }
@@ -143,7 +151,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
                     benutzername = vorname.trim().substring(0, 1) + "." + name;
 
                     // Mitarbeiter wird zur Mitarbeiterliste hinzugefügt
-                    workerList.add(new Mitarbeiter(mitarbeiterID, name, vorname, benutzername, passwort));
+                    MenuManager.workerList.add(new Mitarbeiter(mitarbeiterID, name, vorname, benutzername, passwort));
                 }
 
                 // Eingabe > 5
@@ -158,7 +166,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
 
     /**
      * Methode zum Einlesen einer Zahl vom Nutzer
-     * 
+     *
      * @param auswahl
      *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
      * @param zähler
@@ -185,7 +193,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
 
     /**
      * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
-     * 
+     *
      * @param auswahl
      *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
      * @param zähler

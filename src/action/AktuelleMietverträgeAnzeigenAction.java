@@ -10,7 +10,7 @@ public class AktuelleMietverträgeAnzeigenAction extends MenuManager implements A
     @Override
     public void action() {
 
-        System.out.println("________________________________________ aktive Mietverträge anzeigen ________________________________________");
+        System.out.println("________________________________________ aktive Mietverträge anzeigen ________________________________________\n");
 
         /*
         * Es wird eine Übersicht über alle aktiven Mietverträge ausgegeben.
@@ -38,12 +38,12 @@ public class AktuelleMietverträgeAnzeigenAction extends MenuManager implements A
             if (contract.getMietBeginn() != null) {
                 System.out.println("Mietbeginn:                   " + contract.getMietBeginn());
             } else {
-                System.out.println("Mietbeginn:                   " + "-");
+                System.out.println("Mietbeginn:                   " + "--.--.----");
             }
             if (contract.getMietEnde() != null) {
                 System.out.println("Mietende:                     " + contract.getMietEnde());
             } else {
-                System.out.println("Mietende:                     " + "-");
+                System.out.println("Mietende:                     " + "--.--.----");
             }
             System.out.println("Status:                       " + contract.getStatus());
             System.out.println("");

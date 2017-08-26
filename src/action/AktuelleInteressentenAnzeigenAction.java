@@ -10,7 +10,7 @@ public class AktuelleInteressentenAnzeigenAction extends MenuManager implements 
     @Override
     public void action() {
 
-        System.out.println("________________________________________ aktuelle Interessent anzeigen ________________________________________");
+        System.out.println("________________________________________ aktuelle Interessent anzeigen ________________________________________\n");
 
         /*
          * Für jedes Element in der Interessentenliste werden die dazugehörigen
@@ -20,13 +20,25 @@ public class AktuelleInteressentenAnzeigenAction extends MenuManager implements 
 
         for (Interessent interest : MenuManager.getInterestList()) {
 
-            System.out.println("Interessenten ID: " + interest.getKundenID());
+            if (interest.getKundenID() != -100) {
+                System.out.println("Interessenten ID: " + interest.getKundenID());
+            } else {
+                System.out.println("Interessenten ID: " + "-");
+            }
             System.out.println("Name:             " + interest.getName());
+
             System.out.println("Vorname:          " + interest.getVorname());
-            System.out.println("Geburtsdatum:     " + interest.getGeburtsdatum());
+            if (interest.getGeburtsdatum() != null) {
+                System.out.println("Geburtsdatum:     " + interest.getGeburtsdatum());
+            } else {
+                System.out.println("Geburtsdatum:     " + "--.--.----");
+            }
             System.out.println("E-Mail:           " + interest.getEmail());
+
             System.out.println("Adresse:          " + interest.getAdresse());
+
             System.out.println("Telefon:          " + interest.getTelefonnummer());
+
             System.out.println("");
         }
 

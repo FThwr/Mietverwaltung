@@ -24,13 +24,12 @@ import objekte.Wohnung;
 public class MieterBearbeitenAction extends MenuManager implements Action, Serializable {
 
     static int bearbeitungsAuswahl_mieterID;
-    static int neue_wohnung;
     static boolean window = false;
 
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Mieter bearbeiten ________________________________________");
+        System.out.println("________________________________________ Mieter bearbeiten ________________________________________\n");
 
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
@@ -39,12 +38,16 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
         int änderung = -99;
 
         // Ausgabe aller Mieter-IDs zur einfacheren Auswahl
-        auswahl_AuftragsID_Wohnung_MitarbeiterID(änderung);
+        JComboBox_optimierte_Auswahl(änderung);
 
         // Variable enthält die ID des zu bearbeitenden Mieters
         int zu_bearbeitenden_mieter = MieterBearbeitenAction.bearbeitungsAuswahl_mieterID;
 
         boolean bearbeitungsVorgang = true;
+        /*
+        * Array beeinhaltet alle Attribute, die verändert werden können und
+        * dient zur Ausgabe durch Zugriff auf deren Index
+        */
         String[] kategorie = { "Mieter ID", "Name", "Vorname", "Geburtsdatum", "Wohnung", "E-Mail", "Adresse", "Telefonnummer", "Rolle" };
 
         /*
@@ -63,14 +66,14 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
          * Allgemeine Variablen alte = aktuelle Werte, neue = neue/veränderte
          * Werte
          */
-        int aktuelleMieterID = 0;
-        int neueMieterID = 0;
+        int aktuelleMieterID = -100;
+        int neueMieterID = -100;
 
-        String aktuellerName = "";
-        String neuerName = "";
+        String aktuellerName = "-";
+        String neuerName = "-";
 
-        String aktuellerVorname = "";
-        String neuerVorname = "";
+        String aktuellerVorname = "-";
+        String neuerVorname = "-";
 
         Datum aktuellesGeburtsdatum = null;
         Datum neuesGeburtsdatum = null;
@@ -78,22 +81,23 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
         int aktuelleWohnung = -100;
         int neueWohnung = -100;
 
-        String aktuelleEMail = "";
-        String neueEMail = "";
+        String aktuelleEMail = "-";
+        String neueEMail = "-";
 
         Adresse aktuelleAdresse = null;
         Adresse neueAdresse = null;
 
-        String aktuelleTelefonnummer = "";
-        String neueTelefonnummer = "";
+        String aktuelleTelefonnummer = "-";
+        String neueTelefonnummer = "-";
 
-        String aktuelleRolle = "";
-        String neueRolle = "";
+        String aktuelleRolle = "-";
+        String neueRolle = "-";
 
         /*
-         * Variablen auch zur tabellarischen Ausgabe und enthalten die
-         * Leerzeichen, die nach den Objekten (Daten) eingesetzt werden. Die
-         * Längen der einzelnen Komponenten der Objekte werden verwendet.
+        * Für jedes Element in der Mieterliste wir zeurst das Objekt in der
+        * ArrayList gesucht, welche der eben ausgewählten Mieter-ID entspricht.
+        * Es werden neue Variablen angelegt, welche die einzelnen Werte des
+        * Objekts beeinhalten.
          */
         String GD_Leerzeichen = "";
         String ADR_Leerzeichen = "";
@@ -147,7 +151,9 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                 längenAnpassung_Vorname = aktuellerName;
                 längenAnpassung_Vorname = länge_anpassen(längenAnpassung_Vorname);
 
-                GD_Leerzeichen = länge_anpassen_Datum(aktuellesGeburtsdatum);
+                if (aktuellesGeburtsdatum != null) {
+                    GD_Leerzeichen = länge_anpassen_Datum(aktuellesGeburtsdatum);
+                }
 
                 längenAnpassnung_Wohnung = "" + owner.getWohnungsnummer();
                 längenAnpassnung_Wohnung = länge_anpassen(längenAnpassnung_Wohnung);
@@ -155,7 +161,9 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                 längenAnpassung_EMail = aktuelleEMail;
                 längenAnpassung_EMail = länge_anpassen(längenAnpassung_EMail);
 
-                ADR_Leerzeichen = länge_anpassen_Adresse(aktuelleAdresse);
+                if (aktuelleAdresse != null) {
+                    ADR_Leerzeichen = länge_anpassen_Adresse(aktuelleAdresse);
+                }
 
                 längenAnpassung_Telefonnummer = aktuelleTelefonnummer;
                 längenAnpassung_Telefonnummer = länge_anpassen(längenAnpassung_Telefonnummer);
@@ -301,9 +309,9 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                             neueWohnung = eingabe;
                         }
                         if (nichtVorhanden == 2) {
-                            System.out.println("------------------------------- Fehler! ------------------------------- \nWohnung bereits von einem anderen Mieter belegt!");
+                            System.out.println("------------------------------- Fehler! ------------------------------- \nWohnung bereits von einem anderen Mieter belegt!\n");
                             if (nichtVorhanden != 2 && nichtVorhanden != 1) {
-                                System.out.println("------------------------------- Fehler! ------------------------------- \nWohnung existiert nicht! ");
+                                System.out.println("------------------------------- Fehler! ------------------------------- \nWohnung existiert nicht!\n");
                             }
                         }
                     }
@@ -350,7 +358,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                     String[] auswahl = { "Mieter", "Delete" };
 
                     Scanner a = new Scanner(System.in);
-                    System.out.println("Geben Sie die Zahl vom gewünschten Status aus: " + "1" + auswahl[0] + "2" + auswahl[1]);
+                    System.out.println("Geben Sie die Zahl vom gewünschten Status aus: 1 = Mieter, 2 = Delete\n");
 
                     try {
                         int eingabe = a.nextInt();
@@ -409,7 +417,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                 }
                 // Eingabe > 10
                 if (änderung > 10) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
 
                 }
             } catch (InputMismatchException e) {
@@ -417,9 +425,6 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
             }
         }
 
-        {
-            System.out.println("------------------------------- Fehler! ------------------------------- \nIhre Eingabe war nicht erfolgreich, weil die ID nicht existiert!\n");
-        }
     }
 
     /**
@@ -431,7 +436,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
      */
     public Datum Datum_Eingabe(final Datum aktuellesDatum) {
 
-        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!");
+        System.out.println("Eingabe des Eingangdatums: Wählen Sie bei einem Wert '0' und das Datum bleibt unverändert!\n");
         String[] auswahl = { "Jahr", "Monat", "Tag" };
 
         Datum neuesDatum = null;
@@ -445,7 +450,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
         do {
             monat = einlesen_Zahl(auswahl, zähler);
             if (monat > 12) {
-                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!\n");
             }
         } while (monat > 12);
 
@@ -455,7 +460,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
             tag = einlesen_Zahl(auswahl, zähler);
             if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
                 if (tag > 31) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -463,7 +468,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
 
             if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
                 if (tag > 30) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -471,7 +476,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
 
             if (monat == 2) {
                 if (tag > 29) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -496,10 +501,8 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_AuftragsID_Wohnung_MitarbeiterID(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         MieterBearbeitenAction.window = false;
-        MieterBearbeitenAction.bearbeitungsAuswahl_mieterID = 0;
-        MieterBearbeitenAction.neue_wohnung = 0;
         JFrame meinRahmen = new JFrame();
 
         meinRahmen.setSize(250, 250);
@@ -511,15 +514,6 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
         if (änderung == -99) {
             meinRahmen.setTitle("Mieter ID");
             JLabel frage = new JLabel("Welchen Mieter möchten Sie bearbeiten?");
-            meinPanel.add(frage);
-            for (Mieter owner : MenuManager.ownerList) {
-                combo2.addItem(owner.getKundenID());
-            }
-        }
-
-        if (änderung == 1) {
-            meinRahmen.setTitle("Mieter ID");
-            JLabel frage = new JLabel("Welchen Mieter möchten Sie auswählen?");
             meinPanel.add(frage);
             for (Mieter owner : MenuManager.ownerList) {
                 combo2.addItem(owner.getKundenID());
@@ -539,9 +533,6 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                 if (änderung == -99) {
                     MieterBearbeitenAction.bearbeitungsAuswahl_mieterID = (int) combo2.getSelectedItem();
                 }
-                if (änderung == 2) {
-                    MieterBearbeitenAction.neue_wohnung = (int) combo2.getSelectedItem();
-                }
             }
         };
         meinPanel.add(combo2);
@@ -554,35 +545,75 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
 
     }
 
+    /**
+     * Methode zum Einlesen einer Zahl vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return die eingelesene Zahl
+     */
+
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
-        System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
         Scanner s = new Scanner(System.in);
-        int wort = s.nextInt();
+        int zahl = -100;
+        try {
+
+            do {
+                System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+                zahl = s.nextInt();
+                if (zahl < 0) {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
+                }
+            } while (zahl < 0);
+        } catch (InputMismatchException e) {
+            System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+        }
+        return zahl;
+    }
+
+    /**
+     * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
+     *
+     * @param auswahl
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
+     * @param zähler
+     *            = welches "Änderungsfeld" der Nutzer betreten hat (Nummer des Index des Arrays)
+     * @return das eingelesene Wort
+     */
+    private String einlesen_Wort(final String[] auswahl, final int zähler) {
+        System.out.println("Erstellen: " + auswahl[zähler - 1]);
+        Scanner s = new Scanner(System.in);
+        String wort = s.nextLine();
         return wort;
     }
 
-    private String einlesen_Wort(final String[] auswahl, final int zähler) {
-        System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
-        Scanner s = new Scanner(System.in);
-        String wort = s.next();
-        return wort;
-    }
+    /**
+     * Methode zum Anpassen der Länge des Datums bei der Ausgabe auf der Konsole.
+     */
 
     private String länge_anpassen_Datum(final Datum a_GD) {
 
         String leerzeichen = "";
 
-        String jahr = "" + a_GD.getJahr();
-        int l_J = jahr.length();
+        int abzug = 0;
+        if (a_GD != null) {
+            String jahr = "" + a_GD.getJahr();
+            int l_J = jahr.length();
 
-        String monat = "" + a_GD.getMonat();
-        int l_M = monat.length();
+            String monat = "" + a_GD.getMonat();
+            int l_M = monat.length();
 
-        String tag = "" + a_GD.getTag();
-        int l_T = tag.length();
+            String tag = "" + a_GD.getTag();
+            int l_T = tag.length();
 
-        int abzug = l_J + l_M + l_T + 2; // +2 für die Punkte zwischen den
+            abzug = l_J + l_M + l_T + 2; // +2 für die Punkte zwischen den
                                          // Komponenten
+
+        } else {
+            abzug = 4;
+        }
         if (abzug < 50) {
             while (abzug < 50) {
                 leerzeichen = leerzeichen + " ";
@@ -592,6 +623,13 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
         return leerzeichen;
     }
 
+    /**
+     * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der Ausgabe auf der Konsole.
+     *
+     * @param wort
+     *            = mitgegebenes Attribut
+     * @return das Attribut mit den anschließenden Leerzeichen
+     */
     private String länge_anpassen(String wort) {
 
         int abzug = wort.length();
@@ -603,24 +641,34 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
         return wort;
     }
 
+    /**
+     * Methode zum Anpassen der Länge der Adresse bei der Ausgabe auf der Konsole.
+     */
+
     private String länge_anpassen_Adresse(final Adresse a_A) {
 
         String leerzeichen = "";
+        int abzug = 0;
+        if (a_A != null) {
+            String hausnummer = "" + a_A.getHausnummer();
+            int l_HN = hausnummer.length();
 
-        String hausnummer = "" + a_A.getHausnummer();
-        int l_HN = hausnummer.length();
+            String platz = "" + a_A.getPlz();
+            int l_P = platz.length();
 
-        String platz = "" + a_A.getPlz();
-        int l_P = platz.length();
+            String stadt = a_A.getStadt();
+            int l_ST = stadt.length();
 
-        String stadt = a_A.getStadt();
-        int l_ST = stadt.length();
+            String straße = a_A.getStrasse();
+            int l_SR = straße.length();
 
-        String straße = a_A.getStrasse();
-        int l_SR = straße.length();
-
-        int abzug = l_HN + l_P + l_SR + l_ST + 3; // +3 für die Leerzeichen
+            abzug = l_HN + l_P + l_SR + l_ST + 3; // +3 für die Leerzeichen
                                                   // zwischen den Komponenten
+        }
+
+        else {
+            abzug = 4;
+        }
         if (abzug < 50) {
             while (abzug < 50) {
                 leerzeichen = leerzeichen + " ";

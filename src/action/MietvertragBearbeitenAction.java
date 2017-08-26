@@ -26,14 +26,14 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
 
     static boolean window = false;
     static String bearbeitungsAuswahl_MietvertragID;
-    static int JFRame_mieterID_auswahl;
-    static int JFrame_wohnungsnummer_auswahl;
-    static int JFrame_mitarbeiterID_auswahl;
+    static int neue_mieterID;
+    static int neue_wohnungsnummer;
+    static int neue_mitarbeiterID;
 
     @Override
     public void action() {
 
-        System.out.println("________________________________________ Mietvertrag bearbeiten ________________________________________");
+        System.out.println("________________________________________ Mietvertrag bearbeiten ________________________________________\n");
 
         /*
          * Variable zum Öffnen des richtigen JFrames und zur Auswahl des zu
@@ -42,7 +42,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
         int änderung = -99;
 
         // Ausgabe aller Mietvertrag-IDs zur einfacheren Auswahl
-        auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
+        JComboBox_optimierte_Auswahl(änderung);
 
         // Variable enthält die ID des zu bearbeitenden Mietvertrags
         String zu_bearbeitenden_mietvertrag = MietvertragBearbeitenAction.bearbeitungsAuswahl_MietvertragID;
@@ -99,8 +99,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
         String ME_Leerzeichen = "";
 
         /*
-         * Für jedes Element in der ArrayList 'contractList', welche alle
-         * aktiven Mietverträge beeinhaltet, wir zeurst das Objekt in der
+         * Für jedes Element in der Mietvertragsliste wird zeurst das Objekt in der
          * ArrayList gesucht, welche der eben ausgewählten Vertrags-ID
          * entspricht. Es werden neue Variablen angelegt, welche die einzelnen
          * Werte des Objekts beeinhalten.
@@ -139,8 +138,13 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                 längenAnpassnung_mitarbeiterID = länge_anpassen(aktuelleMitarbeiterID);
                 längenAnpassung_status = länge_anpassen(aktuellerStatus);
 
-                MB_Leerzeichen = länge_anpassen_Datum(aktuellerMietbeginn);
-                ME_Leerzeichen = länge_anpassen_Datum(aktuellesMietende);
+                if (aktuellerMietbeginn != null) {
+                    MB_Leerzeichen = länge_anpassen_Datum(aktuellerMietbeginn);
+                }
+
+                if (aktuellesMietende != null) {
+                    ME_Leerzeichen = länge_anpassen_Datum(aktuellesMietende);
+                }
             }
         }
 
@@ -228,20 +232,20 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
 
                 // Wohnungsnummer
                 if (änderung == 2) {
-                    auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
-                    neueWohnungsID = MietvertragBearbeitenAction.JFrame_wohnungsnummer_auswahl;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    neueWohnungsID = MietvertragBearbeitenAction.neue_wohnungsnummer;
                 }
 
                 // Mieter-ID
                 if (änderung == 3) {
-                    auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
-                    neueKundenID = MietvertragBearbeitenAction.JFRame_mieterID_auswahl;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    neueKundenID = MietvertragBearbeitenAction.neue_mieterID;
                 }
 
                 // Mitarbeiter-ID
                 if (änderung == 4) {
-                    auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(änderung);
-                    neueMitarbeiterID = MietvertragBearbeitenAction.JFrame_mitarbeiterID_auswahl;
+                    JComboBox_optimierte_Auswahl(änderung);
+                    neueMitarbeiterID = MietvertragBearbeitenAction.neue_mitarbeiterID;
                 }
 
                 // Mietbeginn
@@ -389,7 +393,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
         do {
             monat = einlesen_Zahl(auswahl, zähler);
             if (monat > 12) {
-                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!");
+                System.out.println("\n------------------------------- Fehler! ------------------------------- \nMonat darf nicht höher als 12 sein!\n");
             }
         } while (monat > 12);
 
@@ -399,7 +403,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             tag = einlesen_Zahl(auswahl, zähler);
             if (monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10 || monat == 12) {
                 if (tag > 31) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 31 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -407,7 +411,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
 
             if (monat == 4 || monat == 6 || monat == 9 || monat == 11) {
                 if (tag > 30) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 30 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -415,7 +419,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
 
             if (monat == 2) {
                 if (tag > 29) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nIhr Monat hat maximal 29 Tage!\n");
                 } else {
                     datumsEingabeErfolgreich = true;
                 }
@@ -440,12 +444,11 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
      * @param änderung
      *            = Zähler des Attributs -> Bestimmung, welcher Fall eintritt (ob eine Wohnung, etc. bearbeitet wird)
      */
-    private void auswahl_Mietvertrag_Wohnung_Kunde_Mitarbeiter(final int änderung) {
+    private void JComboBox_optimierte_Auswahl(final int änderung) {
         MietvertragBearbeitenAction.window = false;
-        MietvertragBearbeitenAction.bearbeitungsAuswahl_MietvertragID = "";
-        MietvertragBearbeitenAction.JFrame_wohnungsnummer_auswahl = -100;
-        MietvertragBearbeitenAction.JFRame_mieterID_auswahl = -100;
-        MietvertragBearbeitenAction.JFrame_mitarbeiterID_auswahl = -100;
+        MietvertragBearbeitenAction.neue_wohnungsnummer = -100;
+        MietvertragBearbeitenAction.neue_mieterID = -100;
+        MietvertragBearbeitenAction.neue_mitarbeiterID = -100;
 
         JFrame meinRahmen = new JFrame();
         meinRahmen.setSize(250, 250);
@@ -469,7 +472,9 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             meinPanel.add(frage);
 
             for (Wohnung flat : MenuManager.flatList) {
-                combo2.addItem(flat.getWohnungsID());
+                if (flat.getStatus().equals("frei")) {
+                    combo2.addItem(flat.getWohnungsID());
+                }
             }
         }
 
@@ -478,7 +483,9 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             JLabel frage = new JLabel("Welcher Mieter soll ausgewählt werden?");
             meinPanel.add(frage);
             for (Mieter owner : MenuManager.ownerList) {
-                combo2.addItem(owner.getKundenID());
+                if (owner.getWohnungsnummer() == -100) {
+                    combo2.addItem(owner.getKundenID());
+                }
             }
         }
 
@@ -505,13 +512,13 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                     MietvertragBearbeitenAction.bearbeitungsAuswahl_MietvertragID = (String) combo2.getSelectedItem();
                 }
                 if (änderung == 2) {
-                    MietvertragBearbeitenAction.JFrame_wohnungsnummer_auswahl = (int) combo2.getSelectedItem();
+                    MietvertragBearbeitenAction.neue_wohnungsnummer = (int) combo2.getSelectedItem();
                 }
                 if (änderung == 3) {
-                    MietvertragBearbeitenAction.JFRame_mieterID_auswahl = (int) combo2.getSelectedItem();
+                    MietvertragBearbeitenAction.neue_mieterID = (int) combo2.getSelectedItem();
                 }
                 if (änderung == 4) {
-                    MietvertragBearbeitenAction.JFrame_mitarbeiterID_auswahl = (int) combo2.getSelectedItem();
+                    MietvertragBearbeitenAction.neue_mitarbeiterID = (int) combo2.getSelectedItem();
                 }
             }
         };
@@ -543,7 +550,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                 System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
                 zahl = s.nextInt();
                 if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {

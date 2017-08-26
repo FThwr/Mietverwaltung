@@ -84,7 +84,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
             } else {
                 System.out.println("4. Mitarbeiter-ID:                   " + "-");
             }
-            System.out.print("5. Mietbeginn:        ");
+            System.out.print("5. Mietbeginn:                       ");
             System.out.print("--.");
 
             if (such_beginnMonat != -100) {
@@ -98,7 +98,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                 System.out.println("----");
             }
 
-            System.out.print("6. Mietende: ");
+            System.out.print("6. Mietende:                         ");
             System.out.print("--.");
 
             if (such_endeMonat != -100) {
@@ -111,11 +111,11 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
             } else {
                 System.out.println("----");
             }
-            System.out.println("7. Status                         " + such_status);
+            System.out.println("7. Status                        " + such_status);
             System.out.println("8. Suche bestätigen");
+            System.out.println("999. um die zu suchende Eigenschaft zurückzusetzen");
             System.out.println("0. generell Abbruch");
-            System.out.println("999. Rückgängig");
-
+            System.out.println("");
             /*
              * Die try-catch Klammer existiert für nicht erwünschte Eingaben wie
              * Zeichen, wo Zahlen erwartet werden.
@@ -154,11 +154,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                         } catch (NumberFormatException e) {
                             System.out.println("\n------------------------------- Fehler! ------------------------------- \nKeine Nummer!");
                         }
-                        /*
-                         * Der Nutzer hat das Attribut Mietvertrag-ID betreten. Somit
-                         * erhält 'savecheck' ein 'a' um sich zu merken, dass es die
-                         * Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "a";
                     }
                 }
@@ -185,11 +180,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                         // Die Eingabe wird übernommen
                         such_wohnungsID = einlese;
-                        /*
-                         * Der Nutzer hat das Attribut Wohnungsnummer betreten. Somit
-                         * erhält 'savecheck' ein 'b' um sich zu merken, dass es die
-                         * Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "b";
                     }
                 }
@@ -216,11 +206,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                         // Die Eingabe wird übernommen
                         such_kundenID = einlese;
-                        /*
-                         * Der Nutzer hat das Attribut Mieter-ID betreten. Somit
-                         * erhält 'savecheck' ein 'c' um sich zu merken, dass es die
-                         * Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "c";
                     }
                 }
@@ -247,11 +232,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                         // Die Eingabe wird übernommen
                         such_mitarbeiterID = einlese;
-                        /*
-                         * Der Nutzer hat das Attribut Mitarbeiter-ID betreten. Somit
-                         * erhält 'savecheck' ein 'd' um sich zu merken, dass es die
-                         * Abfrage betreten hatte.
-                         */
                         savecheck[eingabe - 1] = "d";
                     }
                 }
@@ -259,21 +239,14 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                 // Mietbeginn
                 if (eingabe == 5) {
                     System.out.println("Spezialisierung des zu suchenden Mietbeginns: --." + such_beginnMonat + "." + such_beginnJahr);
-                    System.out.println("Drücke '1' für Monat: ");
-                    System.out.println("Drücke '2' für Jahr:  ");
-                    System.out.println("Drücke '3' für Bestätigen: ");
-                    System.out.println("Drücke '0' für Abbruch: ");
+                    System.out.println("Drücke '1'  für Monat: ");
+                    System.out.println("Drücke '2'  für Jahr:  ");
+                    System.out.println("Drücke '3'  für Bestätigen: ");
+                    System.out.println("Drücke '0'  für Abbruch: ");
 
                     String[] auswahl = { "Monat", "Jahr" };
                     boolean datumseingabe = true;
 
-                    /*
-                     * Variablen um zu merken, welche Attributsveränderungen der
-                     * Nutzer betreten hat. Hinzugefügt zum 'savecheck' werden die
-                     * Buchstaben jedoch erst, wenn die Suche abgeschlossen ist,
-                     * weil sonst Buchstaben enthalten wären für
-                     * Attributänderungen, die garnicht existieren.
-                     */
                     String buchstabe_einfügen_monat = "";
                     String buchstabe_einfügen_jahr = "";
 
@@ -304,11 +277,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                                 // Die Eingabe wird übernommen
                                 such_beginnMonat = einlese;
-                                /*
-                                 * Der Nutzer hat das Attribut Mietbeginn-Monat betreten. Somit
-                                 * erhält 'savecheck' ein 'e' um sich zu merken, dass es die
-                                 * Abfrage betreten hatte.
-                                 */
                                 buchstabe_einfügen_monat = buchstabe_einfügen_monat + "e";
                             }
                         }
@@ -357,7 +325,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                         // Eingabe > 3
                         if (zähler > 3) {
-                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                         }
                     }
                 }
@@ -373,13 +341,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                     String[] auswahl = { "Monat", "Jahr" };
                     boolean datumseingabe = true;
 
-                    /*
-                     * Variablen um zu merken, welche Attributsveränderungen der
-                     * Nutzer betreten hat. Hinzugefügt zum 'savecheck' werden die
-                     * Buchstaben jedoch erst, wenn die Suche abgeschlossen ist,
-                     * weil sonst Buchstaben enthalten wären für
-                     * Attributänderungen, die garnicht existieren.
-                     */
                     String buchstabe_einfügen_monat = "";
                     String buchstabe_einfügen_jahr = "";
 
@@ -410,11 +371,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                                 // Die Eingabe wird übernommen
                                 such_endeMonat = einlese;
-                                /*
-                                 * Der Nutzer hat das Attribut Mietende-Monat betreten. Somit
-                                 * erhält 'savecheck' ein 'g' um sich zu merken, dass es die
-                                 * Abfrage betreten hatte.
-                                 */
                                 buchstabe_einfügen_monat = buchstabe_einfügen_monat + "g";
                             }
                         }
@@ -464,7 +420,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                         // Eingabe > 3
                         if (zähler > 3) {
-                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                            System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                         }
                     }
                 }
@@ -490,11 +446,6 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
 
                         // Die Eingabe wird übernommen
                         such_status = einlese;
-                        /*
-                        * Der Nutzer hat das Attribut Status betreten. Somit
-                        * erhält 'savecheck' ein 'i' um sich zu merken, dass es die
-                        * Abfrage betreten hatte.
-                        */
                         savecheck[eingabe + 1] = "i";
                     }
                 }
@@ -566,12 +517,33 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                          * übereinstimmen wird der Mietvertrag ausgegeben.
                          */
                         if (vgl_mietvertragID == (such_mietvertragID) && vgl_wohnungsID == such_wohnungsID && vgl_kundenID == such_kundenID && vgl_mitarbeiterID == such_mitarbeiterID && vgl_beginnMonat == such_beginnMonat && vgl_beginnJahr == such_beginnJahr && vgl_endeMonat == such_endeMonat && vgl_endeJahr == such_endeJahr && vgl_status.equals(such_status)) {
+
                             System.out.println("Mietvertrag-ID:       " + contract.getMietvertragsID());
-                            System.out.println("Wohnungs-ID:          " + contract.getWohnungsID());
-                            System.out.println("Kunden-ID:            " + contract.getKundenID());
-                            System.out.println("Mitarbeiter-ID:       " + contract.getMitarbeiterID());
-                            System.out.println("Mietbeginn:           " + contract.getMietBeginn());
-                            System.out.println("Mietende:             " + contract.getMietEnde());
+                            if (contract.getWohnungsID() != -100) {
+                                System.out.println("Wohnungs-ID:          " + contract.getWohnungsID());
+                            } else {
+                                System.out.println("Wohnungs-ID:          " + "-");
+                            }
+                            if (contract.getKundenID() != -100) {
+                                System.out.println("Kunden-ID:            " + contract.getKundenID());
+                            } else {
+                                System.out.println("Kunden-ID:            " + "-");
+                            }
+                            if (contract.getMitarbeiterID() != -100) {
+                                System.out.println("Mitarbeiter-ID:       " + contract.getMitarbeiterID());
+                            } else {
+                                System.out.println("Mitarbeiter-ID:       " + "-");
+                            }
+                            if (contract.getMietBeginn() != null) {
+                                System.out.println("Mietbeginn:           " + contract.getMietBeginn());
+                            } else {
+                                System.out.println("Mietbeginn:           " + "--.--.----");
+                            }
+                            if (contract.getMietEnde() != null) {
+                                System.out.println("Mietende:             " + contract.getMietEnde());
+                            } else {
+                                System.out.println("Mietende:             " + "--.--.----");
+                            }
                             System.out.println("Status:               " + contract.getStatus());
                             System.out.println("");
                         }
@@ -579,7 +551,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                 }
                 // Eingabe > 8
                 if (eingabe > 8) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nEingabemöglichkeit existiert nicht!\n");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
@@ -605,7 +577,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                 System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
                 zahl = s.nextInt();
                 if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!\n");
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {

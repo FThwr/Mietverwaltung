@@ -9,20 +9,28 @@ public class EhemaligeInteressentenAnzeigenAction extends MenuManager implements
     @Override
     public void action() {
 
-        System.out.println("________________________________________ ehemalige Interessent anzeigen ________________________________________");
+        System.out.println("________________________________________ ehemalige Interessent anzeigen ________________________________________\n");
 
         /*
-         * Für jedes Element in der Liste der ehemaligen Interessenten werden die dazugehörigen
-         * Daten ausgegeben.
          * Es wird eine Übersicht über alle ehemaligen Interessenten ausgegeben.
          */
 
         for (objekte.Interessent ehemaligerInteressent : MenuManager.getEhemaligeInteressenten()) {
 
+            if (ehemaligerInteressent.getKundenID() != -100) {
             System.out.println("Interessenten ID: " + ehemaligerInteressent.getKundenID());
+            }
+            else {
+                System.out.println("Interessenten ID: " + "-");
+            }
             System.out.println("Name:             " + ehemaligerInteressent.getName());
             System.out.println("Vorname:          " + ehemaligerInteressent.getVorname());
+            if (ehemaligerInteressent.getGeburtsdatum() != null) {
             System.out.println("Geburtsdatum:     " + ehemaligerInteressent.getGeburtsdatum());
+            }
+            else {
+                System.out.println("Geburtsdatum:     " + "--.--.----");
+            }
             System.out.println("E-Mail:           " + ehemaligerInteressent.getEmail());
             System.out.println("Adresse:          " + ehemaligerInteressent.getAdresse());
             System.out.println("Telefon:          " + ehemaligerInteressent.getTelefonnummer());
