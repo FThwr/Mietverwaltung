@@ -60,7 +60,7 @@ public class MenuManager extends Panel implements Serializable {
     private static ArrayList<MenuEntry> menuList = new ArrayList<>();
     static {
         //1. MenuEbene
-        MenuManager.menuList.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Suche" }));
+        MenuManager.menuList.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Such" }));
         MenuManager.menuList.add(new MenuEntry("Kunde", new String[] { "Interessent", "Mieter" }));
 
         MenuManager.menuList.add(new MenuEntry("Mieter", new String[] { "ehemalige Mieter anzeigen", "aktuelle Mieter anzeigen", "Mieter bearbeiten", "Mieter suchen" }));
@@ -69,7 +69,7 @@ public class MenuManager extends Panel implements Serializable {
         MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "ehemalige Mitarbeiter anzeigen", "aktuelle Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
         MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene Mietverträge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
         MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige Handwerkeraufträge anzeigen", "aktive Handwerkeraufträge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
-        MenuManager.menuList.add(new MenuEntry("Suche", new String[] { "Suchanfrage erstellen", "Suchanfragen anzeigen" }));
+        MenuManager.menuList.add(new MenuEntry("Suchanfrage", new String[] { "Suchanfrage erstellen", "Suchanfragen anzeigen" }));
 
         MenuManager.menuList.add(new MenuEntry("aktuelle Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
         MenuManager.menuList.add(new MenuEntry("ehemalige Mieter anzeigen", new EhemaligeMieterAnzeigenAction()));
