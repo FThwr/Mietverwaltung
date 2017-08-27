@@ -1,5 +1,6 @@
 package test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ public class Test {
 
         // MenuManager m = new MenuManager();
 
-        //    new File("..\\menumanager.dat").delete();
+    	//new File("..\\menumanager.dat").delete();
 
         MenuManager m;
         try {
