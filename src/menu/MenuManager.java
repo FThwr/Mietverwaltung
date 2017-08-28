@@ -13,12 +13,12 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import action.AbgeschlosseneHandwerkeraufträgeAnzeigenAction;
-import action.AbgeschlosseneMietverträgeAnzeigenAction;
-import action.AktiveHandwerkeraufträgeAnzeigenAction;
+import action.AbgeschlosseneHandwerkerauftrÃ¤geAnzeigenAction;
+import action.AbgeschlosseneMietvertrÃ¤geAnzeigenAction;
+import action.AktiveHandwerkerauftrÃ¤geAnzeigenAction;
 import action.AktuelleInteressentenAnzeigenAction;
 import action.AktuelleMieterAnzeigenAction;
-import action.AktuelleMietverträgeAnzeigenAction;
+import action.AktuelleMietvertrÃ¤geAnzeigenAction;
 import action.AktuelleMitarbeiterAnzeigenAction;
 import action.EhemaligeInteressentenAnzeigenAction;
 import action.EhemaligeMieterAnzeigenAction;
@@ -60,15 +60,15 @@ public class MenuManager extends Panel implements Serializable {
     private static ArrayList<MenuEntry> menuList = new ArrayList<>();
     static {
         //1. MenuEbene
-        MenuManager.menuList.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Such" }));
+        MenuManager.menuList.add(new MenuEntry("", new String[] { "Kunde", "Wohnung", "Mitarbeiter", "Handwerkerauftrag", "Mietvertrag", "Suchanfrage" }));
         MenuManager.menuList.add(new MenuEntry("Kunde", new String[] { "Interessent", "Mieter" }));
 
         MenuManager.menuList.add(new MenuEntry("Mieter", new String[] { "ehemalige Mieter anzeigen", "aktuelle Mieter anzeigen", "Mieter bearbeiten", "Mieter suchen" }));
         MenuManager.menuList.add(new MenuEntry("Interessent", new String[] { "ehemalige Interessenten anzeigen", "aktuelle Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
         MenuManager.menuList.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Wohnung suchen" }));
         MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "ehemalige Mitarbeiter anzeigen", "aktuelle Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
-        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene Mietverträge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige Handwerkeraufträge anzeigen", "aktive Handwerkeraufträge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene MietvertrÃ¤ge anzeigen", "aktive MietvertrÃ¤ge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige HandwerkerauftrÃ¤ge anzeigen", "aktive HandwerkerauftrÃ¤ge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
         MenuManager.menuList.add(new MenuEntry("Suchanfrage", new String[] { "Suchanfrage erstellen", "Suchanfragen anzeigen" }));
 
         MenuManager.menuList.add(new MenuEntry("aktuelle Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
@@ -95,14 +95,14 @@ public class MenuManager extends Panel implements Serializable {
         MenuManager.menuList.add(new MenuEntry("Mitarbeiter bearbeiten", new MitarbeiterBearbeitenAction()));
 
         MenuManager.menuList.add(new MenuEntry("Mietvertrag suchen", new MietvertragSuchenAction()));
-        MenuManager.menuList.add(new MenuEntry("abgeschlossene Mietverträge anzeigen", new AbgeschlosseneMietverträgeAnzeigenAction()));
-        MenuManager.menuList.add(new MenuEntry("aktive Mietverträge anzeigen", new AktuelleMietverträgeAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("abgeschlossene MietvertrÃ¤ge anzeigen", new AbgeschlosseneMietvertrÃ¤geAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("aktive MietvertrÃ¤ge anzeigen", new AktuelleMietvertrÃ¤geAnzeigenAction()));
         MenuManager.menuList.add(new MenuEntry("Mietvertrag erstellen", new MietvertragErstellenAction()));
         MenuManager.menuList.add(new MenuEntry("Mietvertrag bearbeiten", new MietvertragBearbeitenAction()));
 
         MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag suchen", new HandwerkerauftragSuchenAction()));
-        MenuManager.menuList.add(new MenuEntry("fertige Handwerkeraufträge anzeigen", new AbgeschlosseneHandwerkeraufträgeAnzeigenAction()));
-        MenuManager.menuList.add(new MenuEntry("aktive Handwerkeraufträge anzeigen", new AktiveHandwerkeraufträgeAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("fertige HandwerkerauftrÃ¤ge anzeigen", new AbgeschlosseneHandwerkerauftrÃ¤geAnzeigenAction()));
+        MenuManager.menuList.add(new MenuEntry("aktive HandwerkerauftrÃ¤ge anzeigen", new AktiveHandwerkerauftrÃ¤geAnzeigenAction()));
         MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag erstellen", new HandwerkerauftragErstellenAction()));
         MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag bearbeiten", new HandwerkerauftragBearbeitenAction()));
 
@@ -114,11 +114,11 @@ public class MenuManager extends Panel implements Serializable {
     protected static ArrayList<Mieter> ownerList = new ArrayList<>();
     protected static ArrayList<Mitarbeiter> workerList = new ArrayList<>();
     protected static ArrayList<Wohnung> flatList = new ArrayList<>();
-    protected static ArrayList<Mietvertrag> beendeteMietverträge = new ArrayList<>();
+    protected static ArrayList<Mietvertrag> beendeteMietvertrÃ¤ge = new ArrayList<>();
     protected static ArrayList<Mieter> ehemaligeMieter = new ArrayList<>();
     protected static ArrayList<Mitarbeiter> ehemaligeMitarbeiter = new ArrayList<>();
     protected static ArrayList<Interessent> ehemaligeInteressenten = new ArrayList<>();
-    protected static ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge = new ArrayList<>();
+    protected static ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkerauftrÃ¤ge = new ArrayList<>();
     protected static ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
     protected static ArrayList<Interessent> InterestList = new ArrayList<>();
     protected static ArrayList<Mietvertrag> contractList = new ArrayList<>();
@@ -134,20 +134,20 @@ public class MenuManager extends Panel implements Serializable {
         MenuManager.ownerList = ownerList;
     }
 
-    public static ArrayList<Handwerkerauftrag> getAbgeschlosseneHandwerkeraufträge() {
-        return MenuManager.abgeschlosseneHandwerkeraufträge;
+    public static ArrayList<Handwerkerauftrag> getAbgeschlosseneHandwerkerauftrÃ¤ge() {
+        return MenuManager.abgeschlosseneHandwerkerauftrÃ¤ge;
     }
 
-    public static void setAbgeschlosseneHandwerkeraufträge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge) {
-        MenuManager.abgeschlosseneHandwerkeraufträge = abgeschlosseneHandwerkeraufträge;
+    public static void setAbgeschlosseneHandwerkerauftrÃ¤ge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkerauftrÃ¤ge) {
+        MenuManager.abgeschlosseneHandwerkerauftrÃ¤ge = abgeschlosseneHandwerkerauftrÃ¤ge;
     }
 
-    public static ArrayList<Mietvertrag> getBeendeteMietverträge() {
-        return MenuManager.beendeteMietverträge;
+    public static ArrayList<Mietvertrag> getBeendeteMietvertrÃ¤ge() {
+        return MenuManager.beendeteMietvertrÃ¤ge;
     }
 
-    public static void setBeendeteMietverträge(final ArrayList<Mietvertrag> beendeteMietverträge) {
-        MenuManager.beendeteMietverträge = beendeteMietverträge;
+    public static void setBeendeteMietvertrÃ¤ge(final ArrayList<Mietvertrag> beendeteMietvertrÃ¤ge) {
+        MenuManager.beendeteMietvertrÃ¤ge = beendeteMietvertrÃ¤ge;
     }
 
     public MenuManager() {
@@ -227,7 +227,7 @@ public class MenuManager extends Panel implements Serializable {
     }
 
     public void add(final Mietvertrag mietvertrag) {
-        MenuManager.beendeteMietverträge.add(mietvertrag);
+        MenuManager.beendeteMietvertrÃ¤ge.add(mietvertrag);
     }
 
     public void add(final Interessent interessent) {
@@ -240,27 +240,27 @@ public class MenuManager extends Panel implements Serializable {
 
     public void start() throws FileNotFoundException, ClassNotFoundException, IOException {
         String anmeldung = " ";
-        boolean passwortÜbereinstimmung = false;
+        boolean passwortÃœbereinstimmung = false;
 
-        while (passwortÜbereinstimmung == false) {
+        while (passwortÃœbereinstimmung == false) {
             anmeldung = anmelden();
             boolean passwort = passwortExistens(anmeldung);
 
             if (passwort == false) {
                 System.out.println("Anmeldung nicht erfolgreich!\n");
             } else {
-                passwortÜbereinstimmung = true;
+                passwortÃœbereinstimmung = true;
             }
         }
         personHerausfinden(anmeldung);
 
-        System.out.println("\nBei Eingabe von \"0\" kehren Sie zum vorherigen Menü zurück. \nBei \"-1\" wird das Programm gespeichert und beendet.");
+        System.out.println("\nBei Eingabe von \"0\" kehren Sie zum vorherigen MenÃ¼ zurÃ¼ck. \nBei \"-1\" wird das Programm gespeichert und beendet.");
         MenuEntry meAktuell = ersterEintrag();
         try {
             meAktuell = aufruf(meAktuell);
 
         } catch (NullPointerException | ClassNotFoundException | IOException ex) {
-            System.out.println("keine Aktion hinterlegt, weil kein Menüeintrag erstellt wurde");
+            System.out.println("keine Aktion hinterlegt, weil kein MenÃ¼eintrag erstellt wurde");
             actionAusfuehren(meAktuell);
             meAktuell = aufruf(meAktuell);
         }
@@ -299,7 +299,7 @@ public class MenuManager extends Panel implements Serializable {
             System.out.println(meAktuell.getName());
             zaehleMenuePunkteAuf(meAktuell);
 
-            System.out.print("Wählen Sie einen Menüpunkt aus: ");
+            System.out.print("WÃ¤hlen Sie einen MenÃ¼punkt aus: ");
             int eingabe = eingabeEinlesen(scanner);
             System.out.println("");
             if (eingabe <= meAktuell.getLocation().length && eingabe > 0) {
@@ -312,7 +312,7 @@ public class MenuManager extends Panel implements Serializable {
                 System.out.println("Programm wurde beendet.");
                 System.exit(0);
             } else {
-                System.out.println("Fehler, der ausgewählte Menüpunkt existiert nicht.");
+                System.out.println("Fehler, der ausgewÃ¤hlte MenÃ¼punkt existiert nicht.");
             }
         } while (meAktuell.getLocation() != null);
         meAktuell = actionAusfuehren(meAktuell);
