@@ -223,7 +223,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                          * Interessenten wird geguckt, ob die eingegebende ID
                          * mit einer bereits existierenden übereinstimmt.
                          */
-                        for (Interessent ehemaligerInteressent : MenuManager.ehemaligeInteressenten) {
+                        for (Interessent ehemaligerInteressent : MenuManager.getEhemaligeInteressenten()) {
                             if (eingabe == ehemaligerInteressent.getKundenID()) {
                                 vorhanden = 1;
                             }
@@ -372,7 +372,7 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
                     if (neueRolle.equals("Mieter")) {
                         for (Interessent interest : MenuManager.getInterestList()) {
                             if (zu_bearbeitenden_interessent == interest.getKundenID()) {
-                                MenuManager.currentManager.add(new Mieter(neueInteressentenID, neuerName, neuerVorname, neuesGeburtsdatum, -100, neueEMail, neueAdresse, neueTelefon, neueRolle));
+                                MenuManager.add(new Mieter(neueInteressentenID, neuerName, neuerVorname, neuesGeburtsdatum, -100, neueEMail, neueAdresse, neueTelefon, neueRolle));
 
                                 // Löschen
                                 Iterator<Interessent> iter = MenuManager.getInterestList().iterator();

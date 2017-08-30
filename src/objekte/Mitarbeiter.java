@@ -1,6 +1,10 @@
 package objekte;
 
-public class Mitarbeiter {
+import java.io.Serializable;
+
+public class Mitarbeiter implements Serializable {
+
+    private static final long serialVersionUID = 2331305355111081008L;
 
     private int mitarbeiterID;
     private String name;

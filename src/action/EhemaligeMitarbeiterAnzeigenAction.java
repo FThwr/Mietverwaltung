@@ -15,15 +15,14 @@ public class EhemaligeMitarbeiterAnzeigenAction extends MenuManager implements A
         /*
          * Es wird eine Übersicht über alle ehemaligen Mitarbeiter ausgegeben.
          */
-        
-        for (Mitarbeiter ehemaligerMitarbeiter : MenuManager.ehemaligeMitarbeiter) {
+
+        for (Mitarbeiter ehemaligerMitarbeiter : MenuManager.getEhemaligeMitarbeiter()) {
 
             if (ehemaligerMitarbeiter.getMitarbeiterID() != -100) {
                 System.out.println("Mitarbeiter ID: " + ehemaligerMitarbeiter.getMitarbeiterID());
-                }
-                else {
-                    System.out.println("Mitarbeiter ID: " + "-");
-                }
+            } else {
+                System.out.println("Mitarbeiter ID: " + "-");
+            }
             System.out.println("Name:           " + ehemaligerMitarbeiter.getName());
             System.out.println("Vorname:        " + ehemaligerMitarbeiter.getVorname());
             System.out.println("Benutzername:   " + ehemaligerMitarbeiter.getBenutzername());

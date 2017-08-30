@@ -130,7 +130,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
          * entspricht. Es werden neue Variablen angelegt, welche die einzelnen
          * Werte des Objekts beeinhalten..
          */
-        for (Wohnung flat : MenuManager.flatList) {
+        for (Wohnung flat : MenuManager.getFlatList()) {
             if (zu_bearbeitende_wohnung == flat.getWohnungsID()) {
 
                 aktuelleID = flat.getWohnungsID();
@@ -467,7 +467,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
                     String name = "";
                     String vorname = "";
 
-                    for (Mitarbeiter worker : MenuManager.workerList) {
+                    for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                         if (worker.getMitarbeiterID() == mitarbeiterID) {
                             name = worker.getName();
                             vorname = worker.getVorname();
@@ -480,14 +480,14 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
                 if (änderung == 15) {
                     bearbeitungsVorgang = false;
 
-                    for (Wohnung flat : MenuManager.flatList) {
+                    for (Wohnung flat : MenuManager.getFlatList()) {
 
                         /*
                          * wenn beim bearbeiten eine Wohnung ausgewählt wird,
                          * die jemanden gehört, dann wohnt der Mieter in der
                          * Wohnung mit der eben angepassten Wohnungsnummer
                          */
-                        for (Mieter owner : MenuManager.ownerList) {
+                        for (Mieter owner : MenuManager.getOwnerList()) {
                             if (owner.getWohnungsnummer() == aktuelleID && neueID != aktuelleID) {
                                 owner.setWohnungsnummer(neueID);
                             }
@@ -618,7 +618,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
             meinRahmen.setTitle("Wohnungs-ID");
             JLabel frage = new JLabel("Welche Wohnung wird bearbeitet?");
             meinPanel.add(frage);
-            for (Wohnung flat : MenuManager.flatList) {
+            for (Wohnung flat : MenuManager.getFlatList()) {
                 if (flat.getStatus().equals("frei")) {
                     combo2.addItem(flat.getWohnungsID());
                 }
@@ -630,7 +630,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
             JLabel frage = new JLabel("Welche Wohnung soll ausgewählt werden?");
             meinPanel.add(frage);
 
-            for (Wohnung flat : MenuManager.flatList) {
+            for (Wohnung flat : MenuManager.getFlatList()) {
                 combo2.addItem(flat.getWohnungsID());
             }
         }
@@ -639,7 +639,7 @@ public class WohnungBearbeitenAction extends MenuManager implements Action {
             meinRahmen.setTitle("Mitarbeiter ID");
             JLabel frage = new JLabel("Welcher Mitarbeiter soll ausgewählt werden?");
             meinPanel.add(frage);
-            for (Mitarbeiter worker : MenuManager.workerList) {
+            for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                 combo2.addItem(worker.getMitarbeiterID());
             }
         }

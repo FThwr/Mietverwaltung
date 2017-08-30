@@ -84,7 +84,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
          * werden neue Variablen angelegt, welche die einzelnen Werte des
          * Objekts beeinhalten.
          */
-        for (Mitarbeiter worker : MenuManager.workerList) {
+        for (Mitarbeiter worker : MenuManager.getWorkerList()) {
             if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
 
                 aktuelleMitarbeiterID = worker.getMitarbeiterID();
@@ -168,7 +168,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
                          * überprüft, ob es einen Mitarbeiter mit der
                          * gewünschten ID bereits gibt.
                          */
-                        for (Mitarbeiter worker : MenuManager.workerList) {
+                        for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                             if (eingabe == worker.getMitarbeiterID()) {
                                 Vorhanden = 1;
                             }
@@ -233,20 +233,20 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
                      * Da der Mitarbeiter gelöscht wird, wird er der Liste der
                      * ehemaligen Mitarbeiter hinzugefügt.
                      */
-                    MenuManager.ehemaligeMitarbeiter.add(new Mitarbeiter(aktuelleMitarbeiterID, aktuellerName, aktuellerVorname, aktuellerBenutzername, aktuellesPasswort));
+                    MenuManager.add(new Mitarbeiter(aktuelleMitarbeiterID, aktuellerName, aktuellerVorname, aktuellerBenutzername, aktuellesPasswort));
 
                     /*
                      * Gleichzeitig wird auch der Name des Mitarbeiters in der
                      * ihm zugewiesenen Wohnung auf leer gesetzt.
                      */
-                    for (Wohnung flat : MenuManager.flatList) {
+                    for (Wohnung flat : MenuManager.getFlatList()) {
                         if (aktuellerName.equals(flat.getZugeordneterMitarbeiter().getName())) {
                             flat.getZugeordneterMitarbeiter().setName("-");
                             ;
                         }
                     }
 
-                    Iterator<Mitarbeiter> iter = MenuManager.workerList.iterator();
+                    Iterator<Mitarbeiter> iter = MenuManager.getWorkerList().iterator();
 
                     while (iter.hasNext()) {
                         Mitarbeiter str = iter.next();
@@ -266,7 +266,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
                      * eben bearbeitet wurde, die einzelnen veränderten
                      * Attribute nun geändert.
                      */
-                    for (Mitarbeiter worker : MenuManager.workerList) {
+                    for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                         if (zu_bearbeitenden_mitarbeiter == worker.getMitarbeiterID()) {
                             worker.setMitarbeiterID(neueMitarbeiterID);
                             worker.setName(neuerName);
@@ -280,7 +280,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
                      * Gleichzeitig wird auch der Name des Mitarbeiters in der
                      * ihm zugewiesenen Wohnung geändert.
                      */
-                    for (Wohnung flat : MenuManager.flatList) {
+                    for (Wohnung flat : MenuManager.getFlatList()) {
                         if (aktuellerName.equals(flat.getZugeordneterMitarbeiter().getName())) {
                             flat.getZugeordneterMitarbeiter().setName(neuerName);
 
@@ -320,7 +320,7 @@ public class MitarbeiterBearbeitenAction extends MenuManager implements Action, 
             meinRahmen.setTitle("Mitarbeiter ID");
             JLabel frage = new JLabel("Welcher Mitarbeiter wird bearbeitet?");
             meinPanel.add(frage);
-            for (Mitarbeiter worker : MenuManager.workerList) {
+            for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                 combo2.addItem(worker.getMitarbeiterID());
             }
         }

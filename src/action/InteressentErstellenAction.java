@@ -101,7 +101,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
                          * geguckt, ob die eingegebende ID mit einer bereits
                          * existierenden übereinstimmt.
                          */
-                        for (Interessent ehemaligerInteressent : MenuManager.ehemaligeInteressenten) {
+                        for (Interessent ehemaligerInteressent : MenuManager.getEhemaligeInteressenten()) {
                             if (neueID == ehemaligerInteressent.getKundenID()) {
                                 vorhanden = 1;
                             }
@@ -197,7 +197,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
                     erstellVorgang = false;
 
                     // Interessent wird zur Interessentenliste hinzugefügt
-                    MenuManager.currentManager.add(new Interessent(interessentenID, name, vorname, geburtsdatum, adresse, EMail, telefonnummer, status));
+                    MenuManager.add(new Interessent(interessentenID, name, vorname, geburtsdatum, adresse, EMail, telefonnummer, status));
 
                 }
             } catch (InputMismatchException e) {
@@ -303,7 +303,7 @@ public class InteressentErstellenAction extends MenuManager implements Action, S
 
     /**
      * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
-     * 
+     *
      * @param auswahl
      *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
      * @param zähler

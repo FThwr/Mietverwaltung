@@ -349,7 +349,7 @@ public class MieterSuchenAction extends MenuManager implements Action, Serializa
                      * Handwerkerauftrag vorhanden sein, damit eine Ausgabe
                      * ermöglicht werden kann.
                      */
-                    for (Mieter owner : MenuManager.ownerList) {
+                    for (Mieter owner : MenuManager.getOwnerList()) {
 
                         if (check.contains("a")) {
                             vgl_mieterID = owner.getKundenID();

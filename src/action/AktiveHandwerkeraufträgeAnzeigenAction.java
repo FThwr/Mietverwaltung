@@ -18,7 +18,7 @@ public class AktiveHandwerkeraufträgeAnzeigenAction extends MenuManager implemen
          * beeinhaltet alle zurzeit aktiven Handwerkeraufträge.
          * Es wird eine Übersicht über alle aktiven Handwerkeraufträge ausgegeben.
          */
-        for (Handwerkerauftrag repair : MenuManager.repairList) {
+        for (Handwerkerauftrag repair : MenuManager.getRepairList()) {
 
             if (repair.getWohnungsID() != -100) {
                 System.out.println("Auftrags ID: " + repair.getAuftragsID());

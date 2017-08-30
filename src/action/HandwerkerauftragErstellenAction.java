@@ -122,7 +122,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                          * eingegebende ID mit einer bereits existierenden
                          * übereinstimmt.
                          */
-                        for (Handwerkerauftrag auftrag : MenuManager.abgeschlosseneHandwerkeraufträge) {
+                        for (Handwerkerauftrag auftrag : MenuManager.getAbgeschlosseneHandwerkeraufträge()) {
                             if (eingabe.equals(auftrag.getAuftragsID())) {
                                 vorhanden = 1;
                             }
@@ -190,7 +190,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
                      * Der Erstellvorgang ist beendet und der Liste der aktiven
                      * Handwerkeraufträgen wird ein neuer Auftrag hinzugefügt.
                      */
-                    MenuManager.repairList.add(new Handwerkerauftrag(auftragsID, wohnungsID, mitarbeiterID, mängelbeschreibung, status, eingangsdatum, fertigstellungsDatum));
+                    MenuManager.getRepairList().add(new Handwerkerauftrag(auftragsID, wohnungsID, mitarbeiterID, mängelbeschreibung, status, eingangsdatum, fertigstellungsDatum));
 
                 }
                 //Eingabe > 7
@@ -295,7 +295,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
             meinPanel.add(frage);
             for (objekte.Wohnung flat : MenuManager.getFlatList()) {
                 int auftrag_vorhanden = 0;
-                for (Handwerkerauftrag repair : MenuManager.repairList) {
+                for (Handwerkerauftrag repair : MenuManager.getRepairList()) {
                     if (repair.getWohnungsID() == flat.getWohnungsID()) {
                         auftrag_vorhanden = 1;
                     }
@@ -373,7 +373,7 @@ public class HandwerkerauftragErstellenAction extends MenuManager implements Act
 
     /**
      * Methode zum Einlesen eines Wortes oder Satzes vom Nutzer
-     * 
+     *
      * @param auswahl
      *            = welches "Änderungsfeld" der Nutzer betreten hat (Name des Index des Arrays)
      * @param zähler

@@ -103,7 +103,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
          * entspricht. Es werden neue Variablen angelegt, welche die einzelnen
          * Werte des Objekts beeinhalten.
          */
-        for (Handwerkerauftrag repair : MenuManager.repairList) {
+        for (Handwerkerauftrag repair : MenuManager.getRepairList()) {
             if (zu_bearbeitenden_handwerkerauftrag.equals(repair.getAuftragsID())) {
 
                 aktuelleAuftragsID = repair.getAuftragsID();
@@ -206,7 +206,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
                          * Aufträge wird geguckt, ob die eingegebende ID mit
                          * einer bereits existierenden übereinstimmt.
                          */
-                        for (Handwerkerauftrag repair : MenuManager.repairList) {
+                        for (Handwerkerauftrag repair : MenuManager.getRepairList()) {
                             if (eingabe.equals(repair.getAuftragsID())) {
                                 vorhanden = 1;
                             }
@@ -218,7 +218,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
                          * eingegebende ID mit einer bereits existierenden
                          * übereinstimmt.
                          */
-                        for (Handwerkerauftrag auftrag : MenuManager.abgeschlosseneHandwerkeraufträge) {
+                        for (Handwerkerauftrag auftrag : MenuManager.getAbgeschlosseneHandwerkeraufträge()) {
                             if (eingabe.equals(auftrag.getAuftragsID())) {
                                 vorhanden = 1;
                             }
@@ -339,12 +339,12 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
                          *  Da der Auftrag abgeschlossen ist, wird er der Liste
                          * der abgeschlossenen Aufträge hinzugefügt.
                          */
-                        MenuManager.abgeschlosseneHandwerkeraufträge.add(new Handwerkerauftrag(neueAuftragsID, neueWohnungsID, +neueMitarbeiterID, neueMängelbeschreibung, neuerStatus, neuesEingangsdatum, aktuellesFertigstellungsdatum));
+                        MenuManager.getAbgeschlosseneHandwerkeraufträge().add(new Handwerkerauftrag(neueAuftragsID, neueWohnungsID, +neueMitarbeiterID, neueMängelbeschreibung, neuerStatus, neuesEingangsdatum, aktuellesFertigstellungsdatum));
                         /*
                          * Auderdem wird der Handwerkerautrag aus der Liste der
                          * aktiven Aufträge entfernt
                          */
-                        Iterator<Handwerkerauftrag> iter = MenuManager.repairList.iterator();
+                        Iterator<Handwerkerauftrag> iter = MenuManager.getRepairList().iterator();
 
                         while (iter.hasNext()) {
                             Handwerkerauftrag str = iter.next();
@@ -398,7 +398,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
             meinRahmen.setTitle("Handwerkerauftrag ID");
             JLabel frage = new JLabel("Welchen Handwerkerauftrag möchten Sie bearbeiten?");
             meinPanel.add(frage);
-            for (Handwerkerauftrag repair : MenuManager.repairList) {
+            for (Handwerkerauftrag repair : MenuManager.getRepairList()) {
                 combo2.addItem(repair.getAuftragsID());
             }
         }
@@ -407,7 +407,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
             meinRahmen.setTitle("Wohnungsnummer");
             JLabel frage = new JLabel("Welche Wohnung möchten Sie auswählen?");
             meinPanel.add(frage);
-            for (Wohnung flat : MenuManager.flatList) {
+            for (Wohnung flat : MenuManager.getFlatList()) {
                 if (flat.getHandwerkerauftrag().getAuftragsID().equals("")) {
                     combo2.addItem(flat.getWohnungsID());
                 }
@@ -418,7 +418,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
             meinRahmen.setTitle("Mitarbeiter-ID");
             JLabel frage = new JLabel("Welchen Mitarbeiter (ID) möchten Sie auswählen?");
             meinPanel.add(frage);
-            for (Handwerkerauftrag repair : MenuManager.repairList) {
+            for (Handwerkerauftrag repair : MenuManager.getRepairList()) {
                 combo2.addItem(repair.getAuftragsID());
             }
         }
@@ -458,7 +458,7 @@ public class HandwerkerauftragBearbeitenAction extends MenuManager implements Ac
 
     /**
      * Methode zum Anpassen der Länge des Attributes (außer Datum) bei der Ausgabe auf der Konsole.
-     * 
+     *
      * @param wort
      *            = mitgegebenes Attribut
      * @return das Attribut mit den anschließenden Leerzeichen

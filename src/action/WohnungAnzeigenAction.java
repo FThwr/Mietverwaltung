@@ -10,7 +10,7 @@ public class WohnungAnzeigenAction extends MenuManager implements Action, Action
     @Override
     public void action() {
 
-        for (Wohnung flat : MenuManager.flatList) {
+        for (Wohnung flat : MenuManager.getFlatList()) {
 
             if (flat.getWohnungsID() != -100) {
                 System.out.println("Wohnungsnummer:                  " + flat.getWohnungsID());

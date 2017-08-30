@@ -224,7 +224,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                          * Aufträge wird geguckt, ob die eingegebende ID mit
                          * einer bereits existierenden übereinstimmt.
                          */
-                        for (Mieter owner : MenuManager.ownerList) {
+                        for (Mieter owner : MenuManager.getOwnerList()) {
                             if (eingabe == owner.getKundenID()) {
                                 vorhanden = 1;
                             }
@@ -236,7 +236,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                          * eingegebende ID mit einer bereits existierenden
                          * übereinstimmt.
                          */
-                        for (Mieter ehermaligerMieter : MenuManager.ehemaligeMieter) {
+                        for (Mieter ehermaligerMieter : MenuManager.getEhemaligeMieter()) {
                             if (eingabe == ehermaligerMieter.getKundenID()) {
                                 vorhanden = 1;
                             }
@@ -288,7 +288,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
                     if (eingabe == 0) {
                     } else {
                         int nichtVorhanden = 0;
-                        for (Mieter owner : MenuManager.ownerList) {
+                        for (Mieter owner : MenuManager.getOwnerList()) {
                             for (Wohnung flat : MenuManager.getFlatList()) {
 
                                 /*
@@ -386,7 +386,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
 
                     if (neueRolle.equals("Mieter")) {
 
-                        for (Mieter owner : MenuManager.ownerList) {
+                        for (Mieter owner : MenuManager.getOwnerList()) {
                             if (zu_bearbeitenden_mieter == owner.getKundenID()) {
                                 owner.setKundenID(neueMieterID);
                                 owner.setName(neuerName);
@@ -402,9 +402,9 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
 
                     if (neueRolle.equals("Delete")) {
 
-                        MenuManager.ehemaligeMieter.add(new Mieter(neueMieterID, neuerName, neuerVorname, neuesGeburtsdatum, neueWohnung, neueEMail, neueAdresse, neueTelefonnummer, "Mieter"));
+                        MenuManager.add(new Mieter(neueMieterID, neuerName, neuerVorname, neuesGeburtsdatum, neueWohnung, neueEMail, neueAdresse, neueTelefonnummer, "Mieter"));
 
-                        Iterator<Mieter> iter = MenuManager.ownerList.iterator();
+                        Iterator<Mieter> iter = MenuManager.getOwnerList().iterator();
 
                         while (iter.hasNext()) {
                             Mieter str = iter.next();
@@ -515,7 +515,7 @@ public class MieterBearbeitenAction extends MenuManager implements Action, Seria
             meinRahmen.setTitle("Mieter ID");
             JLabel frage = new JLabel("Welchen Mieter möchten Sie bearbeiten?");
             meinPanel.add(frage);
-            for (Mieter owner : MenuManager.ownerList) {
+            for (Mieter owner : MenuManager.getOwnerList()) {
                 combo2.addItem(owner.getKundenID());
             }
         }

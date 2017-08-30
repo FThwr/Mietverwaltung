@@ -482,7 +482,7 @@ public class MietvertragSuchenAction extends MenuManager implements Action, Seri
                      * Handwerkerauftrag vorhanden sein, damit eine Ausgabe
                      * ermöglicht werden kann.
                      */
-                    for (Mietvertrag contract : MenuManager.contractList) {
+                    for (Mietvertrag contract : MenuManager.getContractList()) {
 
                         if (check.contains("a")) {
                             vgl_mietvertragID = contract.getMietvertragsID();

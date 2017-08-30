@@ -134,7 +134,7 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                         * ob die eingegebende ID mit einer bereits
                          * existierenden übereinstimmt.
                          */
-                        for (Wohnung flat : MenuManager.flatList) {
+                        for (Wohnung flat : MenuManager.getFlatList()) {
                             if (eingabe == flat.getWohnungsID()) {
                                 vorhanden = 1;
                             }
@@ -284,7 +284,7 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                     String name = "";
                     String vorname = "";
 
-                    for (Mitarbeiter worker : MenuManager.workerList) {
+                    for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                         if (worker.getMitarbeiterID() == mitarbeiterID) {
                             name = worker.getName();
                             vorname = worker.getVorname();
@@ -298,7 +298,7 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
                 if (änderung == 11) {
                     erstellVorgang = false;
 
-                    MenuManager.currentManager.add(new Wohnung(wohnungsnummer, zimmeranzahl, fläche, kosten, etage, balkon, fußbodenheizung, aussicht, adresse, status, letztesRenovierungsdatum, renovierungsanzahl, letzeRenovierung_Details, handwerkerauftrag, zugeordneterMitarbeiter));
+                    MenuManager.add(new Wohnung(wohnungsnummer, zimmeranzahl, fläche, kosten, etage, balkon, fußbodenheizung, aussicht, adresse, status, letztesRenovierungsdatum, renovierungsanzahl, letzeRenovierung_Details, handwerkerauftrag, zugeordneterMitarbeiter));
                 }
 
                 // Eingabe > 11
@@ -334,7 +334,7 @@ public class WohnungErstellenAction extends MenuManager implements Action, Seria
             meinRahmen.setTitle("Mitarbeiter-ID");
             JLabel frage = new JLabel("Welchen Mitarbeiter (ID) möchten Sie auswählen?");
             meinPanel.add(frage);
-            for (Mitarbeiter worker : MenuManager.workerList) {
+            for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                 combo2.addItem(worker.getMitarbeiterID());
             }
         }

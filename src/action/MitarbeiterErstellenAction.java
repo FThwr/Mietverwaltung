@@ -86,7 +86,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
                          * einen Mitarbeiter mit der gewünschten ID bereits
                          * gibt.
                          */
-                        for (Mitarbeiter worker : MenuManager.workerList) {
+                        for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                             if (eingabe == worker.getMitarbeiterID()) {
                                 Vorhanden = 1;
                             }
@@ -97,7 +97,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
                          * einen Mitarbeiter mit der gewünschten ID bereits
                          * gibt.
                          */
-                        for (Mitarbeiter ehemaligerMitarbeiter : MenuManager.ehemaligeMitarbeiter) {
+                        for (Mitarbeiter ehemaligerMitarbeiter : MenuManager.getEhemaligeMitarbeiter()) {
                             if (eingabe == ehemaligerMitarbeiter.getMitarbeiterID()) {
                                 Vorhanden = 1;
                             }
@@ -151,7 +151,7 @@ public class MitarbeiterErstellenAction extends MenuManager implements Action, S
                     benutzername = vorname.trim().substring(0, 1) + "." + name;
 
                     // Mitarbeiter wird zur Mitarbeiterliste hinzugefügt
-                    MenuManager.workerList.add(new Mitarbeiter(mitarbeiterID, name, vorname, benutzername, passwort));
+                    MenuManager.add(new Mitarbeiter(mitarbeiterID, name, vorname, benutzername, passwort));
                 }
 
                 // Eingabe > 5

@@ -13,15 +13,49 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import action.*;
+import action.AbgeschlosseneHandwerkeraufträgeAnzeigenAction;
+import action.AbgeschlosseneMietverträgeAnzeigenAction;
+import action.AktiveHandwerkeraufträgeAnzeigenAction;
+import action.AktuelleInteressentenAnzeigenAction;
+import action.AktuelleMieterAnzeigenAction;
+import action.AktuelleMietverträgeAnzeigenAction;
+import action.AktuelleMitarbeiterAnzeigenAction;
+import action.EhemaligeInteressentenAnzeigenAction;
+import action.EhemaligeMieterAnzeigenAction;
+import action.EhemaligeMitarbeiterAnzeigenAction;
+import action.HandwerkerauftragBearbeitenAction;
+import action.HandwerkerauftragErstellenAction;
+import action.HandwerkerauftragSuchenAction;
+import action.InteressentBearbeitenAction;
+import action.InteressentErstellenAction;
+import action.InteressentSuchenAction;
+import action.MieterBearbeitenAction;
+import action.MieterSuchenAction;
+import action.MietvertragBearbeitenAction;
+import action.MietvertragErstellenAction;
+import action.MietvertragSuchenAction;
+import action.MitarbeiterBearbeitenAction;
+import action.MitarbeiterErstellenAction;
+import action.SuchanfrageWohnungSuchenAction;
+import action.SuchanfragenAnzeigenAction;
+import action.WohnungAnzeigenAction;
+import action.WohnungBearbeitenAction;
+import action.WohnungErstellenAction;
+import action.WohnungSuchenAktion;
 import hilfsklassen.Panel;
-import objekte.*;
+import objekte.Handwerkerauftrag;
+import objekte.Interessent;
+import objekte.Mieter;
+import objekte.Mietvertrag;
+import objekte.Mitarbeiter;
+import objekte.Suchanfrage;
+import objekte.Wohnung;
 
 public class MenuManager extends Panel implements Serializable {
 
     private static final long serialVersionUID = -1283828418695494828L;
 
-    protected static MenuManager currentManager;
+    private static MenuManager currentManager;
 
     private static ArrayList<MenuEntry> menuList = new ArrayList<>();
     static {
@@ -33,7 +67,7 @@ public class MenuManager extends Panel implements Serializable {
         MenuManager.menuList.add(new MenuEntry("Interessent", new String[] { "ehemalige Interessenten anzeigen", "aktuelle Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
         MenuManager.menuList.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Wohnung suchen" }));
         MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "ehemalige Mitarbeiter anzeigen", "aktuelle Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
-        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene MietvertrÃ¤ge anzeigen", "aktive MietvertrÃ¤ge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene MietvertrÃ¤ge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
         MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige HandwerkerauftrÃ¤ge anzeigen", "aktive HandwerkerauftrÃ¤ge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
         MenuManager.menuList.add(new MenuEntry("Suchanfrage", new String[] { "Suchanfrage erstellen", "Suchanfragen anzeigen" }));
 
@@ -77,43 +111,43 @@ public class MenuManager extends Panel implements Serializable {
 
     }
 
-    protected static ArrayList<Mieter> ownerList = new ArrayList<>();
-    protected static ArrayList<Mitarbeiter> workerList = new ArrayList<>();
-    protected static ArrayList<Wohnung> flatList = new ArrayList<>();
-    protected static ArrayList<Mietvertrag> beendeteMietverträge = new ArrayList<>();
-    protected static ArrayList<Mieter> ehemaligeMieter = new ArrayList<>();
-    protected static ArrayList<Mitarbeiter> ehemaligeMitarbeiter = new ArrayList<>();
-    protected static ArrayList<Interessent> ehemaligeInteressenten = new ArrayList<>();
-    protected static ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge = new ArrayList<>();
-    protected static ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
-    protected static ArrayList<Interessent> InterestList = new ArrayList<>();
-    protected static ArrayList<Mietvertrag> contractList = new ArrayList<>();
-    protected static ArrayList<Suchanfrage> searchList = new ArrayList<>();
+    protected ArrayList<Mieter> ownerList = new ArrayList<>();
+    protected ArrayList<Mitarbeiter> workerList = new ArrayList<>();
+    protected ArrayList<Wohnung> flatList = new ArrayList<>();
+    protected ArrayList<Mietvertrag> beendeteMietverträge = new ArrayList<>();
+    protected ArrayList<Mieter> ehemaligeMieter = new ArrayList<>();
+    protected ArrayList<Mitarbeiter> ehemaligeMitarbeiter = new ArrayList<>();
+    protected ArrayList<Interessent> ehemaligeInteressenten = new ArrayList<>();
+    protected ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge = new ArrayList<>();
+    protected ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
+    protected ArrayList<Interessent> InterestList = new ArrayList<>();
+    protected ArrayList<Mietvertrag> contractList = new ArrayList<>();
+    protected ArrayList<Suchanfrage> searchList = new ArrayList<>();
 
     private static final String dateiPfad = "..\\menumanager.dat";
 
     public static ArrayList<Interessent> getEhemaligeInteressenten() {
-        return MenuManager.ehemaligeInteressenten;
+        return MenuManager.currentManager.ehemaligeInteressenten;
     }
 
     public static void setOwnerList(final ArrayList<Mieter> ownerList) {
-        MenuManager.ownerList = ownerList;
+        MenuManager.currentManager.ownerList = ownerList;
     }
 
     public static ArrayList<Handwerkerauftrag> getAbgeschlosseneHandwerkeraufträge() {
-        return MenuManager.abgeschlosseneHandwerkeraufträge;
+        return MenuManager.currentManager.abgeschlosseneHandwerkeraufträge;
     }
 
-    public static void setAbgeschlosseneHandwerkerauftrÃ¤ge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkerauftrÃ¤ge) {
-        MenuManager.abgeschlosseneHandwerkeraufträge = abgeschlosseneHandwerkerauftrÃ¤ge;
+    public static void setAbgeschlosseneHandwerkerauftrÃ¤ge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge) {
+        MenuManager.currentManager.abgeschlosseneHandwerkeraufträge = abgeschlosseneHandwerkeraufträge;
     }
 
     public static ArrayList<Mietvertrag> getBeendeteMietverträge() {
-        return MenuManager.beendeteMietverträge;
+        return MenuManager.currentManager.beendeteMietverträge;
     }
 
-    public static void setBeendeteMietvertrÃ¤ge(final ArrayList<Mietvertrag> beendeteMietvertrÃ¤ge) {
-        MenuManager.beendeteMietverträge = beendeteMietvertrÃ¤ge;
+    public static void setBeendeteMietvertrÃ¤ge(final ArrayList<Mietvertrag> beendeteMietverträge) {
+        MenuManager.currentManager.beendeteMietverträge = beendeteMietverträge;
     }
 
     public MenuManager() {
@@ -137,71 +171,75 @@ public class MenuManager extends Panel implements Serializable {
     }
 
     public static ArrayList<Mitarbeiter> getWorkerList() {
-        return MenuManager.workerList;
+        return MenuManager.currentManager.workerList;
     }
 
     public static void setWorkerList(final ArrayList<Mitarbeiter> workerList) {
-        MenuManager.workerList = workerList;
+        MenuManager.currentManager.workerList = workerList;
     }
 
     public static ArrayList<Wohnung> getFlatList() {
-        return MenuManager.flatList;
+        return MenuManager.currentManager.flatList;
     }
 
     public static void setFlatList(final ArrayList<Wohnung> flatList) {
-        MenuManager.flatList = flatList;
+        MenuManager.currentManager.flatList = flatList;
     }
 
     public static ArrayList<Interessent> getInterestList() {
-        return MenuManager.InterestList;
+        return MenuManager.currentManager.InterestList;
     }
 
     public static void setInterestList(final ArrayList<Interessent> interestList) {
-        MenuManager.InterestList = interestList;
+        MenuManager.currentManager.InterestList = interestList;
     }
 
     public static ArrayList<Mietvertrag> getContractList() {
-        return MenuManager.contractList;
+        return MenuManager.currentManager.contractList;
     }
 
     public static void setContractList(final ArrayList<Mietvertrag> contractList) {
-        MenuManager.contractList = contractList;
+        MenuManager.currentManager.contractList = contractList;
     }
 
     public static ArrayList<Mieter> getOwnerList() {
-        return MenuManager.ownerList;
+        return MenuManager.currentManager.ownerList;
     }
 
     public static void setEhemaligeInteressenten(final ArrayList<Interessent> ehemaligeInteressenten) {
-        MenuManager.ehemaligeInteressenten = ehemaligeInteressenten;
+        MenuManager.currentManager.ehemaligeInteressenten = ehemaligeInteressenten;
     }
 
     public static ArrayList<Mitarbeiter> getEhemaligeMitarbeiter() {
-        return MenuManager.ehemaligeMitarbeiter;
+        return MenuManager.currentManager.ehemaligeMitarbeiter;
     }
 
     public static void setEhemaligeMitarbeiter(final ArrayList<Mitarbeiter> ehemaligeMitabrbeiter) {
-        MenuManager.ehemaligeMitarbeiter = ehemaligeMitabrbeiter;
+        MenuManager.currentManager.ehemaligeMitarbeiter = ehemaligeMitabrbeiter;
     }
 
-    public void add(final Mitarbeiter mitarbeiter) {
-        MenuManager.workerList.add(mitarbeiter);
+    public static void add(final Mitarbeiter mitarbeiter) {
+        MenuManager.currentManager.workerList.add(mitarbeiter);
     }
 
-    public void add(final Wohnung wohnung) {
-        MenuManager.flatList.add(wohnung);
+    public static void add(final Wohnung wohnung) {
+        MenuManager.currentManager.flatList.add(wohnung);
     }
 
-    public void add(final Mietvertrag mietvertrag) {
-        MenuManager.beendeteMietverträge.add(mietvertrag);
+    public static void add(final Mietvertrag mietvertrag) {
+        MenuManager.currentManager.beendeteMietverträge.add(mietvertrag);
     }
 
-    public void add(final Interessent interessent) {
-        MenuManager.InterestList.add(interessent);
+    public static void add(final Interessent interessent) {
+        MenuManager.currentManager.InterestList.add(interessent);
     }
 
-    public void add(final Mieter mieter) {
-        MenuManager.ownerList.add(mieter);
+    public static void add(final Mieter mieter) {
+        MenuManager.currentManager.ownerList.add(mieter);
+    }
+
+    public static void add(final Suchanfrage suchanfrage) {
+        MenuManager.currentManager.searchList.add(suchanfrage);
     }
 
     public void start() throws FileNotFoundException, ClassNotFoundException, IOException {
@@ -233,7 +271,7 @@ public class MenuManager extends Panel implements Serializable {
     }
 
     private void personHerausfinden(final String anmeldung) {
-        for (Mitarbeiter worker : MenuManager.workerList) {
+        for (Mitarbeiter worker : MenuManager.currentManager.workerList) {
             if (anmeldung.equals(worker.getPasswort())) {
                 System.out.println("\nWillkommen bei der Mietverwaltung: " + worker.getName() + ", " + worker.getVorname() + "\n");
             }
@@ -251,7 +289,7 @@ public class MenuManager extends Panel implements Serializable {
     }
 
     public boolean passwortExistens(final String anmeldung) {
-        for (Mitarbeiter ma : MenuManager.workerList) {
+        for (Mitarbeiter ma : MenuManager.currentManager.workerList) {
             if (anmeldung.equals(ma.getPasswort())) {
                 return true;
             }
@@ -265,7 +303,7 @@ public class MenuManager extends Panel implements Serializable {
             System.out.println(meAktuell.getName());
             zaehleMenuePunkteAuf(meAktuell);
 
-            System.out.print("WÃ¤hlen Sie einen MenÃ¼punkt aus: ");
+            System.out.print("Wählen Sie einen Menüpunkt aus: ");
             int eingabe = eingabeEinlesen(scanner);
             System.out.println("");
             if (eingabe <= meAktuell.getLocation().length && eingabe > 0) {
@@ -278,7 +316,7 @@ public class MenuManager extends Panel implements Serializable {
                 System.out.println("Programm wurde beendet.");
                 System.exit(0);
             } else {
-                System.out.println("Fehler, der ausgewÃ¤hlte MenÃ¼punkt existiert nicht.");
+                System.out.println("Fehler, der ausgewählte MenÃ¼punkt existiert nicht.");
             }
         } while (meAktuell.getLocation() != null);
         meAktuell = actionAusfuehren(meAktuell);
@@ -347,27 +385,27 @@ public class MenuManager extends Panel implements Serializable {
     }
 
     public static ArrayList<Mieter> getEhemaligeMieter() {
-        return MenuManager.ehemaligeMieter;
+        return MenuManager.currentManager.ehemaligeMieter;
     }
 
     public static void setEhemaligeMieter(final ArrayList<Mieter> ehemaligeMieter) {
-        MenuManager.ehemaligeMieter = ehemaligeMieter;
+        MenuManager.currentManager.ehemaligeMieter = ehemaligeMieter;
     }
 
     public static ArrayList<Handwerkerauftrag> getRepairList() {
-        return MenuManager.repairList;
+        return MenuManager.currentManager.repairList;
     }
 
     public static void setRepairList(final ArrayList<Handwerkerauftrag> repairList) {
-        MenuManager.repairList = repairList;
+        MenuManager.currentManager.repairList = repairList;
     }
 
     public static ArrayList<Suchanfrage> getSearchList() {
-        return MenuManager.searchList;
+        return MenuManager.currentManager.searchList;
     }
 
     public static void setSearchList(final ArrayList<Suchanfrage> searchList) {
-        MenuManager.searchList = searchList;
+        MenuManager.currentManager.searchList = searchList;
     }
 
     public static void speichern() {

@@ -605,7 +605,7 @@ public class WohnungSuchenAktion extends MenuManager implements Action {
                      * Handwerkerauftrag vorhanden sein, damit eine Ausgabe
                      * ermöglicht werden kann.
                      */
-                    for (Wohnung flat : MenuManager.flatList) {
+                    for (Wohnung flat : MenuManager.getFlatList()) {
 
                         if (check.contains("a")) {
                             vgl_wohnungsnummer = flat.getWohnungsID();

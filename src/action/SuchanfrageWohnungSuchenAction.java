@@ -362,9 +362,9 @@ public class SuchanfrageWohnungSuchenAction extends MenuManager implements Actio
                 if (eingabe == 8) {
                     suchVorgang = false;
 
-                    erg = xxx(MenuManager.flatList, bedingungList);
+                    erg = xxx(MenuManager.getFlatList(), bedingungList);
 
-                    MenuManager.searchList.add(new Suchanfrage(SuchanfrageWohnungSuchenAction.such_mitarbeiterID, SuchanfrageWohnungSuchenAction.such_kundenID, zimmeranzahl_rela, such_zimmeranzahl, fl‰che_rela, such_fl‰che, kosten_rela, such_kosten, etage_rela, such_etage, such_balkon, such_fuﬂbodenheizung, such_aussicht));
+                    MenuManager.add(new Suchanfrage(SuchanfrageWohnungSuchenAction.such_mitarbeiterID, SuchanfrageWohnungSuchenAction.such_kundenID, zimmeranzahl_rela, such_zimmeranzahl, fl‰che_rela, such_fl‰che, kosten_rela, such_kosten, etage_rela, such_etage, such_balkon, such_fuﬂbodenheizung, such_aussicht));
 
                     for (Wohnung flat : erg) {
 

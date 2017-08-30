@@ -104,7 +104,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
          * entspricht. Es werden neue Variablen angelegt, welche die einzelnen
          * Werte des Objekts beeinhalten.
          */
-        for (Mietvertrag contract : MenuManager.contractList) {
+        for (Mietvertrag contract : MenuManager.getContractList()) {
             if (zu_bearbeitenden_mietvertrag.equals(contract.getMietvertragsID())) {
 
                 aktuelleMietvertragsID = contract.getMietvertragsID();
@@ -195,7 +195,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                     * Aufträge wird geguckt, ob die eingegebende ID mit
                     * einer bereits existierenden übereinstimmt.
                     */
-                    for (Mietvertrag contract : MenuManager.contractList) {
+                    for (Mietvertrag contract : MenuManager.getContractList()) {
                         if (eingabe.equals(contract.getMietvertragsID())) {
                             vorhanden = 1;
                         }
@@ -207,7 +207,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                     * eingegebende ID mit einer bereits existierenden
                     * übereinstimmt.
                     */
-                    for (Mietvertrag abgeschlossenerMietvertrag : MenuManager.beendeteMietverträge) {
+                    for (Mietvertrag abgeschlossenerMietvertrag : MenuManager.getBeendeteMietverträge()) {
                         if (eingabe.equals(abgeschlossenerMietvertrag.getMietvertragsID())) {
                             vorhanden = 1;
                         }
@@ -288,7 +288,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                          * so eben bearbeitet wurde, die einzelnen veränderten
                          * Attribute nun geändert.
                          */
-                        for (Mietvertrag contract : MenuManager.contractList) {
+                        for (Mietvertrag contract : MenuManager.getContractList()) {
                             if (zu_bearbeitenden_mietvertrag.equals(contract.getMietvertragsID())) {
                                 contract.setMietvertragsID(neueMietvertragsID);
                                 contract.setWohnungsID(neueWohnungsID);
@@ -306,13 +306,13 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                          * Da der Vertrag ausgelaufen ist, wird er der Liste der
                          * beendeten Verträge hinzugefügt.
                          */
-                        MenuManager.beendeteMietverträge.add(new Mietvertrag(neueMietvertragsID, neueWohnungsID, neueKundenID, neueMitarbeiterID, neuerMietbeginn, neuesMietende, neuerStatus));
+                        MenuManager.getBeendeteMietverträge().add(new Mietvertrag(neueMietvertragsID, neueWohnungsID, neueKundenID, neueMitarbeiterID, neuerMietbeginn, neuesMietende, neuerStatus));
 
                         /*
                          * Auderdem wird der Handwerkerautrag aus der Liste der
                          * aktiven Aufträge entfernt
                          */
-                        Iterator<Mietvertrag> iter = MenuManager.contractList.iterator();
+                        Iterator<Mietvertrag> iter = MenuManager.getContractList().iterator();
 
                         while (iter.hasNext()) {
                             Mietvertrag str = iter.next();
@@ -329,9 +329,9 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                     * daraufhin der Status auf 'vermietet' gesetzt, wenn das
                     * der Fall ist und sonst auf 'frei'
                     */
-                    for (Wohnung flat : MenuManager.flatList) {
+                    for (Wohnung flat : MenuManager.getFlatList()) {
                         int belegt = 0;
-                        for (Mietvertrag contract : MenuManager.contractList) {
+                        for (Mietvertrag contract : MenuManager.getContractList()) {
                             if (contract.getWohnungsID() == flat.getWohnungsID() && flat.getWohnungsID() != -100 && contract.getWohnungsID() != -100) {
                                 belegt = 1;
                             }
@@ -350,7 +350,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                     * Wenn er keinen bestizt, dann bekommt er einen Strich in
                     * sienem Profil an der Stelle der Wohnungsnummer.
                     */
-                    for (Mieter owner : MenuManager.ownerList) {
+                    for (Mieter owner : MenuManager.getOwnerList()) {
                         if (owner.getWohnungsnummer() == aktuelleWohnungsID) {
 
                             owner.setWohnungsnummer(-100);
@@ -461,7 +461,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             meinRahmen.setTitle("Mietvertrag ID");
             JLabel frage = new JLabel("Welcher Mietvertrag wird bearbeitet?");
             meinPanel.add(frage);
-            for (Mietvertrag contract : MenuManager.contractList) {
+            for (Mietvertrag contract : MenuManager.getContractList()) {
                 combo2.addItem(contract.getMietvertragsID());
             }
         }
@@ -471,7 +471,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             JLabel frage = new JLabel("Welche Wohnung soll ausgewählt werden?");
             meinPanel.add(frage);
 
-            for (Wohnung flat : MenuManager.flatList) {
+            for (Wohnung flat : MenuManager.getFlatList()) {
                 if (flat.getStatus().equals("frei")) {
                     combo2.addItem(flat.getWohnungsID());
                 }
@@ -482,7 +482,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             meinRahmen.setTitle("Mieter ID");
             JLabel frage = new JLabel("Welcher Mieter soll ausgewählt werden?");
             meinPanel.add(frage);
-            for (Mieter owner : MenuManager.ownerList) {
+            for (Mieter owner : MenuManager.getOwnerList()) {
                 if (owner.getWohnungsnummer() == -100) {
                     combo2.addItem(owner.getKundenID());
                 }
@@ -493,7 +493,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             meinRahmen.setTitle("Mitarbeiter ID");
             JLabel frage = new JLabel("Welcher Mitarbeiter soll ausgewählt werden?");
             meinPanel.add(frage);
-            for (Mitarbeiter worker : MenuManager.workerList) {
+            for (Mitarbeiter worker : MenuManager.getWorkerList()) {
                 combo2.addItem(worker.getMitarbeiterID());
             }
         }
