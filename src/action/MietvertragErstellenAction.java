@@ -404,6 +404,8 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
         Scanner s = new Scanner(System.in);
         int zahl = -100;
+        
+        while (zahl == -100) {
         try {
 
             do {
@@ -414,7 +416,37 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
                 }
             } while (zahl < 0);
         } catch (InputMismatchException e) {
-            System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+
+            String eingabeString = s.nextLine();
+            if (eingabeString.equals("Januar")) {
+            	zahl = 1;
+            } else if (eingabeString.equals("Februar")) {
+            	zahl = 2;
+            } else if (eingabeString.equals("März")) {
+            	zahl = 3;
+            } else if (eingabeString.equals("April")) {
+            	zahl = 4;
+            } else if (eingabeString.equals("Mai")) {
+            	zahl = 5;
+            } else if (eingabeString.equals("Juni")) {
+            	zahl = 6;
+            } else if (eingabeString.equals("Juli")) {
+            	zahl = 7;
+            } else if (eingabeString.equals("August")) {
+            	zahl = 8;
+            } else if (eingabeString.equals("September")) {
+            	zahl = 9;
+            } else if (eingabeString.equals("Oktober")) {
+            	zahl = 10;
+            } else if (eingabeString.equals("November")) {
+            	zahl = 11;
+            } else if (eingabeString.equals("Dezember")) {
+            	zahl = 12;
+            } else {
+            	System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+            }
+            
+        }
         }
         return zahl;
     }
