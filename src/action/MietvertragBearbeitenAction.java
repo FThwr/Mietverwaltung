@@ -53,7 +53,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
          * Array beeinhaltet alle Attribute, die verändert werden können und
          * dient zur Ausgabe durch Zugriff auf deren Index
          */
-        String[] kategorie = { "Mietvertrag-ID", "Wohnungs-ID", "Kunden-ID", "Mitarbeiter-ID", "Mietbeginn", "Status" };
+        String[] kategorie = { "Mietvertrag-ID", "Wohnungs-ID", "Kunden-ID", "Mitarbeiter-ID", "Mietbeginn", "Mietende", "Status" };
 
         /*
          * diese Variablen dienen später für eine tabellarische Ausgabe auf der
