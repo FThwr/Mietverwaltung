@@ -25,7 +25,7 @@ import objekte.Wohnung;
 public class MietvertragBearbeitenAction extends MenuManager implements Action, Serializable {
 
     static boolean window = false;
-    static String bearbeitungsAuswahl_MietvertragID;
+    static int bearbeitungsAuswahl_MietvertragID;
     static int neue_mieterID;
     static int neue_wohnungsnummer;
     static int neue_mitarbeiterID;
@@ -45,7 +45,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
         JComboBox_optimierte_Auswahl(änderung);
 
         // Variable enthält die ID des zu bearbeitenden Mietvertrags
-        String zu_bearbeitenden_mietvertrag = MietvertragBearbeitenAction.bearbeitungsAuswahl_MietvertragID;
+        int zu_bearbeitenden_mietvertrag = MietvertragBearbeitenAction.bearbeitungsAuswahl_MietvertragID;
 
         boolean bearbeitungsVorgang = true;
 
@@ -105,7 +105,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
          * Werte des Objekts beeinhalten.
          */
         for (Mietvertrag contract : MenuManager.getContractList()) {
-            if (zu_bearbeitenden_mietvertrag.equals(contract.getMietvertragsID())) {
+            if (zu_bearbeitenden_mietvertrag == contract.getMietvertragsID()) {
 
                 aktuelleMietvertragsID = contract.getMietvertragsID();
                 neueMietvertragsID = aktuelleMietvertragsID;
@@ -156,13 +156,13 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
          */
         while (bearbeitungsVorgang == true) {
             System.out.println("............................... Wählen Sie die zu bearbeitende Eigenschaft aus! ...............................");
-            System.out.println("1. Mietvertrag-ID:       " + längenAnpassung_mietvertragID + "neue Mietvertrag-ID:       " + neueMietvertragsID);
-            System.out.println("2. Wohnungs-ID:          " + längenAnpassung_wohnungsID + "neue Wohnungs-ID:          " + neueWohnungsID);
-            System.out.println("3. Kunden-ID:            " + längenAnpassung_kundenID + "neue Kunden-ID:            " + neueKundenID);
-            System.out.println("4. Mitarbeiter-ID:       " + längenAnpassnung_mitarbeiterID + "neue Mitarbeiter-ID:       " + neueMitarbeiterID);
-            System.out.println("5. Mietbeginn:           " + aktuellerMietbeginn + MB_Leerzeichen + "neuer Mietbeginn:          " + neuerMietbeginn);
-            System.out.println("6. Mietende:             " + aktuellesMietende + ME_Leerzeichen + "neues Mietende:            " + neuesMietende);
-            System.out.println("7. Status:               " + längenAnpassung_status + "neuer Status:              " + neuerStatus);
+            System.out.println("1. Mietvertrag-ID:       " + längenAnpassung_mietvertragID + " neue Mietvertrag-ID:       " + neueMietvertragsID);
+            System.out.println("2. Wohnungs-ID:          " + längenAnpassung_wohnungsID + " neue Wohnungs-ID:          " + neueWohnungsID);
+            System.out.println("3. Kunden-ID:            " + längenAnpassung_kundenID + " neue Kunden-ID:            " + neueKundenID);
+            System.out.println("4. Mitarbeiter-ID:       " + längenAnpassnung_mitarbeiterID + " neue Mitarbeiter-ID:       " + neueMitarbeiterID);
+            System.out.println("5. Mietbeginn:           " + aktuellerMietbeginn + MB_Leerzeichen + " neuer Mietbeginn:          " + neuerMietbeginn);
+            System.out.println("6. Mietende:             " + aktuellesMietende + ME_Leerzeichen + " neues Mietende:            " + neuesMietende);
+            System.out.println("7. Status:               " + längenAnpassung_status + " neuer Status:              " + neuerStatus);
             System.out.println("8. Bestätigen");
             System.out.println("0. Abbruch");
             System.out.println("");
@@ -266,10 +266,10 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                     if (eingabe == 1) {
                         neuerStatus = "aktiv";
                     }
-                    if (eingabe == 2) {
+                    else if (eingabe == 2) {
                         neuerStatus = "ausgelaufen";
                     }
-                    if (eingabe == 0) {
+                    else if (eingabe == 0) {
                     }
 
                     // Jede andere Eingabe führt zu einer Fehlermeldung.
@@ -289,7 +289,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                          * Attribute nun geändert.
                          */
                         for (Mietvertrag contract : MenuManager.getContractList()) {
-                            if (zu_bearbeitenden_mietvertrag.equals(contract.getMietvertragsID())) {
+                            if (zu_bearbeitenden_mietvertrag == contract.getMietvertragsID()) {
                                 contract.setMietvertragsID(neueMietvertragsID);
                                 contract.setWohnungsID(neueWohnungsID);
                                 contract.setKundenID(neueKundenID);
@@ -317,7 +317,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                         while (iter.hasNext()) {
                             Mietvertrag str = iter.next();
 
-                            if ("" + str.getMietvertragsID() == zu_bearbeitenden_mietvertrag) {
+                            if ("" + str.getMietvertragsID() == zu_bearbeitenden_mietvertrag + "") {
                                 iter.remove();
 
                             }
@@ -509,7 +509,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (änderung == -99) {
-                    MietvertragBearbeitenAction.bearbeitungsAuswahl_MietvertragID = (String) combo2.getSelectedItem();
+                    MietvertragBearbeitenAction.bearbeitungsAuswahl_MietvertragID = (int) combo2.getSelectedItem();
                 }
                 if (änderung == 2) {
                     MietvertragBearbeitenAction.neue_wohnungsnummer = (int) combo2.getSelectedItem();
