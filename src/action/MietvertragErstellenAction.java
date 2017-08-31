@@ -193,7 +193,7 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
                     erstellVorgang = false;
                     System.out.println("Mietvertrag wurde erfolgreich angelegt!");
 
-                    MenuManager.getContractList().add(new Mietvertrag(mietvertragID, wohnungsID, kundenID, mitarbeiterID, mietbeginn, mietende, status));
+                    MenuManager.add(new Mietvertrag(mietvertragID, wohnungsID, kundenID, mitarbeiterID, mietbeginn, mietende, status));
 
                     /*
                      * Es wird überprüft, ob eine Wohnung besetzt ist und
@@ -404,49 +404,49 @@ public class MietvertragErstellenAction extends MenuManager implements Action, S
     private int einlesen_Zahl(final String[] auswahl, final int zähler) {
         Scanner s = new Scanner(System.in);
         int zahl = -100;
-        
+
         while (zahl == -100) {
-        try {
+            try {
 
-            do {
-                System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
-                zahl = s.nextInt();
-                if (zahl < 0) {
-                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                do {
+                    System.out.println("Geben Sie ein: " + auswahl[zähler - 1]);
+                    zahl = s.nextInt();
+                    if (zahl < 0) {
+                        System.out.println("\n------------------------------- Fehler! ------------------------------- \nNur positive Zahlen erlaubt!");
+                    }
+                } while (zahl < 0);
+            } catch (InputMismatchException e) {
+
+                String eingabeString = s.nextLine();
+                if (eingabeString.equals("Januar")) {
+                    zahl = 1;
+                } else if (eingabeString.equals("Februar")) {
+                    zahl = 2;
+                } else if (eingabeString.equals("März")) {
+                    zahl = 3;
+                } else if (eingabeString.equals("April")) {
+                    zahl = 4;
+                } else if (eingabeString.equals("Mai")) {
+                    zahl = 5;
+                } else if (eingabeString.equals("Juni")) {
+                    zahl = 6;
+                } else if (eingabeString.equals("Juli")) {
+                    zahl = 7;
+                } else if (eingabeString.equals("August")) {
+                    zahl = 8;
+                } else if (eingabeString.equals("September")) {
+                    zahl = 9;
+                } else if (eingabeString.equals("Oktober")) {
+                    zahl = 10;
+                } else if (eingabeString.equals("November")) {
+                    zahl = 11;
+                } else if (eingabeString.equals("Dezember")) {
+                    zahl = 12;
+                } else {
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
                 }
-            } while (zahl < 0);
-        } catch (InputMismatchException e) {
 
-            String eingabeString = s.nextLine();
-            if (eingabeString.equals("Januar")) {
-            	zahl = 1;
-            } else if (eingabeString.equals("Februar")) {
-            	zahl = 2;
-            } else if (eingabeString.equals("März")) {
-            	zahl = 3;
-            } else if (eingabeString.equals("April")) {
-            	zahl = 4;
-            } else if (eingabeString.equals("Mai")) {
-            	zahl = 5;
-            } else if (eingabeString.equals("Juni")) {
-            	zahl = 6;
-            } else if (eingabeString.equals("Juli")) {
-            	zahl = 7;
-            } else if (eingabeString.equals("August")) {
-            	zahl = 8;
-            } else if (eingabeString.equals("September")) {
-            	zahl = 9;
-            } else if (eingabeString.equals("Oktober")) {
-            	zahl = 10;
-            } else if (eingabeString.equals("November")) {
-            	zahl = 11;
-            } else if (eingabeString.equals("Dezember")) {
-            	zahl = 12;
-            } else {
-            	System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
             }
-            
-        }
         }
         return zahl;
     }

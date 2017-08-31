@@ -563,36 +563,36 @@ public class InteressentBearbeitenAction extends MenuManager implements Action, 
 
                 String eingabeString = s.nextLine();
                 if (eingabeString.equals("Januar")) {
-                	zahl = 1;
+                    zahl = 1;
                 } else if (eingabeString.equals("Februar")) {
-                	zahl = 2;
+                    zahl = 2;
                 } else if (eingabeString.equals("März")) {
-                	zahl = 3;
+                    zahl = 3;
                 } else if (eingabeString.equals("April")) {
-                	zahl = 4;
+                    zahl = 4;
                 } else if (eingabeString.equals("Mai")) {
-                	zahl = 5;
+                    zahl = 5;
                 } else if (eingabeString.equals("Juni")) {
-                	zahl = 6;
+                    zahl = 6;
                 } else if (eingabeString.equals("Juli")) {
-                	zahl = 7;
+                    zahl = 7;
                 } else if (eingabeString.equals("August")) {
-                	zahl = 8;
+                    zahl = 8;
                 } else if (eingabeString.equals("September")) {
-                	zahl = 9;
+                    zahl = 9;
                 } else if (eingabeString.equals("Oktober")) {
-                	zahl = 10;
+                    zahl = 10;
                 } else if (eingabeString.equals("November")) {
-                	zahl = 11;
+                    zahl = 11;
                 } else if (eingabeString.equals("Dezember")) {
-                	zahl = 12;
+                    zahl = 12;
                 } else {
-                	System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
+                    System.out.println("\n------------------------------- Fehler! ------------------------------- \nSie haben einen Buchstaben eingegeben, wo eine Zahl erwartet wurde!\n");
                 }
-                
+
             }
-            }
-            return zahl;
+        }
+        return zahl;
     }
 
     /**

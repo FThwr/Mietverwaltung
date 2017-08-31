@@ -67,13 +67,8 @@ public class MenuManager extends Panel implements Serializable {
         MenuManager.menuList.add(new MenuEntry("Interessent", new String[] { "ehemalige Interessenten anzeigen", "aktuelle Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
         MenuManager.menuList.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Wohnung suchen" }));
         MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "ehemalige Mitarbeiter anzeigen", "aktuelle Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
-<<<<<<< HEAD
         MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene MietvertrÃ¤ge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
         MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige HandwerkerauftrÃ¤ge anzeigen", "aktive HandwerkerauftrÃ¤ge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
-=======
-        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene Mietverträge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige Handwerkeraufträge anzeigen", "aktive Handwerkeraufträge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
->>>>>>> branch 'master' of https://github.com/FThwr/Mietverwaltung
         MenuManager.menuList.add(new MenuEntry("Suchanfrage", new String[] { "Suchanfrage erstellen", "Suchanfragen anzeigen" }));
 
         MenuManager.menuList.add(new MenuEntry("aktuelle Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
@@ -119,15 +114,16 @@ public class MenuManager extends Panel implements Serializable {
     protected ArrayList<Mieter> ownerList = new ArrayList<>();
     protected ArrayList<Mitarbeiter> workerList = new ArrayList<>();
     protected ArrayList<Wohnung> flatList = new ArrayList<>();
-    protected ArrayList<Mietvertrag> beendeteMietverträge = new ArrayList<>();
-    protected ArrayList<Mieter> ehemaligeMieter = new ArrayList<>();
-    protected ArrayList<Mitarbeiter> ehemaligeMitarbeiter = new ArrayList<>();
-    protected ArrayList<Interessent> ehemaligeInteressenten = new ArrayList<>();
-    protected ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge = new ArrayList<>();
     protected ArrayList<Handwerkerauftrag> repairList = new ArrayList<>();
     protected ArrayList<Interessent> InterestList = new ArrayList<>();
     protected ArrayList<Mietvertrag> contractList = new ArrayList<>();
     protected ArrayList<Suchanfrage> searchList = new ArrayList<>();
+
+    protected ArrayList<Mieter> ehemaligeMieter = new ArrayList<>();
+    protected ArrayList<Mietvertrag> beendeteMietverträge = new ArrayList<>();
+    protected ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge = new ArrayList<>();
+    protected ArrayList<Mitarbeiter> ehemaligeMitarbeiter = new ArrayList<>();
+    protected ArrayList<Interessent> ehemaligeInteressenten = new ArrayList<>();
 
     private static final String dateiPfad = "..\\menumanager.dat";
 
@@ -143,26 +139,16 @@ public class MenuManager extends Panel implements Serializable {
         return MenuManager.currentManager.abgeschlosseneHandwerkeraufträge;
     }
 
-<<<<<<< HEAD
     public static void setAbgeschlosseneHandwerkerauftrÃ¤ge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge) {
         MenuManager.currentManager.abgeschlosseneHandwerkeraufträge = abgeschlosseneHandwerkeraufträge;
-=======
-    public static void setAbgeschlosseneHandwerkeraufträge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge) {
-        MenuManager.abgeschlosseneHandwerkeraufträge = abgeschlosseneHandwerkeraufträge;
->>>>>>> branch 'master' of https://github.com/FThwr/Mietverwaltung
     }
 
     public static ArrayList<Mietvertrag> getBeendeteMietverträge() {
         return MenuManager.currentManager.beendeteMietverträge;
     }
 
-<<<<<<< HEAD
-    public static void setBeendeteMietvertrÃ¤ge(final ArrayList<Mietvertrag> beendeteMietverträge) {
-        MenuManager.currentManager.beendeteMietverträge = beendeteMietverträge;
-=======
     public static void setBeendeteMietverträge(final ArrayList<Mietvertrag> beendeteMietverträge) {
-        MenuManager.beendeteMietverträge = beendeteMietverträge;
->>>>>>> branch 'master' of https://github.com/FThwr/Mietverwaltung
+        MenuManager.currentManager.beendeteMietverträge = beendeteMietverträge;
     }
 
     public MenuManager() {
@@ -237,12 +223,12 @@ public class MenuManager extends Panel implements Serializable {
         MenuManager.currentManager.workerList.add(mitarbeiter);
     }
 
-    public static void add(final Wohnung wohnung) {
-        MenuManager.currentManager.flatList.add(wohnung);
+    public static void add(final Mietvertrag mietvertrag) {
+        MenuManager.currentManager.contractList.add(mietvertrag);
     }
 
-    public static void add(final Mietvertrag mietvertrag) {
-        MenuManager.currentManager.beendeteMietverträge.add(mietvertrag);
+    public static void add(final Wohnung wohnung) {
+        MenuManager.currentManager.flatList.add(wohnung);
     }
 
     public static void add(final Interessent interessent) {
@@ -255,6 +241,26 @@ public class MenuManager extends Panel implements Serializable {
 
     public static void add(final Suchanfrage suchanfrage) {
         MenuManager.currentManager.searchList.add(suchanfrage);
+    }
+
+    public static void add(final Handwerkerauftrag handwerkerauftrag) {
+        MenuManager.currentManager.repairList.add(handwerkerauftrag);
+    }
+
+    public static void addEhemaligeMieter(final Mieter ehemaligeMieter) {
+        MenuManager.currentManager.ehemaligeMieter.add(ehemaligeMieter);
+    }
+
+    public static void addBeendeteMietverträge(final Mietvertrag beendeterMietvertrag) {
+        MenuManager.currentManager.beendeteMietverträge.add(beendeterMietvertrag);
+    }
+
+    public static void addEhemaligeMitarbeiter(final Mitarbeiter ehemaligeMitarbeiter) {
+        MenuManager.currentManager.ehemaligeMitarbeiter.add(ehemaligeMitarbeiter);
+    }
+
+    public static void addAbgeschlosseneHandwerkeraufträge(final Handwerkerauftrag abgeschlossenerHandwerkerauftrag) {
+        MenuManager.currentManager.abgeschlosseneHandwerkeraufträge.add(abgeschlossenerHandwerkerauftrag);
     }
 
     public void start() throws FileNotFoundException, ClassNotFoundException, IOException {
@@ -331,11 +337,7 @@ public class MenuManager extends Panel implements Serializable {
                 System.out.println("Programm wurde beendet.");
                 System.exit(0);
             } else {
-<<<<<<< HEAD
-                System.out.println("Fehler, der ausgewählte MenÃ¼punkt existiert nicht.");
-=======
                 System.out.println("Fehler, der ausgewählte Menüpunkt existiert nicht.");
->>>>>>> branch 'master' of https://github.com/FThwr/Mietverwaltung
             }
         } while (meAktuell.getLocation() != null);
         meAktuell = actionAusfuehren(meAktuell);
@@ -448,5 +450,4 @@ public class MenuManager extends Panel implements Serializable {
         }
         return null;
     }
-
 }
