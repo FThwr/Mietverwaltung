@@ -67,8 +67,8 @@ public class MenuManager extends Panel implements Serializable {
         MenuManager.menuList.add(new MenuEntry("Interessent", new String[] { "ehemalige Interessenten anzeigen", "aktuelle Interessenten anzeigen", "neuen Interessenten erstellen", "Interessent bearbeiten", "Interessenten suchen" }));
         MenuManager.menuList.add(new MenuEntry("Wohnung", new String[] { "Wohnung anzeigen", "neue Wohnung erstellen", "Wohnung bearbeiten", "Wohnung suchen" }));
         MenuManager.menuList.add(new MenuEntry("Mitarbeiter", new String[] { "ehemalige Mitarbeiter anzeigen", "aktuelle Mitarbeiter anzeigen", "neuen Mitarbeiter erstellen", "Mitarbeiter bearbeiten" }));
-        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene MietvertrÃ¤ge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
-        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige HandwerkerauftrÃ¤ge anzeigen", "aktive HandwerkerauftrÃ¤ge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Mietvertrag", new String[] { "abgeschlossene Mietverträge anzeigen", "aktive Mietverträge anzeigen", "Mietvertrag erstellen", "Mietvertrag bearbeiten", "Mietvertrag suchen" }));
+        MenuManager.menuList.add(new MenuEntry("Handwerkerauftrag", new String[] { "fertige Handwerkeraufträge anzeigen", "aktive Handwerkeraufträge anzeigen", "Handwerkerauftrag erstellen", "Handwerkerauftrag bearbeiten", "Handwerkerauftrag suchen" }));
         MenuManager.menuList.add(new MenuEntry("Suchanfrage", new String[] { "Suchanfrage erstellen", "Suchanfragen anzeigen" }));
 
         MenuManager.menuList.add(new MenuEntry("aktuelle Mieter anzeigen", new AktuelleMieterAnzeigenAction()));
@@ -139,7 +139,7 @@ public class MenuManager extends Panel implements Serializable {
         return MenuManager.currentManager.abgeschlosseneHandwerkeraufträge;
     }
 
-    public static void setAbgeschlosseneHandwerkerauftrÃ¤ge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge) {
+    public static void setAbgeschlosseneHandwerkeraufträge(final ArrayList<Handwerkerauftrag> abgeschlosseneHandwerkeraufträge) {
         MenuManager.currentManager.abgeschlosseneHandwerkeraufträge = abgeschlosseneHandwerkeraufträge;
     }
 
