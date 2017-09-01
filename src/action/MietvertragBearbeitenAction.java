@@ -317,7 +317,7 @@ public class MietvertragBearbeitenAction extends MenuManager implements Action, 
                         while (iter.hasNext()) {
                             Mietvertrag str = iter.next();
 
-                            if ("" + str.getMietvertragsID() == zu_bearbeitenden_mietvertrag + "") {
+                            if (str.getMietvertragsID() == zu_bearbeitenden_mietvertrag) {
                                 iter.remove();
 
                             }
